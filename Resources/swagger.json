@@ -1,0 +1,2149 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is a spec for Tailoring REST API",
+    "version" : "v1",
+    "title" : "Swagger spec for Tailoring REST API",
+    "termsOfService" : "http://www.menswearhouse.com/",
+    "contact" : {
+      "name" : "Pavel Zhelnov",
+      "url" : "http://www.menswearhouse.com/",
+      "email" : "pzhelnov(@)provectus.com"
+    },
+    "license" : {
+      "name" : "Company Licence",
+      "url" : "http://www.menswearhouse.com/"
+    }
+  },
+  "basePath" : "/tailoring-rest-app/tmw/",
+  "tags" : [ {
+    "name" : "alteration"
+  }, {
+    "name" : "customer"
+  }, {
+    "name" : "device"
+  }, {
+    "name" : "item",
+    "description" : "Item Resource"
+  }, {
+    "name" : "manifest",
+    "description" : "Manifest Resource"
+  }, {
+    "name" : "order",
+    "description" : "Alteration Order Management"
+  } ],
+  "schemes" : [ "http", "https" ],
+  "paths" : {
+    "/alteration/find" : {
+      "get" : {
+        "tags" : [ "alteration" ],
+        "summary" : "Returns search result for alteration",
+        "description" : "",
+        "operationId" : "find",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "garment",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "COAT", "PANTS", "VEST", "SHIRT", "OVERCOAT", "LEATHER", "SHORTS", "SKIRT", "SKORT", "DRESS", "RENTAL_COAT", "RENTAL_PANTS", "SFS_PANTS" ]
+        }, {
+          "name" : "orderType",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "NORMAL", "NCA" ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Alteration"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alteration/findAll" : {
+      "get" : {
+        "tags" : [ "alteration" ],
+        "summary" : "Returns search result for alterations",
+        "description" : "",
+        "operationId" : "find",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "$ref" : "#/definitions/Alteration"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer/find" : {
+      "get" : {
+        "tags" : [ "customer" ],
+        "summary" : "Returns search result for customers",
+        "description" : "",
+        "operationId" : "searchCustomer",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "perfectFitId",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "firstName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "lastName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "phoneNumber",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "email",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "zip",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/CustomerResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer/upsertCustomer" : {
+      "post" : {
+        "tags" : [ "customer" ],
+        "summary" : "Returns Customer creation result",
+        "description" : "",
+        "operationId" : "createCustomer",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CustomerRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CustomerResponse"
+            }
+          }
+        }
+      }
+    },
+    "/device/user" : {
+      "get" : {
+        "tags" : [ "device" ],
+        "summary" : "Returns User by deviceId",
+        "description" : "",
+        "operationId" : "getUsersByDeviceId",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "deviceId",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "storeId",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "token",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/item/all" : {
+      "get" : {
+        "tags" : [ "item" ],
+        "summary" : "Returns list of garment divisions",
+        "description" : "",
+        "operationId" : "getAll",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/GarmentDivision"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/item/get" : {
+      "get" : {
+        "tags" : [ "item" ],
+        "summary" : "Returns Product Item by id",
+        "description" : "",
+        "operationId" : "getItemByItemId",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "itemId",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ProductItem"
+            }
+          }
+        }
+      }
+    },
+    "/manifest/garments" : {
+      "get" : {
+        "tags" : [ "manifest" ],
+        "summary" : "Returns Garments of Manifest",
+        "description" : "",
+        "operationId" : "getManifestsOrderList",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "manifestId",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/AlteredGarment"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/manifest/get" : {
+      "get" : {
+        "tags" : [ "manifest" ],
+        "summary" : "Returns manifest by id",
+        "description" : "",
+        "operationId" : "getManifests",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Manifest"
+            }
+          }
+        }
+      }
+    },
+    "/manifest/getByGarmentId" : {
+      "get" : {
+        "tags" : [ "manifest" ],
+        "summary" : "Returns Manifest by garmentId",
+        "description" : "",
+        "operationId" : "getByOrderId",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "garmentId",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ManifestDetails"
+            }
+          }
+        }
+      }
+    },
+    "/manifest/getById" : {
+      "get" : {
+        "tags" : [ "manifest" ],
+        "summary" : "Returns Manifest by manifestId",
+        "description" : "",
+        "operationId" : "getManifest",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "manifestId",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ManifestDetails"
+            }
+          }
+        }
+      }
+    },
+    "/manifest/getDetails" : {
+      "get" : {
+        "tags" : [ "manifest" ],
+        "summary" : "Returns Manifest Details by Id, could be duplicate",
+        "description" : "",
+        "operationId" : "getManifestDetails",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "manifestId",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ManifestDetails"
+            }
+          }
+        }
+      }
+    },
+    "/manifest/getManifestList" : {
+      "post" : {
+        "tags" : [ "manifest" ],
+        "summary" : "Returns the list of manifests by request",
+        "description" : "",
+        "operationId" : "getGeneralManifestDetails",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SearchManifestRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ManifestGeneralDetails"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/manifest/pushStatus/{token}" : {
+      "post" : {
+        "tags" : [ "manifest" ],
+        "summary" : "Change Status for Manifest with force",
+        "description" : "",
+        "operationId" : "pushManifestStatus",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/PushManifestRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/manifest/receiveGarments/{token}" : {
+      "post" : {
+        "tags" : [ "manifest" ],
+        "summary" : "Receives Garments from NTS",
+        "description" : "",
+        "operationId" : "receiveGarmentsFromNts",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ManuallyReceiveGarmentRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Manifest"
+            }
+          }
+        }
+      }
+    },
+    "/manifest/sendManifest/{token}" : {
+      "post" : {
+        "tags" : [ "manifest" ],
+        "summary" : "Sends manifest by email",
+        "description" : "",
+        "operationId" : "sendManifest",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SendManifestRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/manifest/status/{token}" : {
+      "post" : {
+        "tags" : [ "manifest" ],
+        "summary" : "Changes status for manifest",
+        "description" : "",
+        "operationId" : "changeStatus",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ChangeManifestStatusRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ManifestDetails"
+            }
+          }
+        }
+      }
+    },
+    "/order/create" : {
+      "post" : {
+        "tags" : [ "order" ],
+        "summary" : "Create Order",
+        "description" : "",
+        "operationId" : "create",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CreateOrderInfoRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AlterationOrder"
+            }
+          }
+        }
+      }
+    },
+    "/order/deleteManually" : {
+      "post" : {
+        "tags" : [ "order" ],
+        "summary" : "Deletes the order manually",
+        "description" : "",
+        "operationId" : "deleteManually",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/AlterationOrder"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AlterationOrder"
+            }
+          }
+        }
+      }
+    },
+    "/order/garment/getStatus" : {
+      "get" : {
+        "tags" : [ "order" ],
+        "summary" : "Returns the status of garment by its ID",
+        "description" : "",
+        "operationId" : "getGarmentStatus",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "garmentId",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "string",
+              "enum" : [ "SAVED", "ACTIVE", "SCHEDULED", "POSTED", "DISPATCHED", "ALTERED", "RETURNED", "COMPLETED", "PICKED_UP", "DELETED" ]
+            }
+          }
+        }
+      }
+    },
+    "/order/generate/{token}" : {
+      "post" : {
+        "tags" : [ "order" ],
+        "summary" : "Generate Order",
+        "description" : "",
+        "operationId" : "generate",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CreateOrderInfoRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AlterationOrder"
+            }
+          }
+        }
+      }
+    },
+    "/order/generateNCA" : {
+      "post" : {
+        "tags" : [ "order" ],
+        "summary" : "Generate Order NCA, update garments and change status",
+        "description" : "",
+        "operationId" : "generateNCA",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/GenerateNCARequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AlterationOrder"
+            }
+          }
+        }
+      }
+    },
+    "/order/get" : {
+      "get" : {
+        "tags" : [ "order" ],
+        "summary" : "Returns Alteration Order by id",
+        "description" : "",
+        "operationId" : "get",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "orderId",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AlterationOrder"
+            }
+          }
+        }
+      }
+    },
+    "/order/isTransferableGarment" : {
+      "get" : {
+        "tags" : [ "order" ],
+        "summary" : "Return Garment if it's transferable",
+        "description" : "",
+        "operationId" : "isTransferableGarment",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "garmentId",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "storeId",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "isNtsFriendly",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/GarmentSummary"
+            }
+          }
+        }
+      }
+    },
+    "/order/search/{token}" : {
+      "post" : {
+        "tags" : [ "order" ],
+        "summary" : "Search of orders",
+        "description" : "",
+        "operationId" : "search",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SearchCriteria"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AlterationOrder"
+            }
+          }
+        }
+      }
+    },
+    "/order/split/{token}" : {
+      "post" : {
+        "tags" : [ "order" ],
+        "summary" : "Splits the order",
+        "description" : "",
+        "operationId" : "split",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/AlterationOrderSplit"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AlterationOrder"
+            }
+          }
+        }
+      }
+    },
+    "/order/submit/{token}" : {
+      "post" : {
+        "tags" : [ "order" ],
+        "summary" : "Submits the order",
+        "description" : "",
+        "operationId" : "submit",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/AlterationOrder"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AlterationOrder"
+            }
+          }
+        }
+      }
+    },
+    "/order/transferableGarments/{token}" : {
+      "post" : {
+        "tags" : [ "order" ],
+        "summary" : "Returns transferable garments",
+        "description" : "",
+        "operationId" : "listTransferableOrders",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SearchGarmentCriteria"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/GarmentSummary"
+            }
+          }
+        }
+      }
+    },
+    "/order/update" : {
+      "post" : {
+        "tags" : [ "order" ],
+        "summary" : "Updates the order",
+        "description" : "",
+        "operationId" : "update",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/AlterationOrder"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AlterationOrder"
+            }
+          }
+        }
+      }
+    },
+    "/order/updateNote/{token}" : {
+      "post" : {
+        "tags" : [ "order" ],
+        "summary" : "Updates the garment note",
+        "description" : "",
+        "operationId" : "updateNote",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/UpdateNotesRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AlteredGarment"
+            }
+          }
+        }
+      }
+    },
+    "/order/virtualRack" : {
+      "get" : {
+        "tags" : [ "order" ],
+        "summary" : "Returns Virtual Racks filtered by date",
+        "description" : "",
+        "operationId" : "getVirtualRackSummary",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "date",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/VirtualRackSummary"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "token" : {
+      "type" : "apiKey"
+    }
+  },
+  "definitions" : {
+    "Address" : {
+      "type" : "object",
+      "properties" : {
+        "city" : {
+          "type" : "string"
+        },
+        "state" : {
+          "type" : "string"
+        },
+        "zip" : {
+          "type" : "string"
+        },
+        "addressLineOne" : {
+          "type" : "string"
+        },
+        "addressLineTwo" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AddressRequest" : {
+      "type" : "object",
+      "properties" : {
+        "addressLineOne" : {
+          "type" : "string"
+        },
+        "addressLineTwo" : {
+          "type" : "string"
+        },
+        "zip" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "state" : {
+          "type" : "string"
+        },
+        "empty" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "Alteration" : {
+      "type" : "object",
+      "required" : [ "attributeQuantity" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "garmentType" : {
+          "type" : "string",
+          "enum" : [ "COAT", "PANTS", "VEST", "SHIRT", "OVERCOAT", "LEATHER", "SHORTS", "SKIRT", "SKORT", "DRESS", "RENTAL_COAT", "RENTAL_PANTS", "SFS_PANTS" ]
+        },
+        "maxQuantity" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "attribute" : {
+          "type" : "string"
+        },
+        "rank" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "item" : {
+          "$ref" : "#/definitions/AlterationItemPrice"
+        },
+        "restricted" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AlterationRestricted"
+          }
+        },
+        "ntsFriendly" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "attributeQuantity" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "AlterationItemPrice" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "secondaryItemCode" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "costIfPurchasedAtTMW" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "costExternal" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "minutes" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "AlterationOrder" : {
+      "type" : "object",
+      "required" : [ "createdBy", "createdDateTime", "customer", "orderId", "orderType", "status", "store", "tailoringStore" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "orderId" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 2550
+        },
+        "posTransactionId" : {
+          "type" : "string"
+        },
+        "note" : {
+          "type" : "string"
+        },
+        "dueDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "completeDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "pickupDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "SAVED", "ACTIVE", "SCHEDULED", "POSTED", "DISPATCHED", "ALTERED", "RETURNED", "COMPLETED", "PICKED_UP", "DELETED" ]
+        },
+        "totalPrice" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "orderType" : {
+          "type" : "string",
+          "enum" : [ "NORMAL", "NCA" ]
+        },
+        "category" : {
+          "type" : "string",
+          "enum" : [ "CUSTOM", "RENTAL", "RFA", "PRESSING", "SFS" ]
+        },
+        "store" : {
+          "$ref" : "#/definitions/Store"
+        },
+        "createdDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "updatedDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "jobPickedUp" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "layaway" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "createdBy" : {
+          "$ref" : "#/definitions/User"
+        },
+        "fitter" : {
+          "$ref" : "#/definitions/User"
+        },
+        "updatedBy" : {
+          "$ref" : "#/definitions/User"
+        },
+        "version" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "customer" : {
+          "$ref" : "#/definitions/Customer"
+        },
+        "garments" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AlteredGarment"
+          }
+        },
+        "orderTotalMinutes" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "orderScheduledMinutes" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "rushOrder" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "external" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "tailoringStore" : {
+          "$ref" : "#/definitions/Store"
+        },
+        "minimalGarmentStatus" : {
+          "type" : "string",
+          "enum" : [ "SAVED", "ACTIVE", "SCHEDULED", "POSTED", "DISPATCHED", "ALTERED", "RETURNED", "COMPLETED", "PICKED_UP", "DELETED" ]
+        },
+        "allGarmentsReceivedManually" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "orderFree" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "AlterationOrderSplit" : {
+      "type" : "object",
+      "properties" : {
+        "orderId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "garmentIds" : {
+          "type" : "array",
+          "items" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        },
+        "dueDate" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AlterationRestricted" : {
+      "type" : "object",
+      "required" : [ "restricted" ],
+      "properties" : {
+        "restricted" : {
+          "type" : "string",
+          "enum" : [ "CUSTOM", "RENTAL", "RFA", "PRESSING", "SFS", "NORMAL" ]
+        }
+      }
+    },
+    "AlteredGarment" : {
+      "type" : "object",
+      "required" : [ "garmentType", "tailoringStore" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "garmentId" : {
+          "type" : "string"
+        },
+        "note" : {
+          "type" : "string"
+        },
+        "garmentType" : {
+          "type" : "string",
+          "enum" : [ "COAT", "PANTS", "VEST", "SHIRT", "OVERCOAT", "LEATHER", "SHORTS", "SKIRT", "SKORT", "DRESS", "RENTAL_COAT", "RENTAL_PANTS", "SFS_PANTS" ]
+        },
+        "item" : {
+          "$ref" : "#/definitions/ProductItem"
+        },
+        "color" : {
+          "$ref" : "#/definitions/DivisionColor"
+        },
+        "itemCode" : {
+          "type" : "string"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "SAVED", "ACTIVE", "SCHEDULED", "POSTED", "DISPATCHED", "ALTERED", "RETURNED", "COMPLETED", "PICKED_UP", "DELETED" ]
+        },
+        "scheduledDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "assignedTo" : {
+          "$ref" : "#/definitions/User"
+        },
+        "orderedAlterations" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/OrderedAlteration"
+          }
+        },
+        "groupId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "parentGarmentId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "ncaRelated" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "bookedMinutes" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "tailoringStore" : {
+          "$ref" : "#/definitions/Store"
+        },
+        "updatedBy" : {
+          "$ref" : "#/definitions/User"
+        },
+        "manualReceivedBy" : {
+          "$ref" : "#/definitions/User"
+        },
+        "orderId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "garmentExternal" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "new" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "purchasedAtTMW" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "childSize" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "formal" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "AlteredGarmentInfo" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "garmentId" : {
+          "type" : "string"
+        },
+        "orderId" : {
+          "type" : "string"
+        },
+        "orderUniqueId" : {
+          "type" : "string"
+        },
+        "minutes" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "garmentType" : {
+          "type" : "string",
+          "enum" : [ "COAT", "PANTS", "VEST", "SHIRT", "OVERCOAT", "LEATHER", "SHORTS", "SKIRT", "SKORT", "DRESS", "RENTAL_COAT", "RENTAL_PANTS", "SFS_PANTS" ]
+        },
+        "priority" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "dueDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ChangeManifestStatusRequest" : {
+      "type" : "object",
+      "properties" : {
+        "manifestId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "CREATED", "TRANSIT", "HOLD", "DELIVERED", "DELETED" ]
+        },
+        "garmentIds" : {
+          "type" : "array",
+          "items" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        },
+        "acceptorShortname" : {
+          "type" : "string"
+        },
+        "acceptorPassword" : {
+          "type" : "string"
+        },
+        "trackingNumber" : {
+          "type" : "string"
+        },
+        "notes" : {
+          "type" : "string"
+        },
+        "currentStoreId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "updatedByUser" : {
+          "$ref" : "#/definitions/User"
+        }
+      }
+    },
+    "CreateOrderInfoRequest" : {
+      "type" : "object",
+      "properties" : {
+        "customerFromSearch" : {
+          "$ref" : "#/definitions/CustomerRequest"
+        },
+        "customer" : {
+          "$ref" : "#/definitions/CustomerRequest"
+        },
+        "orderType" : {
+          "type" : "string",
+          "enum" : [ "NORMAL", "NCA" ]
+        },
+        "category" : {
+          "type" : "string"
+        },
+        "reservationId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "tailoringStoreId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "dueDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "orderCategory" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Customer" : {
+      "type" : "object",
+      "required" : [ "contactPreferences", "firstName", "lastName" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "firstName" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 35
+        },
+        "lastName" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 35
+        },
+        "phoneNumber" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 12
+        },
+        "email" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 255
+        },
+        "contactPreferences" : {
+          "type" : "string",
+          "enum" : [ "PHONE", "EMAIL", "NONE" ]
+        },
+        "regularWearer" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "notifyCounter" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "CustomerRequest" : {
+      "type" : "object",
+      "required" : [ "birthday" ],
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "partyId" : {
+          "type" : "string"
+        },
+        "universePartyId" : {
+          "type" : "string"
+        },
+        "perfectFitId" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "phoneNumber" : {
+          "type" : "string"
+        },
+        "contactPreferences" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "address" : {
+          "$ref" : "#/definitions/AddressRequest"
+        },
+        "originStoreId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "birthday" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "doNotContactModes" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "ALL_FORMS", "PHONE", "EMAIL", "MAIL", "MAIL_WITHOUT_REWARD_CERTS" ]
+          }
+        }
+      }
+    },
+    "CustomerResponse" : {
+      "type" : "object",
+      "properties" : {
+        "perfectFitId" : {
+          "type" : "string"
+        },
+        "partyId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "phoneNumber" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "universePartyId" : {
+          "type" : "string"
+        },
+        "address" : {
+          "$ref" : "#/definitions/Address"
+        }
+      }
+    },
+    "DivisionColor" : {
+      "type" : "object",
+      "required" : [ "colorCode", "colorFamily", "divisionCode" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "divisionCode" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 255
+        },
+        "colorCode" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 255
+        },
+        "colorDescription" : {
+          "type" : "string"
+        },
+        "colorFamily" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 255
+        }
+      }
+    },
+    "GarmentDetails" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "garmentId" : {
+          "type" : "string"
+        },
+        "orderId" : {
+          "type" : "string"
+        },
+        "dueDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "SAVED", "ACTIVE", "SCHEDULED", "POSTED", "DISPATCHED", "ALTERED", "RETURNED", "COMPLETED", "PICKED_UP", "DELETED" ]
+        },
+        "garmentType" : {
+          "type" : "string",
+          "enum" : [ "COAT", "PANTS", "VEST", "SHIRT", "OVERCOAT", "LEATHER", "SHORTS", "SKIRT", "SKORT", "DRESS", "RENTAL_COAT", "RENTAL_PANTS", "SFS_PANTS" ]
+        },
+        "customer" : {
+          "$ref" : "#/definitions/CustomerRequest"
+        },
+        "totalAlterationsMins" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "receivedBy" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "getGroupId" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "GarmentDivision" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "garmentTypes" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "COAT", "PANTS", "VEST", "SHIRT", "OVERCOAT", "LEATHER", "SHORTS", "SKIRT", "SKORT", "DRESS", "RENTAL_COAT", "RENTAL_PANTS", "SFS_PANTS" ]
+          }
+        }
+      }
+    },
+    "GarmentSummary" : {
+      "type" : "object",
+      "properties" : {
+        "garmentSummary" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AlteredGarmentInfo"
+          }
+        },
+        "totalCount" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
+    },
+    "GenerateNCARequest" : {
+      "type" : "object",
+      "properties" : {
+        "garmentIds" : {
+          "type" : "array",
+          "items" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        },
+        "order" : {
+          "$ref" : "#/definitions/AlterationOrder"
+        },
+        "dueDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "orderCategory" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Manifest" : {
+      "type" : "object",
+      "required" : [ "createdDateTime", "sourceStore", "status", "targetStore" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "updatedBy" : {
+          "$ref" : "#/definitions/User"
+        },
+        "createdDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "updatedDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "trackingNumber" : {
+          "type" : "string"
+        },
+        "sentDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "sendingNote" : {
+          "type" : "string"
+        },
+        "deliveredDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "receivingNote" : {
+          "type" : "string"
+        },
+        "forwardDirection" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "sourceStore" : {
+          "$ref" : "#/definitions/Store"
+        },
+        "targetStore" : {
+          "$ref" : "#/definitions/Store"
+        },
+        "lastLocationStore" : {
+          "$ref" : "#/definitions/Store"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "CREATED", "TRANSIT", "HOLD", "DELIVERED", "DELETED" ]
+        },
+        "version" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
+    },
+    "ManifestDetails" : {
+      "type" : "object",
+      "required" : [ "createdDateTime", "sourceStore", "status", "targetStore" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "createdDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "updatedDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "trackingNumber" : {
+          "type" : "string"
+        },
+        "sentDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "sendingNote" : {
+          "type" : "string"
+        },
+        "deliveredDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "receivingNote" : {
+          "type" : "string"
+        },
+        "forwardDirection" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "sourceStore" : {
+          "$ref" : "#/definitions/Store"
+        },
+        "targetStore" : {
+          "$ref" : "#/definitions/Store"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "CREATED", "TRANSIT", "HOLD", "DELIVERED", "DELETED" ]
+        },
+        "garmentDetails" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/GarmentDetails"
+          }
+        },
+        "totalGarmentsNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalAlterationsMins" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "garmentsWithError" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "ManifestGeneralDetails" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "CREATED", "TRANSIT", "HOLD", "DELIVERED", "DELETED" ]
+        },
+        "sourceStore" : {
+          "$ref" : "#/definitions/Store"
+        },
+        "targetStore" : {
+          "$ref" : "#/definitions/Store"
+        },
+        "garments" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "sentDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "deliveredDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "forwardDirection" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "ManuallyReceiveGarmentRequest" : {
+      "type" : "object",
+      "properties" : {
+        "garmentIds" : {
+          "type" : "array",
+          "items" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        },
+        "userId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "manifestId" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
+    },
+    "OrderedAlteration" : {
+      "type" : "object",
+      "required" : [ "alteration", "quantity", "totalPrice" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "quantity" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "minutes" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "alteration" : {
+          "$ref" : "#/definitions/Alteration"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "DELETED", "NEW", "PAID", "PAIDFREE", "VOID" ]
+        },
+        "attribute" : {
+          "type" : "string"
+        },
+        "totalPrice" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "nameForReport" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ProductItem" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "itemId" : {
+          "type" : "string"
+        },
+        "retailPrice" : {
+          "type" : "number"
+        },
+        "defaultQuantity" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "division" : {
+          "type" : "string"
+        },
+        "itemDescription" : {
+          "type" : "string"
+        },
+        "garmentTypes" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "COAT", "PANTS", "VEST", "SHIRT", "OVERCOAT", "LEATHER", "SHORTS", "SKIRT", "SKORT", "DRESS", "RENTAL_COAT", "RENTAL_PANTS", "SFS_PANTS" ]
+          }
+        },
+        "mustBeSelected" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "PushManifestRequest" : {
+      "type" : "object",
+      "properties" : {
+        "manifestId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "manifestStatus" : {
+          "type" : "string",
+          "enum" : [ "CREATED", "TRANSIT", "HOLD", "DELIVERED", "DELETED" ]
+        },
+        "user" : {
+          "$ref" : "#/definitions/User"
+        }
+      }
+    },
+    "Role" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "roleName" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string",
+          "enum" : [ "TAILOR", "STORE_ADMIN", "REGIONAL_ADMIN", "DRIVER", "HUB_ADMIN", "SYSTEM_ADMIN" ]
+        }
+      }
+    },
+    "SearchCriteria" : {
+      "type" : "object",
+      "properties" : {
+        "orderStatuses" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "nameOrNumber" : {
+          "type" : "string"
+        },
+        "offset" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "length" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "storeId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "sortCriteria" : {
+          "$ref" : "#/definitions/SearchingSortCriteria"
+        },
+        "overdue" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "SearchGarmentCriteria" : {
+      "type" : "object",
+      "properties" : {
+        "offset" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "length" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "storeId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "onlyNtsOrders" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "garmentId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "SearchManifestRequest" : {
+      "type" : "object",
+      "properties" : {
+        "manifestId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "sourceStoreId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "targetStoreId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "statusList" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "CREATED", "TRANSIT", "HOLD", "DELIVERED", "DELETED" ]
+          }
+        },
+        "excludeWithNoOrders" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "deliveredManifestsCutDays" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "SearchingSortCriteria" : {
+      "type" : "object",
+      "properties" : {
+        "lastName" : {
+          "type" : "string",
+          "enum" : [ "ASC", "DESC" ]
+        },
+        "dueDateTime" : {
+          "type" : "string",
+          "enum" : [ "ASC", "DESC" ]
+        }
+      }
+    },
+    "SendManifestRequest" : {
+      "type" : "object",
+      "properties" : {
+        "sourceStoreId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "targetStoreId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "manifestId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "users" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "Store" : {
+      "type" : "object",
+      "required" : [ "storeType" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "uniqueId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "state" : {
+          "type" : "string"
+        },
+        "zip" : {
+          "type" : "string"
+        },
+        "phone" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "regionCode" : {
+          "type" : "string"
+        },
+        "timeZone" : {
+          "type" : "string"
+        },
+        "orderExecutionLimit" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "storeType" : {
+          "type" : "string",
+          "enum" : [ "SIMPLE", "CTS", "HUB", "OVERFLOW", "SELLING", "NTS" ]
+        },
+        "ntsFriendlyNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "district" : {
+          "type" : "string"
+        }
+      }
+    },
+    "UpdateNotesRequest" : {
+      "type" : "object",
+      "properties" : {
+        "garmentId" : {
+          "type" : "string"
+        },
+        "notes" : {
+          "type" : "string"
+        }
+      }
+    },
+    "User" : {
+      "type" : "object",
+      "required" : [ "firstName", "lastName", "uniqueId" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "uniqueId" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "active" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "tibcoStore" : {
+          "$ref" : "#/definitions/Store"
+        },
+        "jobCode" : {
+          "type" : "string"
+        },
+        "store" : {
+          "$ref" : "#/definitions/Store"
+        },
+        "roles" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Role"
+          }
+        },
+        "tailor" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "VirtualRackSummary" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "orderId" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "garmentSize" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "priority" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "SAVED", "ACTIVE", "SCHEDULED", "POSTED", "DISPATCHED", "ALTERED", "RETURNED", "COMPLETED", "PICKED_UP", "DELETED" ]
+        }
+      }
+    }
+  }
+}
