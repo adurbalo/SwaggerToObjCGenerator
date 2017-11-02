@@ -11,7 +11,13 @@
 @interface Schema : BaseModel
 
 @property (nonatomic, strong) NSString *type;
-@property (nonatomic, strong) NSDictionary *items;
+@property (nonatomic, strong) NSString *itemsType;
+@property (nonatomic, strong) NSString *reference;
 
+- (NSString *)objC_mainTypeName;
+- (NSString *)objC_genericTypeName;
+- (NSString *)objC_fullTypeName;
+
+- (NSArray<NSString *> *)allTypes;
 
 @end

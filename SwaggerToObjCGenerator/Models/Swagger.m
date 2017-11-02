@@ -25,62 +25,6 @@
 + (NSValueTransformer *)infoJSONTransformer {
     return [MTLJSONAdapter dictionaryTransformerWithModelClass:Info.class];
 }
-/*
-- (void)setUnprocessedPaths:(NSDictionary<NSString *,NSDictionary *> *)unprocessedPaths
-{
-    NSMutableDictionary<NSString *,NSArray<Path *> *> *processedPaths = [NSMutableDictionary new];
-    
-    [unprocessedPaths enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSDictionary * _Nonnull obj, BOOL * _Nonnull stop) { //Path Level
-        
-        NSMutableArray<Path*> *pathsArray = [NSMutableArray new];
-       
-        [obj enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull methodKey, NSDictionary * _Nonnull methodObj, BOOL * _Nonnull methodStop) { //Method Level
-            NSError *error = nil;
-            Path *path = [MTLJSONAdapter modelOfClass:[Path class]
-                                   fromJSONDictionary:methodObj
-                                                error:&error];
-            if (error) {
-                NSLog(@"Error: %@", error);
-            } else {
-                path.method = methodKey;
-                [pathsArray addObject:path];
-            }
-        }];
-        
-        if (pathsArray.count > 0) {
-            processedPaths[key] = pathsArray;
-        }
-    }];
-    
-    self.paths = processedPaths;
-}
- 
-+ (NSValueTransformer *)propertiesJSONTransformer {
-    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSDictionary *value, BOOL *success, NSError *__autoreleasing *error) {
-        
-        NSMutableArray<Property*> *propertiesArray = [NSMutableArray new];
-        
-        [value enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSDictionary * _Nonnull obj, BOOL * _Nonnull stop) {
-            
-            NSError *error = nil;
-            Property *response = [MTLJSONAdapter modelOfClass:[Property class]
-                                           fromJSONDictionary:obj
-                                                        error:&error];
-            if (error) {
-                *stop = YES;
-                *success = NO;
-            } else {
-                response.name = key;
-            }
-            
-            if (response) {
-                [propertiesArray addObject:response];
-            }
-        }];
-        return (propertiesArray.count > 0)?propertiesArray:nil;
-    }];
-}
-*/
 
 + (NSValueTransformer *)pathsJSONTransformer
 {
@@ -95,7 +39,7 @@
             [pathObj enumerateKeysAndObjectsUsingBlock:^(NSString *  _Nonnull method, NSDictionary * _Nonnull obj, BOOL * _Nonnull stop) {
                 
                 NSError *error = nil;
-                Path *definition = [MTLJSONAdapter modelOfClass:[Path class]
+                Path *pathCandidateObj = [MTLJSONAdapter modelOfClass:[Path class]
                                              fromJSONDictionary:obj
                                                           error:&error];
                 if (error) {
@@ -103,11 +47,12 @@
                     *success = NO;
                     NSLog(@"Error: %@", error);
                 } else {
-                    definition.method = method;
+                    pathCandidateObj.method = method;
+                    pathCandidateObj.pathString = path;
                 }
                 
-                if (definition) {
-                    [definitionsArray addObject:definition];
+                if (pathCandidateObj) {
+                    [definitionsArray addObject:pathCandidateObj];
                 }
             }];
             
@@ -145,6 +90,5 @@
         return (definitionsArray.count > 0)?definitionsArray:nil;
     }];
 }
-
 
 @end

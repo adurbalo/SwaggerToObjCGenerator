@@ -9,14 +9,15 @@
 #import "BaseModel.h"
 #import "Schema.h"
 
-@interface PathParameter : BaseModel
+@interface PathParameter : Schema
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *placedIn;
 @property (nonatomic) BOOL required;
-@property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSString *format;
 @property (nonatomic, strong) Schema *schema;
 @property (nonatomic) NSArray *enumList;
+
+- (Schema*)currentSchema;
 
 @end

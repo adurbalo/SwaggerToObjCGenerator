@@ -13,6 +13,7 @@
 @interface Path : BaseModel
 
 @property (nonatomic, strong) NSString *method;
+@property (nonatomic, strong) NSString *pathString;
 
 @property (nonatomic, strong) NSArray<NSString *> *tags;
 @property (nonatomic, strong) NSString *summary;
@@ -23,5 +24,12 @@
 @property (nonatomic, strong) NSArray<PathParameter *> *parameters;
 @property (nonatomic, strong) NSArray<Response*> *responses;
 
+- (NSString *)methodName;
+- (NSString *)methodImplementation;
+
+- (NSSet<NSString*> *)customClassesNames;
+
+- (NSArray<PathParameter *> *)queryParameters;
+- (NSArray<PathParameter *> *)bodyParameters;
 
 @end

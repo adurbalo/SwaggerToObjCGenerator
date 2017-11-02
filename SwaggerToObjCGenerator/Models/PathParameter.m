@@ -27,4 +27,14 @@
     return [MTLJSONAdapter dictionaryTransformerWithModelClass:Schema.class];
 }
 
+#pragma mark - Public
+
+- (Schema *)currentSchema
+{
+    if (self.schema) {
+        return self.schema;
+    }
+    return self;
+}
+
 @end

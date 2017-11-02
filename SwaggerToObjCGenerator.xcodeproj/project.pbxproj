@@ -13,6 +13,11 @@
 		6173B8081FA9D02A00FAE8D9 /* PathParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6173B8071FA9D02A00FAE8D9 /* PathParameter.m */; };
 		6173B80B1FA9D89800FAE8D9 /* Response.m in Sources */ = {isa = PBXBuildFile; fileRef = 6173B80A1FA9D89800FAE8D9 /* Response.m */; };
 		6173B80E1FA9D8E400FAE8D9 /* Schema.m in Sources */ = {isa = PBXBuildFile; fileRef = 6173B80D1FA9D8E400FAE8D9 /* Schema.m */; };
+		6179FBCA1FAB33FD005B817C /* Swagger+CodeGen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6179FBC91FAB33FD005B817C /* Swagger+CodeGen.m */; };
+		6179FBD31FAB4223005B817C /* ServiceTemplate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6179FBD01FAB3F5C005B817C /* ServiceTemplate.h */; };
+		6179FBD41FAB4223005B817C /* ServiceTemplate.m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6179FBD11FAB3F5C005B817C /* ServiceTemplate.m */; };
+		6179FBD51FAB4223005B817C /* swagger.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 619365CF1FA8AE4B003B7B0B /* swagger.json */; };
+		6179FBD81FAB49E7005B817C /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 6179FBD71FAB49E7005B817C /* Service.m */; };
 		619365C81FA8AD52003B7B0B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365C71FA8AD52003B7B0B /* main.m */; };
 		619365D31FA8B6CF003B7B0B /* Swagger.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365D21FA8B6CF003B7B0B /* Swagger.m */; };
 		619365D61FA8B7FD003B7B0B /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365D51FA8B7FD003B7B0B /* BaseModel.m */; };
@@ -25,12 +30,15 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		619365C21FA8AD52003B7B0B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = Resources;
+			dstSubfolderSpec = 16;
 			files = (
+				6179FBD31FAB4223005B817C /* ServiceTemplate.h in CopyFiles */,
+				6179FBD41FAB4223005B817C /* ServiceTemplate.m in CopyFiles */,
+				6179FBD51FAB4223005B817C /* swagger.json in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -46,6 +54,12 @@
 		6173B80A1FA9D89800FAE8D9 /* Response.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Response.m; sourceTree = "<group>"; };
 		6173B80C1FA9D8E400FAE8D9 /* Schema.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Schema.h; sourceTree = "<group>"; };
 		6173B80D1FA9D8E400FAE8D9 /* Schema.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Schema.m; sourceTree = "<group>"; };
+		6179FBC81FAB33FD005B817C /* Swagger+CodeGen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Swagger+CodeGen.h"; sourceTree = "<group>"; };
+		6179FBC91FAB33FD005B817C /* Swagger+CodeGen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Swagger+CodeGen.m"; sourceTree = "<group>"; };
+		6179FBD01FAB3F5C005B817C /* ServiceTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceTemplate.h; sourceTree = "<group>"; };
+		6179FBD11FAB3F5C005B817C /* ServiceTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceTemplate.m; sourceTree = "<group>"; };
+		6179FBD61FAB49E7005B817C /* Service.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Service.h; sourceTree = "<group>"; };
+		6179FBD71FAB49E7005B817C /* Service.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Service.m; sourceTree = "<group>"; };
 		619365C41FA8AD52003B7B0B /* SwaggerToObjCGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwaggerToObjCGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		619365C71FA8AD52003B7B0B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		619365CF1FA8AE4B003B7B0B /* swagger.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = swagger.json; sourceTree = "<group>"; };
@@ -86,6 +100,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		6179FBCC1FAB3EB8005B817C /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				6179FBD01FAB3F5C005B817C /* ServiceTemplate.h */,
+				6179FBD11FAB3F5C005B817C /* ServiceTemplate.m */,
+			);
+			path = Templates;
+			sourceTree = "<group>";
+		};
 		619365BB1FA8AD52003B7B0B = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +140,7 @@
 		619365CE1FA8AE4B003B7B0B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6179FBCC1FAB3EB8005B817C /* Templates */,
 				619365CF1FA8AE4B003B7B0B /* swagger.json */,
 			);
 			path = Resources;
@@ -129,6 +153,10 @@
 				619365D51FA8B7FD003B7B0B /* BaseModel.m */,
 				619365D11FA8B6CF003B7B0B /* Swagger.h */,
 				619365D21FA8B6CF003B7B0B /* Swagger.m */,
+				6179FBC81FAB33FD005B817C /* Swagger+CodeGen.h */,
+				6179FBC91FAB33FD005B817C /* Swagger+CodeGen.m */,
+				6179FBD61FAB49E7005B817C /* Service.h */,
+				6179FBD71FAB49E7005B817C /* Service.m */,
 				619365D71FA8B83D003B7B0B /* Info.h */,
 				619365D81FA8B83D003B7B0B /* Info.m */,
 				619365DA1FA8B9B0003B7B0B /* Contact.h */,
@@ -256,8 +284,10 @@
 			files = (
 				6173B8081FA9D02A00FAE8D9 /* PathParameter.m in Sources */,
 				619365D61FA8B7FD003B7B0B /* BaseModel.m in Sources */,
+				6179FBCA1FAB33FD005B817C /* Swagger+CodeGen.m in Sources */,
 				61124E4D1FA9F72B0082BDA5 /* Property.m in Sources */,
 				61124E4A1FA9F6690082BDA5 /* Definition.m in Sources */,
+				6179FBD81FAB49E7005B817C /* Service.m in Sources */,
 				619365D91FA8B83D003B7B0B /* Info.m in Sources */,
 				619365DC1FA8B9B0003B7B0B /* Contact.m in Sources */,
 				619365DF1FA8BA2B003B7B0B /* License.m in Sources */,
