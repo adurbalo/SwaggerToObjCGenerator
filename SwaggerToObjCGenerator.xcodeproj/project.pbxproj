@@ -14,10 +14,10 @@
 		6173B80B1FA9D89800FAE8D9 /* Response.m in Sources */ = {isa = PBXBuildFile; fileRef = 6173B80A1FA9D89800FAE8D9 /* Response.m */; };
 		6173B80E1FA9D8E400FAE8D9 /* Schema.m in Sources */ = {isa = PBXBuildFile; fileRef = 6173B80D1FA9D8E400FAE8D9 /* Schema.m */; };
 		6179FBCA1FAB33FD005B817C /* Swagger+CodeGen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6179FBC91FAB33FD005B817C /* Swagger+CodeGen.m */; };
-		6179FBD31FAB4223005B817C /* ServiceTemplate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6179FBD01FAB3F5C005B817C /* ServiceTemplate.h */; };
-		6179FBD41FAB4223005B817C /* ServiceTemplate.m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6179FBD11FAB3F5C005B817C /* ServiceTemplate.m */; };
-		6179FBD51FAB4223005B817C /* swagger.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 619365CF1FA8AE4B003B7B0B /* swagger.json */; };
 		6179FBD81FAB49E7005B817C /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 6179FBD71FAB49E7005B817C /* Service.m */; };
+		6179FBD91FAB9F8E005B817C /* ServiceTemplate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6179FBD01FAB3F5C005B817C /* ServiceTemplate.h */; };
+		6179FBDA1FAB9F8E005B817C /* ServiceTemplate.m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6179FBD11FAB3F5C005B817C /* ServiceTemplate.m */; };
+		6179FBDB1FAB9F8E005B817C /* swagger.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 619365CF1FA8AE4B003B7B0B /* swagger.json */; };
 		619365C81FA8AD52003B7B0B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365C71FA8AD52003B7B0B /* main.m */; };
 		619365D31FA8B6CF003B7B0B /* Swagger.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365D21FA8B6CF003B7B0B /* Swagger.m */; };
 		619365D61FA8B7FD003B7B0B /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365D51FA8B7FD003B7B0B /* BaseModel.m */; };
@@ -34,9 +34,9 @@
 			dstPath = Resources;
 			dstSubfolderSpec = 16;
 			files = (
-				6179FBD31FAB4223005B817C /* ServiceTemplate.h in CopyFiles */,
-				6179FBD41FAB4223005B817C /* ServiceTemplate.m in CopyFiles */,
-				6179FBD51FAB4223005B817C /* swagger.json in CopyFiles */,
+				6179FBD91FAB9F8E005B817C /* ServiceTemplate.h in CopyFiles */,
+				6179FBDA1FAB9F8E005B817C /* ServiceTemplate.m in CopyFiles */,
+				6179FBDB1FAB9F8E005B817C /* swagger.json in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
