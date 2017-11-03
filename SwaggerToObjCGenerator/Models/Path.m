@@ -7,6 +7,7 @@
 //
 
 #import "Path.h"
+#import "NSString+Helper.h"
 
 @interface Path ()
  
@@ -132,6 +133,23 @@
     return bodyParameters;
 }
 
+- (NSString *)apiConstVariableName
+{
+    NSArray *components = [self.pathString componentsSeparatedByString:@"/"];
+    if (components.count == 0) {
+        components = @[self.pathString];
+    }
+    
+    NSMutableString *varNameString = [[NSMutableString alloc] initWithString:@"k"];
+    [components enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *oneComp = [obj stringByReplacingOccurrencesOfString:@"{" withString:@""];
+        oneComp = [obj stringByReplacingOccurrencesOfString:@"}" withString:@""];
+        [varNameString appendString:[obj capitalizeFirstCharacter]];
+    }];
+    [varNameString appendString:@"APIPath"];
+    return varNameString;
+}
+
 - (NSString *)methodName
 {
     NSArray *components = [self.pathString componentsSeparatedByString:@"/"];
@@ -141,7 +159,7 @@
     
     NSMutableString *methodTitleString = [[NSMutableString alloc] initWithFormat:@"- (NSURLSessionTask *)%@", self.method];
     [components enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [methodTitleString appendString:[obj capitalizedString]];
+        [methodTitleString appendString:[obj capitalizeFirstCharacter]];
     }];
     
     BOOL parametersExists = NO;
@@ -153,8 +171,8 @@
     [self.parameters enumerateObjectsUsingBlock:^(PathParameter * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
         NSString *name = obj.name;
-        if ((name.length > 1) && (idx == 0)) {
-            name = [NSString stringWithFormat:@"%@%@", [[name substringToIndex:1] uppercaseString], [name substringFromIndex:1]];
+        if (idx == 0) {
+            name = [name capitalizeFirstCharacter];
         }
         [methodTitleString appendFormat:@"%@:(%@)%@ ", name, [[obj currentSchema] objC_fullTypeName], obj.name];
     }];
@@ -176,7 +194,7 @@
     [methodImplementationString appendFormat:@"%@\n{\n", methodName];
     
     // path parameters
-    [methodImplementationString appendFormat:@"\tNSString *thePath = @\"%@\";\n", self.pathString];
+    [methodImplementationString appendFormat:@"\tNSString *thePath = %@;\n", [self apiConstVariableName]];
     
     //Query params
     NSArray<PathParameter*> *queryParameters = [self queryParameters];
@@ -184,7 +202,7 @@
     if (queryParameters.count > 0) {
         queryDictionaryInit = @"[[NSMutableDictionary alloc] init]";
     }
-    [methodImplementationString appendFormat:@"\tNSMutableDictionary *queryParmeters = %@;\n", queryDictionaryInit];
+    [methodImplementationString appendFormat:@"\n\tNSMutableDictionary *queryParmeters = %@;\n", queryDictionaryInit];
     [queryParameters enumerateObjectsUsingBlock:^(PathParameter * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [methodImplementationString appendFormat:@"\tqueryParmeters[@\"%@\"] = %@;\n", obj.name, obj.name];
     }];
@@ -195,10 +213,20 @@
     if (bodyParameters.count > 0) {
         bodyDictionaryInit = @"[[NSMutableDictionary alloc] init]";
     }
-    [methodImplementationString appendFormat:@"\tNSMutableDictionary *bodyParmeters = %@;\n", bodyDictionaryInit];
+    [methodImplementationString appendFormat:@"\n\tNSMutableDictionary *bodyParmeters = %@;\n", bodyDictionaryInit];
     [bodyParameters enumerateObjectsUsingBlock:^(PathParameter * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [methodImplementationString appendFormat:@"\tbodyParmeters[@\"%@\"] = %@;\n", obj.name, obj.name];
     }];
+    
+    //Return
+    NSString *outputClass = nil;
+    if (outputClass){
+        outputClass = [NSString stringWithFormat:@"[%@ class]", outputClass];
+    }
+    else{
+        outputClass = @"Nil";
+    }
+    //[methodImplementationString appendFormat:@"\treturn [self.serverAPI makeRequest:WADLRequestMethod%@ resource:self forURLPath:thePath queryParameters:queryParmeters bodyObject:bodyObject HTTPHeaderParameters:headParameters outputClass:%@ isInvoked:NO responseBlock:responseBlock];\n}\n\n", oneService.method, outputClass];
     
     [methodImplementationString appendString:@"\n}\n"];
     return methodImplementationString;

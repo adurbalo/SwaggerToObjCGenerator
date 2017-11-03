@@ -2,11 +2,11 @@
 //  <service_class_name>.m
 //  
 
-#import "<service_class_name>.h"
-#import "APIConsts.h"
+#import "<class_name_marker>.h"
+<import_marker>
 
-@implementation <service_class_name>
+@implementation <class_name_marker>
 
-<methods_implementation>
+<class_implementation_marker>
 
 @end

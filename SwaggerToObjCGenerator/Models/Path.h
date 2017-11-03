@@ -24,6 +24,8 @@
 @property (nonatomic, strong) NSArray<PathParameter *> *parameters;
 @property (nonatomic, strong) NSArray<Response*> *responses;
 
+- (NSString *)apiConstVariableName;
+
 - (NSString *)methodName;
 - (NSString *)methodImplementation;
 

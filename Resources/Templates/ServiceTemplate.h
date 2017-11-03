@@ -1,14 +1,9 @@
-//
-//  <service_class_name>.h
-//
 
 #import <Foundation/Foundation.h>
-#import "WADLAbstractServerAPI.h"
-#import "WADLServicesResource.h"
-<import_xsd>
+<import_marker>
 
-@interface <service_class_name> : WADLServicesResource
+@interface <class_name_marker> : <superclass_name_marker>
 
-<methods_declaration>
+<class_declaration_marker>
 
 @end

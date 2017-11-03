@@ -25,6 +25,8 @@ int main(int argc, const char * argv[]) {
         */
         NSString *filePath = @"/Users/andreydurbalo/Downloads/tux_m_swagger.json";
 
+        filePath = @"/Users/andreydurbalo/Downloads/rental_swagger.json";
+        
         NSBundle *mainBundle = [NSBundle mainBundle];
         filePath = [mainBundle pathForResource:@"Resources/swagger" ofType:@"json"];
         

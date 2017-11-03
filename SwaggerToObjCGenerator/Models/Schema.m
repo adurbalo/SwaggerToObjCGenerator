@@ -40,6 +40,8 @@
         objCNameClass = @"NSString";
     } else if ([type isEqualToString:@"array"]) {
         objCNameClass = @"NSArray";
+    } else if ([type isEqualToString:@"object"]) {
+        objCNameClass = @"NSDictionary";
     } else {
 //        NSLog(@"Unimplemented fro type: %@", type);
         objCNameClass = type;
