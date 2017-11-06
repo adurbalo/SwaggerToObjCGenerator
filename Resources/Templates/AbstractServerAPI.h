@@ -2,25 +2,23 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol WADLServerAPIInheritor <NSObject>
-- (WADLRequestTask)makeRequest:(WADLRequestMethod)method
-                      resource:(WADLServicesResource*)resource
-                    forURLPath:(NSString *)urlPath
-               queryParameters:(NSDictionary*)queryParameters
-                    bodyObject:(NSDictionary*)parameters
-          HTTPHeaderParameters:(NSDictionary*)HTTPHeaderParameters
-                   outputClass:(Class)outputClass
-                     isInvoked:(BOOL)isInvoked
-                 responseBlock:(void (^)(id, NSError *))responseBlock;
+@protocol ServerAPIInheritor <NSObject>
+
+- (NSURLSessionTask *)makeRequestWithHTTPMethod:(NSString *)httpMethod
+                                       resource:(ParentServicesResource *)resource
+                                     forURLPath:(NSString *)urlPath
+                                     parameters:(NSDictionary<NSString*, id> *)parameters
+                                    outputClass:(Class)outputClass
+                                  responseBlock:(void (^)(id, NSError *))responseBlock;
 
 @end
 
-<services_classes_declaration>
+<class_derective_declaration_marker>
 
 @interface <class_name_marker> : NSObject
 {
-@protected
-<services_ivars>
+//@protected
+//<services_ivars>
 }
 
 + (instancetype)sharedServerAPI;

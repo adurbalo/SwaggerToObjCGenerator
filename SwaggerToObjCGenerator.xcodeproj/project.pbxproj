@@ -13,8 +13,8 @@
 		6139EC711FAC9B5700248C4F /* NSString+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6139EC701FAC9B5700248C4F /* NSString+Helper.m */; };
 		6139EC7B1FACB0C200248C4F /* ParentServicesResource.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6139EC781FACAE2800248C4F /* ParentServicesResource.h */; };
 		6139EC7C1FACB0C200248C4F /* ParentServicesResource.m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6139EC791FACAE2800248C4F /* ParentServicesResource.m */; };
-		6139EC7D1FACB0C200248C4F /* ServiceTemplate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6139EC751FACAB0100248C4F /* ServiceTemplate.h */; };
-		6139EC7E1FACB0C200248C4F /* ServiceTemplate.m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6139EC731FACAB0100248C4F /* ServiceTemplate.m */; };
+		6139EC7D1FACB0C200248C4F /* ObjectiveCClassTemplate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6139EC751FACAB0100248C4F /* ObjectiveCClassTemplate.h */; };
+		6139EC7E1FACB0C200248C4F /* ObjectiveCClassTemplate.m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6139EC731FACAB0100248C4F /* ObjectiveCClassTemplate.m */; };
 		6139EC7F1FACB0C200248C4F /* APIConsts.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6190FE321FAC81AE0027E586 /* APIConsts.h */; };
 		6139EC831FACCDA600248C4F /* AbstractServerAPI.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6139EC811FACC41C00248C4F /* AbstractServerAPI.h */; };
 		6139EC841FACCDA600248C4F /* AbstractServerAPI.m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6139EC801FACC41B00248C4F /* AbstractServerAPI.m */; };
@@ -44,8 +44,8 @@
 				6139EC841FACCDA600248C4F /* AbstractServerAPI.m in CopyFiles */,
 				6139EC7B1FACB0C200248C4F /* ParentServicesResource.h in CopyFiles */,
 				6139EC7C1FACB0C200248C4F /* ParentServicesResource.m in CopyFiles */,
-				6139EC7D1FACB0C200248C4F /* ServiceTemplate.h in CopyFiles */,
-				6139EC7E1FACB0C200248C4F /* ServiceTemplate.m in CopyFiles */,
+				6139EC7D1FACB0C200248C4F /* ObjectiveCClassTemplate.h in CopyFiles */,
+				6139EC7E1FACB0C200248C4F /* ObjectiveCClassTemplate.m in CopyFiles */,
 				6139EC7F1FACB0C200248C4F /* APIConsts.h in CopyFiles */,
 				6179FBDB1FAB9F8E005B817C /* swagger.json in CopyFiles */,
 			);
@@ -61,12 +61,13 @@
 		61124E4C1FA9F72B0082BDA5 /* Property.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Property.m; sourceTree = "<group>"; };
 		6139EC6F1FAC9B5700248C4F /* NSString+Helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Helper.h"; sourceTree = "<group>"; };
 		6139EC701FAC9B5700248C4F /* NSString+Helper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Helper.m"; sourceTree = "<group>"; };
-		6139EC731FACAB0100248C4F /* ServiceTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceTemplate.m; sourceTree = "<group>"; };
-		6139EC751FACAB0100248C4F /* ServiceTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceTemplate.h; sourceTree = "<group>"; };
+		6139EC731FACAB0100248C4F /* ObjectiveCClassTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectiveCClassTemplate.m; sourceTree = "<group>"; };
+		6139EC751FACAB0100248C4F /* ObjectiveCClassTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectiveCClassTemplate.h; sourceTree = "<group>"; };
 		6139EC781FACAE2800248C4F /* ParentServicesResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParentServicesResource.h; sourceTree = "<group>"; };
 		6139EC791FACAE2800248C4F /* ParentServicesResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParentServicesResource.m; sourceTree = "<group>"; };
 		6139EC801FACC41B00248C4F /* AbstractServerAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractServerAPI.m; sourceTree = "<group>"; };
 		6139EC811FACC41C00248C4F /* AbstractServerAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractServerAPI.h; sourceTree = "<group>"; };
+		613FA3E31FB0B6DB00913983 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		6173B8061FA9D02A00FAE8D9 /* PathParameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PathParameter.h; sourceTree = "<group>"; };
 		6173B8071FA9D02A00FAE8D9 /* PathParameter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PathParameter.m; sourceTree = "<group>"; };
 		6173B8091FA9D89800FAE8D9 /* Response.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Response.h; sourceTree = "<group>"; };
@@ -125,8 +126,8 @@
 				6139EC801FACC41B00248C4F /* AbstractServerAPI.m */,
 				6139EC781FACAE2800248C4F /* ParentServicesResource.h */,
 				6139EC791FACAE2800248C4F /* ParentServicesResource.m */,
-				6139EC751FACAB0100248C4F /* ServiceTemplate.h */,
-				6139EC731FACAB0100248C4F /* ServiceTemplate.m */,
+				6139EC751FACAB0100248C4F /* ObjectiveCClassTemplate.h */,
+				6139EC731FACAB0100248C4F /* ObjectiveCClassTemplate.m */,
 				6190FE321FAC81AE0027E586 /* APIConsts.h */,
 			);
 			path = Templates;
@@ -165,6 +166,7 @@
 		619365CE1FA8AE4B003B7B0B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				613FA3E31FB0B6DB00913983 /* Constants.h */,
 				6179FBCC1FAB3EB8005B817C /* Templates */,
 				619365CF1FA8AE4B003B7B0B /* swagger.json */,
 			);

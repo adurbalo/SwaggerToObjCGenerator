@@ -1,18 +1,15 @@
-//  <parent_service_resource>.m
-//  wadl2objc
-//
 
 #import "<class_name_marker>.h"
 
 @interface <class_name_marker> ()
 
-@property (nonatomic, strong) WADLAbstractServerAPI<WADLServerAPIInheritor> *serverAPI;
+@property (nonatomic, strong) <abstract_server_class_name><ServerAPIInheritor> *serverAPI;
 
 @end
 
 @implementation <class_name_marker>
 
-- (instancetype)initWithWADLServerAPI:(WADLAbstractServerAPI<WADLServerAPIInheritor> *)serverAPI
+- (instancetype)initWithServerAPI:(<abstract_server_class_name><ServerAPIInheritor> *)serverAPI
 {
     self = [super init];
     if (self) {

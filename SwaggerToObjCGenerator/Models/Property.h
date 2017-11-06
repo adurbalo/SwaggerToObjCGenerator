@@ -7,13 +7,12 @@
 //
 
 #import "BaseModel.h"
+#import "Schema.h"
 
-@interface Property : BaseModel
+@interface Property : Schema
 
 @property(nonatomic, strong) NSString *name;
-@property(nonatomic, strong) NSString *type;
 @property(nonatomic, strong) NSString *format;
 @property(nonatomic, strong) NSArray<NSString *> *enumList;
-@property(nonatomic, strong) NSString *reference;
 
 @end

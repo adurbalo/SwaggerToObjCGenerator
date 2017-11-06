@@ -16,4 +16,10 @@
 @property (nonatomic, strong) NSArray<NSString *> *required;
 @property (nonatomic, strong) NSArray<Property *> *properties;
 
+- (NSString *)machineDeclarationFromTemplate:(NSString*)templateString;
+- (NSString *)machineImplementationFromTemplate:(NSString*)templateString;
+
+- (NSString *)humanDeclarationFromTemplate:(NSString*)templateString;
+- (NSString *)humanImplementationFromTemplate:(NSString*)templateString;
+
 @end

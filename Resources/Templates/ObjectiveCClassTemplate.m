@@ -1,6 +1,3 @@
-//
-//  <service_class_name>.m
-//  
 
 #import "<class_name_marker>.h"
 <import_marker>

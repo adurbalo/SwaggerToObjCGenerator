@@ -8,6 +8,7 @@
 
 #import "Path.h"
 #import "NSString+Helper.h"
+#import "Constants.h"
 
 @interface Path ()
  
@@ -73,12 +74,19 @@
     return response;
 }
 
-- (BOOL)isCustomClassName:(NSString*)className;
+- (NSArray<NSString *> *)availableParametersTypes
 {
-    if (!className) {
-        return NO;
-    }
-    return ![className hasPrefix:@"NS"] && ![className isEqualToString:@"id"];
+    NSArray<NSString *> *types = [self.parameters valueForKeyPath:@"@distinctUnionOfObjects.placedIn"];
+    return types;
+}
+
+- (NSArray<PathParameter *> *)parametersByPlacedIn:(NSString *)placedIn
+{
+    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(PathParameter * _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+        return [evaluatedObject.placedIn isEqualToString:placedIn];
+    }];
+    NSArray<PathParameter*> *queryParameters = [self.parameters filteredArrayUsingPredicate:predicate];
+    return queryParameters;
 }
 
 #pragma mark - Public
@@ -105,32 +113,12 @@
     
     NSMutableSet<NSString *> *filteredSet = [NSMutableSet new];
     [names enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, BOOL * _Nonnull stop) {
-        if ([self isCustomClassName:obj]) {
+        if (isCustomClassType(obj)) {
             [filteredSet addObject:obj];
         }
     }];
     
     return filteredSet;
-}
-
-- (NSArray<PathParameter *> *)queryParameters
-{
-    NSString *placedIn = @"query";
-    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(PathParameter * _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-        return [evaluatedObject.placedIn isEqualToString:placedIn];
-    }];
-    NSArray<PathParameter*> *queryParameters = [self.parameters filteredArrayUsingPredicate:predicate];
-    return queryParameters;
-}
-
--(NSArray<PathParameter *> *)bodyParameters
-{
-    NSString *placedIn = @"body";
-    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(PathParameter * _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-        return [evaluatedObject.placedIn isEqualToString:placedIn];
-    }];
-    NSArray<PathParameter*> *bodyParameters = [self.parameters filteredArrayUsingPredicate:predicate];
-    return bodyParameters;
 }
 
 - (NSString *)apiConstVariableName
@@ -143,8 +131,8 @@
     NSMutableString *varNameString = [[NSMutableString alloc] initWithString:@"k"];
     [components enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSString *oneComp = [obj stringByReplacingOccurrencesOfString:@"{" withString:@""];
-        oneComp = [obj stringByReplacingOccurrencesOfString:@"}" withString:@""];
-        [varNameString appendString:[obj capitalizeFirstCharacter]];
+        oneComp = [oneComp stringByReplacingOccurrencesOfString:@"}" withString:@""];
+        [varNameString appendString:[oneComp capitalizeFirstCharacter]];
     }];
     [varNameString appendString:@"APIPath"];
     return varNameString;
@@ -192,31 +180,33 @@
     NSMutableString *methodImplementationString = [NSMutableString new];
     NSString *methodName = [self methodName];
     [methodImplementationString appendFormat:@"%@\n{\n", methodName];
+    [methodImplementationString appendFormat:@"\tNSString *thePath = %@;", [self apiConstVariableName]];
     
-    // path parameters
-    [methodImplementationString appendFormat:@"\tNSString *thePath = %@;\n", [self apiConstVariableName]];
-    
-    //Query params
-    NSArray<PathParameter*> *queryParameters = [self queryParameters];
-    NSString *queryDictionaryInit = @"nil";
-    if (queryParameters.count > 0) {
-        queryDictionaryInit = @"[[NSMutableDictionary alloc] init]";
-    }
-    [methodImplementationString appendFormat:@"\n\tNSMutableDictionary *queryParmeters = %@;\n", queryDictionaryInit];
-    [queryParameters enumerateObjectsUsingBlock:^(PathParameter * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [methodImplementationString appendFormat:@"\tqueryParmeters[@\"%@\"] = %@;\n", obj.name, obj.name];
+    NSMutableArray<NSString *> *parameters = [[self availableParametersTypes] mutableCopy];
+    NSString *pathParameterName = @"path";
+    [parameters enumerateObjectsUsingBlock:^(NSString * _Nonnull parameterType, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        [[self parametersByPlacedIn:parameterType] enumerateObjectsUsingBlock:^(PathParameter * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if ([parameterType isEqualToString:pathParameterName]) {
+                [methodImplementationString appendFormat:@"\n\tthePath = [thePath stringByReplacingOccurrencesOfString:@\"{%@}\" withString:%@];", obj.name, obj.name];
+            } else {
+                NSString *variableName = [NSString stringWithFormat:@"%@Parmeters", parameterType];
+                [methodImplementationString appendFormat:@"\n\tNSMutableDictionary *%@ = [[NSMutableDictionary alloc] init];", variableName];
+                [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = %@;", variableName, obj.name, obj.name];
+            }
+        }];
     }];
     
-    //Body params
-    NSArray<PathParameter*> *bodyParameters = [self bodyParameters];
-    NSString *bodyDictionaryInit = @"nil";
-    if (bodyParameters.count > 0) {
-        bodyDictionaryInit = @"[[NSMutableDictionary alloc] init]";
+    [parameters removeObject:pathParameterName];
+    if ([parameters count] == 0) {
+        [methodImplementationString appendString:@"\n\tNSMutableDictionary<NSString*, id> *requestParmeters = nil;"];
+    } else {
+        [methodImplementationString appendString:@"\n\tNSMutableDictionary<NSString*, id> *requestParmeters = [[NSMutableDictionary alloc] init];"];
+        [parameters enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [methodImplementationString appendFormat:@"\n\trequestParmeters[@\"%@\"] = %@Parmeters;", obj, obj];
+        }];
     }
-    [methodImplementationString appendFormat:@"\n\tNSMutableDictionary *bodyParmeters = %@;\n", bodyDictionaryInit];
-    [bodyParameters enumerateObjectsUsingBlock:^(PathParameter * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [methodImplementationString appendFormat:@"\tbodyParmeters[@\"%@\"] = %@;\n", obj.name, obj.name];
-    }];
     
     //Return
     NSString *outputClass = nil;
@@ -226,8 +216,7 @@
     else{
         outputClass = @"Nil";
     }
-    //[methodImplementationString appendFormat:@"\treturn [self.serverAPI makeRequest:WADLRequestMethod%@ resource:self forURLPath:thePath queryParameters:queryParmeters bodyObject:bodyObject HTTPHeaderParameters:headParameters outputClass:%@ isInvoked:NO responseBlock:responseBlock];\n}\n\n", oneService.method, outputClass];
-    
+    [methodImplementationString appendFormat:@"\n\treturn [self.serverAPI makeRequestWithHTTPMethod:@\"%@\" resource:self forURLPath:thePath parameters:requestParmeters outputClass:%@ responseBlock:responseBlock];", self.method, outputClass];
     [methodImplementationString appendString:@"\n}\n"];
     return methodImplementationString;
 }

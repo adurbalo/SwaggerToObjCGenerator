@@ -7,6 +7,7 @@
 //
 
 #import "Schema.h"
+#import "Constants.h"
 
 @implementation Schema
 
@@ -30,25 +31,6 @@
     }];
 }
 
-#pragma mark - Internal
-
-- (NSString*)toObjCClassNameFromType:(NSString*)type
-{
-    NSString *objCNameClass = nil;
-    
-    if ([type isEqualToString:@"string"]) {
-        objCNameClass = @"NSString";
-    } else if ([type isEqualToString:@"array"]) {
-        objCNameClass = @"NSArray";
-    } else if ([type isEqualToString:@"object"]) {
-        objCNameClass = @"NSDictionary";
-    } else {
-//        NSLog(@"Unimplemented fro type: %@", type);
-        objCNameClass = type;
-    }
-    return objCNameClass;
-}
-
 #pragma mark - Public
 
 - (NSString *)objC_mainTypeName
@@ -56,7 +38,7 @@
     if (self.reference) {
         return [self.reference lastPathComponent];
     }
-    return [self toObjCClassNameFromType:self.type];
+    return objC_classNameFromSwaggerType(self.type);
 }
 
 - (NSString *)objC_genericTypeName
@@ -64,7 +46,7 @@
     if (!self.itemsType) {
         return nil;
     }
-    return [self toObjCClassNameFromType:[self.itemsType lastPathComponent]];
+    return objC_classNameFromSwaggerType([self.itemsType lastPathComponent]);
 }
 
 -(NSString *)objC_fullTypeName

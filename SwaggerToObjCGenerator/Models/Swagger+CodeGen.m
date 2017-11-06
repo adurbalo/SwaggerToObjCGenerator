@@ -8,12 +8,7 @@
 
 #import "Swagger+CodeGen.h"
 #import "NSString+Helper.h"
-
-#define CLASS_IMPORT_MARKER @"<import_marker>"
-#define CLASS_NAME_MARKER @"<class_name_marker>"
-#define SUPERCLASS_NAME_MARKER @"<superclass_name_marker>"
-#define CLASS_DECLARATION_MARKER @"<class_declaration_marker>"
-#define CLASS_IMPLEMENTATION_MARKER @"<class_implementation_marker>"
+#import "Constants.h"
 
 @implementation Swagger (CodeGen)
 
@@ -36,9 +31,22 @@
 {
     [self generateParentServiceResource];
     [self generateServicesClasses];
+    [self generateDefinitionsClasses];
 }
 
 #pragma mark - Preparation
+
+- (void)createDirectoryForPathIfNeeded:(NSString*)path
+{
+    BOOL isDirectory = NO;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDirectory]) {
+        NSError* error;
+        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error];
+        if (error) {
+            NSLog(@"Error: %@", error);
+        }
+    }
+}
 
 - (NSDictionary<NSString*, NSArray<Path*> *> *)splitedPathsByServices
 {
@@ -89,7 +97,12 @@
     NSDictionary<NSString*, NSArray<Path*> *> *pathsByResources = [self splitedPathsByServices];
     
     NSMutableString *apiFileContent = [NSMutableString new];
+    
     NSMutableString *abstractServerContent_H_fileContent = [NSMutableString new];
+    NSMutableString *abstractServerClassDerectiveDeclaration_H_Content = [NSMutableString new];
+    
+    NSMutableString *abstractServerContent_M_fileContent = [NSMutableString new];
+    NSMutableString *abstractServerImports_M_fileContent = [NSMutableString new];
     
     [pathsByResources enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull resourceName, NSArray<Path *> * _Nonnull obj, BOOL * _Nonnull stop) {
         
@@ -98,10 +111,15 @@
         
         [apiFileContent setString:[NSString stringWithFormat:@"%@\n%@", apiFileContent, [self APIFileCodeForResourceName:resourceName withPaths:obj]]];
         [abstractServerContent_H_fileContent setString:[NSString stringWithFormat:@"%@ %@", abstractServerContent_H_fileContent, [self abstractServerDefinitionForResourceName:resourceName andResourceClassName:resorceClassName]]];
+        [abstractServerClassDerectiveDeclaration_H_Content setString:[NSString stringWithFormat:@"%@@class %@;\n", abstractServerClassDerectiveDeclaration_H_Content,resorceClassName]];
+        
+        [abstractServerContent_M_fileContent setString:[NSString stringWithFormat:@"%@ %@", abstractServerContent_M_fileContent, [self abstractServerImplementationForResourceName:resourceName andResourceClassName:resorceClassName]]];
+        [abstractServerImports_M_fileContent setString:[NSString stringWithFormat:@"%@#import \"%@.h\"\n", abstractServerImports_M_fileContent, resorceClassName]];
     }];
     
     [self generateAPIConstantsFileWithContent:apiFileContent];
-    [self generateAbstractServerFile_H_WithContent:abstractServerContent_H_fileContent];
+    [self generateAbstractServerFile_H_WithContent:abstractServerContent_H_fileContent withClassesDerectiveDeclaration:abstractServerClassDerectiveDeclaration_H_Content];
+    [self generateAbstractServerFile_M_WithContent:abstractServerContent_M_fileContent withImports:abstractServerImports_M_fileContent];
 }
 
 - (NSString *)APIFileCodeForResourceName:(NSString*)serviceName withPaths:(NSArray<Path*> *)paths
@@ -120,6 +138,13 @@
     return [NSString stringWithFormat:@"\n%@\n%@\n", propertyDefinition, methodDefinition];
 }
 
+- (NSString *)abstractServerImplementationForResourceName:(NSString*)resourceName andResourceClassName:(NSString*)resourceClassName
+{
+    NSString *classMethodImplementation = [NSString stringWithFormat:@"+ (%@ *)%@\n{\n\treturn [[self sharedServerAPI] %@];\n}\n", resourceClassName, resourceName, resourceName];
+    NSString *instanseMethodImplementation = [NSString stringWithFormat:@"- (%@ *)%@\n{\n\tif(!_%@) _%@ = [[%@ alloc] initWithServerAPI:self.child];\n\treturn _%@\n}", resourceClassName, resourceName, resourceName, resourceName, resourceClassName, resourceName];
+    return [NSString stringWithFormat:@"\n%@\n%@\n", classMethodImplementation, instanseMethodImplementation];
+}
+
 #pragma mark - Generation
 
 - (void)generateParentServiceResource
@@ -129,6 +154,7 @@
                                                                              encoding:NSUTF8StringEncoding
                                                                                 error:nil];
     [hContentOfFile replaceOccurrencesOfString:CLASS_NAME_MARKER withString:[self parentServiceRecourseName] options:0 range:NSMakeRange(0, hContentOfFile.length)];
+    [hContentOfFile replaceOccurrencesOfString:ABSTRACT_SERVER_API_NAME_MARKER withString:[self abstractServerName] options:0 range:NSMakeRange(0, hContentOfFile.length)];
     
     NSError *hError = nil;
     [hContentOfFile writeToFile:fullFilePathH atomically:YES encoding:NSUTF8StringEncoding error:&hError];
@@ -141,6 +167,7 @@
                                                                              encoding:NSUTF8StringEncoding
                                                                                 error:nil];
     [mContentOfFile replaceOccurrencesOfString:CLASS_NAME_MARKER withString:[self parentServiceRecourseName] options:0 range:NSMakeRange(0, hContentOfFile.length)];
+    [mContentOfFile replaceOccurrencesOfString:ABSTRACT_SERVER_API_NAME_MARKER withString:[self abstractServerName] options:0 range:NSMakeRange(0, hContentOfFile.length)];
     
     NSError *mError = nil;
     [mContentOfFile writeToFile:fullFilePathM atomically:YES encoding:NSUTF8StringEncoding error:&mError];
@@ -165,15 +192,34 @@
     };
 }
 
-- (void)generateAbstractServerFile_H_WithContent:(NSString*)content
+- (void)generateAbstractServerFile_H_WithContent:(NSString*)content withClassesDerectiveDeclaration:(NSString*)classesDeclaration
 {
     NSString *fullFilePath = [[self.destinationPath stringByAppendingPathComponent:[self abstractServerName]] stringByAppendingString:@".h"];
     
     NSMutableString *hContentOfFile = [[NSMutableString alloc] initWithContentsOfFile:[self.resourcesPath stringByAppendingPathComponent:@"AbstractServerAPI.h"]
                                                                              encoding:NSUTF8StringEncoding
                                                                                 error:nil];
-    //Generate Class name
+    [hContentOfFile replaceOccurrencesOfString:CLASS_NAME_MARKER withString:[self abstractServerName] options:0 range:NSMakeRange(0, hContentOfFile.length)];
     [hContentOfFile replaceOccurrencesOfString:CLASS_DECLARATION_MARKER withString:content options:0 range:NSMakeRange(0, hContentOfFile.length)];
+    [hContentOfFile replaceOccurrencesOfString:CLASS_DERECTIVE_DECLARATION_MARKER withString:classesDeclaration options:0 range:NSMakeRange(0, hContentOfFile.length)];
+    
+    NSError *error = nil;
+    [hContentOfFile writeToFile:fullFilePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    if (error) {
+        NSLog(@"Error: %@", error);
+    };
+}
+
+- (void)generateAbstractServerFile_M_WithContent:(NSString*)content withImports:(NSString*)importsContent
+{
+    NSString *fullFilePath = [[self.destinationPath stringByAppendingPathComponent:[self abstractServerName]] stringByAppendingString:@".m"];
+    
+    NSMutableString *hContentOfFile = [[NSMutableString alloc] initWithContentsOfFile:[self.resourcesPath stringByAppendingPathComponent:@"AbstractServerAPI.m"]
+                                                                             encoding:NSUTF8StringEncoding
+                                                                                error:nil];
+    [hContentOfFile replaceOccurrencesOfString:CLASS_NAME_MARKER withString:[self abstractServerName] options:0 range:NSMakeRange(0, hContentOfFile.length)];
+    [hContentOfFile replaceOccurrencesOfString:CLASS_IMPLEMENTATION_MARKER withString:content options:0 range:NSMakeRange(0, hContentOfFile.length)];
+    [hContentOfFile replaceOccurrencesOfString:CLASS_IMPORT_MARKER withString:importsContent options:0 range:NSMakeRange(0, hContentOfFile.length)];
     
     NSError *error = nil;
     [hContentOfFile writeToFile:fullFilePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
@@ -185,9 +231,12 @@
 - (NSString *)generateH_FileForResourceName:(NSString*)resourceName withPaths:(NSArray<Path*> *)paths
 {
     NSString *className = [NSString stringWithFormat:@"%@%@ServiceResource", self.prefix, [resourceName capitalizeFirstCharacter]];
-    NSString *fullFilePath = [[self.destinationPath stringByAppendingPathComponent:className] stringByAppendingString:@".h"];
+    NSString *resourcesDirectory = [self.destinationPath stringByAppendingPathComponent:@"Resources"];
+    [self createDirectoryForPathIfNeeded:resourcesDirectory];
     
-    NSMutableString *hContentOfFile = [[NSMutableString alloc] initWithContentsOfFile:[self.resourcesPath stringByAppendingPathComponent:@"ServiceTemplate.h"]
+    NSString *fullFilePath = [[resourcesDirectory stringByAppendingPathComponent:className] stringByAppendingString:@".h"];
+    
+    NSMutableString *hContentOfFile = [[NSMutableString alloc] initWithContentsOfFile:[self.resourcesPath stringByAppendingPathComponent:@"ObjectiveCClassTemplate.h"]
                                                                              encoding:NSUTF8StringEncoding
                                                                                 error:nil];
     //Generate Class name
@@ -226,9 +275,12 @@
 - (void)generateM_FileForResourceName:(NSString*)resourceName withPaths:(NSArray<Path*> *)paths
 {
     NSString *className = [NSString stringWithFormat:@"%@%@ServiceResource", self.prefix, [resourceName capitalizeFirstCharacter]];
-    NSString *fullFilePath = [[self.destinationPath stringByAppendingPathComponent:className] stringByAppendingString:@".m"];
+    NSString *resourcesDirectory = [self.destinationPath stringByAppendingPathComponent:@"Resources"];
+    [self createDirectoryForPathIfNeeded:resourcesDirectory];
     
-    NSMutableString *mContentOfFile = [[NSMutableString alloc] initWithContentsOfFile:[self.resourcesPath stringByAppendingPathComponent:@"ServiceTemplate.m"]
+    NSString *fullFilePath = [[resourcesDirectory stringByAppendingPathComponent:className] stringByAppendingString:@".m"];
+    
+    NSMutableString *mContentOfFile = [[NSMutableString alloc] initWithContentsOfFile:[self.resourcesPath stringByAppendingPathComponent:@"ObjectiveCClassTemplate.m"]
                                                                              encoding:NSUTF8StringEncoding
                                                                                 error:nil];
     //Import Api Const
@@ -247,6 +299,73 @@
     
     NSError *error = nil;
     [mContentOfFile writeToFile:fullFilePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    
+    if (error) {
+        NSLog(@"Error: %@", error);
+    };
+}
+
+#pragma mark - Definitions
+
+- (void)generateDefinitionsClasses
+{
+    NSString *objcHtemplate = [[NSString alloc] initWithContentsOfFile:[self.resourcesPath stringByAppendingPathComponent:@"ObjectiveCClassTemplate.h"]
+                                                                             encoding:NSUTF8StringEncoding
+                                                                                error:nil];
+    NSString *objcMtemplate = [[NSString alloc] initWithContentsOfFile:[self.resourcesPath stringByAppendingPathComponent:@"ObjectiveCClassTemplate.m"]
+                                                                            encoding:NSUTF8StringEncoding
+                                                                               error:nil];
+    NSString *pathToDefinitionDir = [self.destinationPath stringByAppendingPathComponent:@"Definitions"];
+    NSString *pathToMachineDirectory = [pathToDefinitionDir stringByAppendingPathComponent:@"Machine"];
+    [self createDirectoryForPathIfNeeded:pathToMachineDirectory];
+    [self clearFilesInDirectoryPath:pathToMachineDirectory];
+    
+    NSString *pathToHumanDirectory = [pathToDefinitionDir stringByAppendingPathComponent:@"Human"];
+    [self createDirectoryForPathIfNeeded:pathToHumanDirectory];
+    
+    [self.definitions enumerateObjectsUsingBlock:^(Definition * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        NSString *machineH_Path = [[pathToMachineDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"_%@", obj.name]] stringByAppendingString:@".h"];
+        NSString *machineM_path = [[pathToMachineDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"_%@", obj.name]] stringByAppendingString:@".m"];
+        
+        [self writeString:[obj machineDeclarationFromTemplate:objcHtemplate] toFilePath:machineH_Path];
+        [self writeString:[obj machineImplementationFromTemplate:objcMtemplate] toFilePath:machineM_path];
+        
+        NSString *humanH_Path = [[pathToHumanDirectory stringByAppendingPathComponent:obj.name] stringByAppendingString:@".h"];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:humanH_Path]) {
+            [self writeString:[obj humanDeclarationFromTemplate:objcHtemplate] toFilePath:humanH_Path];
+        }
+        
+        NSString *humanM_path = [[pathToHumanDirectory stringByAppendingPathComponent:obj.name] stringByAppendingString:@".m"];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:humanM_path]) {
+            [self writeString:[obj machineImplementationFromTemplate:objcMtemplate] toFilePath:humanM_path];
+        }
+    }];
+}
+
+- (void)clearFilesInDirectoryPath:(NSString*)path
+{
+    NSDirectoryEnumerator* en = [[NSFileManager defaultManager] enumeratorAtPath:path];
+    NSError* err = nil;
+    BOOL res = NO;
+    
+    NSString* file;
+    while (file = [en nextObject]) {
+        res = [[NSFileManager defaultManager] removeItemAtPath:[path stringByAppendingPathComponent:file] error:&err];
+        if (!res && err) {
+            NSLog(@"oops: %@", err);
+        }
+    }
+}
+
+- (void)writeString:(NSString *)contentString toFilePath:(NSString *)filePath
+{
+    if (!contentString) {
+        return;
+    }
+    
+    NSError *error = nil;
+    [contentString writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
     
     if (error) {
         NSLog(@"Error: %@", error);

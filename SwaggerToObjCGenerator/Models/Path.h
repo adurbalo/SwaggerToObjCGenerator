@@ -31,7 +31,4 @@
 
 - (NSSet<NSString*> *)customClassesNames;
 
-- (NSArray<PathParameter *> *)queryParameters;
-- (NSArray<PathParameter *> *)bodyParameters;
-
 @end
