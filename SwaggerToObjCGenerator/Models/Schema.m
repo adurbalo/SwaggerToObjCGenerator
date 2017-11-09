@@ -17,6 +17,8 @@
     [keyPathDict setObject:@"type" forKey:@"type"];
     [keyPathDict setObject:@"items" forKey:@"itemsType"];
     [keyPathDict setObject:@"$ref" forKey:@"reference"];
+    [keyPathDict setObject:@"enum" forKey:@"enumList"];
+    [keyPathDict setObject:@"name" forKey:@"name"];
     return keyPathDict;
 }
 
@@ -51,8 +53,8 @@
 
 -(NSString *)objC_fullTypeName
 {
-    if ([[self objC_mainTypeName] isEqualToString:@"id"]) {
-        return [self objC_mainTypeName];
+    if (self.enumList.count > 0) {
+        return [enumTypeNameByParameterName(self.name) stringByAppendingString:@" "];
     }
     NSString *generic = [self objC_genericTypeName];
     if (generic) {

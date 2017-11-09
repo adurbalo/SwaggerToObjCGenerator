@@ -1,0 +1,38 @@
+
+#import "<class_name_marker>.h"
+
+@implementation <class_name_marker>
+
+<class_implementation_marker>
+
++ (NSDictionary<NSString *, NSNumber *> *)dictionaryByEnumName:(NSString*)enumName
+{
+    NSString *selectorName = [NSString stringWithFormat:@"%@Dictionary", enumName];
+    SEL selector = NSSelectorFromString(selectorName);
+    if (![self respondsToSelector:selector]) {
+        NSLog(@"Ooooooops something went wrong...");
+        return nil;
+    }
+    return [self valueForKeyPath:selectorName];
+}
+
+#pragma mark - Public
+
++ (NSUInteger)enumValueForObject:(id)object enumName:(NSString*)enumName
+{
+    return [[self dictionaryByEnumName:enumName][object] integerValue];
+}
+
++ (id)objectForEnumValue:(NSUInteger)enumValue enumName:(NSString*)enumName
+{
+    __block NSString *targetKey = nil;
+    [[self dictionaryByEnumName:enumName] enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSNumber * _Nonnull obj, BOOL * _Nonnull stop) {
+        if ([obj isEqualToNumber:@(enumValue)]) {
+            targetKey = key;
+            *stop = YES;
+        }
+    }];
+    return targetKey;
+}
+
+@end

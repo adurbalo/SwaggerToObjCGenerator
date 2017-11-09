@@ -9,6 +9,7 @@
 #import "Path.h"
 #import "NSString+Helper.h"
 #import "Constants.h"
+#import "SettingsManager.h"
 
 @interface Path ()
  
@@ -138,6 +139,16 @@
     return varNameString;
 }
 
+- (NSString *)objC_methodParameterNameByName:(NSString *)name
+{
+    NSCharacterSet *charactersToRemove = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
+    NSString *updatedName = [[name componentsSeparatedByCharactersInSet:charactersToRemove] componentsJoinedByString:@""];
+    if ([updatedName isEqualToString:@"id"]) {
+        updatedName = [@"_" stringByAppendingString:updatedName];
+    }
+    return updatedName;
+}
+
 - (NSString *)methodName
 {
     NSArray *components = [self.pathString componentsSeparatedByString:@"/"];
@@ -147,7 +158,10 @@
     
     NSMutableString *methodTitleString = [[NSMutableString alloc] initWithFormat:@"- (NSURLSessionTask *)%@", self.method];
     [components enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [methodTitleString appendString:[obj capitalizeFirstCharacter]];
+        if (![obj hasPrefix:@"{"]) {
+            NSString *component = [[self objC_methodParameterNameByName:obj] capitalizeFirstCharacter];
+            [methodTitleString appendString:component];
+        }
     }];
     
     BOOL parametersExists = NO;
@@ -158,19 +172,28 @@
     
     [self.parameters enumerateObjectsUsingBlock:^(PathParameter * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        NSString *name = obj.name;
+        NSString *name = [self objC_methodParameterNameByName:obj.name];
+        NSString *title = [name copy];
         if (idx == 0) {
-            name = [name capitalizeFirstCharacter];
+            title = [title capitalizeFirstCharacter];
         }
-        [methodTitleString appendFormat:@"%@:(%@)%@ ", name, [[obj currentSchema] objC_fullTypeName], obj.name];
+        
+        [methodTitleString appendFormat:@"%@:(%@)%@ ", title, [[obj currentSchema] objC_fullTypeName], name];
+        
+        if ([[obj currentSchema] enumList].count > 0) {
+            [[SettingsManager sharedManager] addEnumName:name withOptions:[[obj currentSchema] enumList]];
+        }
     }];
+    
+    if (parametersExists) {
+        [methodTitleString appendString:@"and"];
+    }
     
     Response *response = [self successResponse];
     if (response.schema) {
-        if (parametersExists) {
-            [methodTitleString appendString:@"and"];
-        }
         [methodTitleString appendFormat:@"ResponseBlock:(void(^)(%@response, NSError *error))responseBlock", [response.schema objC_fullTypeName]];
+    } else {
+        [methodTitleString appendString:@"ResponseBlock:(void(^)(id response, NSError *error))responseBlock"];
     }
     return methodTitleString;
 }
@@ -184,18 +207,41 @@
     
     NSMutableArray<NSString *> *parameters = [[self availableParametersTypes] mutableCopy];
     NSString *pathParameterName = @"path";
+
+    if ([parameters containsObject:pathParameterName]) {
+        [parameters replaceObjectAtIndex:[parameters indexOfObject:pathParameterName] withObject:[parameters firstObject]];
+    }
+    
     [parameters enumerateObjectsUsingBlock:^(NSString * _Nonnull parameterType, NSUInteger idx, BOOL * _Nonnull stop) {
         
+        NSString *variableName = [NSString stringWithFormat:@"%@Parmeters", parameterType];
+        if (![parameterType isEqualToString:pathParameterName]) {
+            [methodImplementationString appendFormat:@"\n\tNSMutableDictionary *%@ = [[NSMutableDictionary alloc] init];", variableName];
+        } else {
+            [methodImplementationString appendFormat:@"\n\tNSArray *pathComponents = [thePath componentsSeparatedByString:@\"/\"];\n\tNSMutableArray *updatedPathComponents = [pathComponents mutableCopy];\n\t[pathComponents enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {"];
+        }
         [[self parametersByPlacedIn:parameterType] enumerateObjectsUsingBlock:^(PathParameter * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             
+            NSString *parameterVariableName = [self objC_methodParameterNameByName:obj.name];
             if ([parameterType isEqualToString:pathParameterName]) {
-                [methodImplementationString appendFormat:@"\n\tthePath = [thePath stringByReplacingOccurrencesOfString:@\"{%@}\" withString:%@];", obj.name, obj.name];
+                [methodImplementationString appendFormat:@"\n\t\tif ([obj isEqualToString:@\"{%@}\"]) {\n", obj.name];
+                if (obj.enumList.count > 0) {
+                    [methodImplementationString appendFormat:@"\t\t\tid parameterObject = [%@ objectForEnumValue:%@ enumName:%@]?:@\"(null)\";\n", [[SettingsManager sharedManager] enumsClassName], parameterVariableName, enumTypeNameConstantNameByParameterName(obj.name)];
+                } else {
+                    [methodImplementationString appendFormat:@"\t\t\tid parameterObject = %@?:@\"(null)\";\n", parameterVariableName];
+                }
+                 [methodImplementationString appendString:@"\t\t\t[updatedPathComponents replaceObjectAtIndex:idx withObject:parameterObject];\n\t\t}"];
             } else {
-                NSString *variableName = [NSString stringWithFormat:@"%@Parmeters", parameterType];
-                [methodImplementationString appendFormat:@"\n\tNSMutableDictionary *%@ = [[NSMutableDictionary alloc] init];", variableName];
-                [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = %@;", variableName, obj.name, obj.name];
+                if (obj.enumList.count > 0) {
+                    [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = [%@ objectForEnumValue:%@ enumName:%@];", variableName, obj.name, [[SettingsManager sharedManager] enumsClassName], parameterVariableName, enumTypeNameConstantNameByParameterName(obj.name)];
+                } else {
+                    [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = %@;", variableName, obj.name, parameterVariableName];
+                }
             }
         }];
+        if ([parameterType isEqualToString:pathParameterName]) {
+            [methodImplementationString appendFormat:@"\n\t}]; \n\tthePath = [updatedPathComponents componentsJoinedByString:@\"/\"];"];
+        }
     }];
     
     [parameters removeObject:pathParameterName];

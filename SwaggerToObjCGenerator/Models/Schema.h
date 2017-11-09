@@ -10,9 +10,11 @@
 
 @interface Schema : BaseModel
 
+@property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSString *itemsType;
 @property (nonatomic, strong) NSString *reference;
+@property (nonatomic) NSArray *enumList;
 
 - (NSString *)objC_mainTypeName;
 - (NSString *)objC_genericTypeName;

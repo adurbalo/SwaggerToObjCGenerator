@@ -8,6 +8,7 @@
 
 #import "Definition.h"
 #import "Constants.h"
+#import "SettingsManager.h"
 
 @implementation Definition
 
@@ -54,14 +55,25 @@
     NSMutableString *declaration = [[NSMutableString alloc] initWithString:templateString];
     NSString *className = [NSString stringWithFormat:@"_%@", self.name];
     [declaration replaceOccurrencesOfString:CLASS_NAME_MARKER withString:className options:0 range:NSMakeRange(0, declaration.length)];
-    [declaration replaceOccurrencesOfString:SUPERCLASS_NAME_MARKER withString:@"NSObject" options:0 range:NSMakeRange(0, declaration.length)];
+    [declaration replaceOccurrencesOfString:SUPERCLASS_NAME_MARKER withString:[[SettingsManager sharedManager] definitionsSuperclassName] options:0 range:NSMakeRange(0, declaration.length)];
     
     NSMutableSet<NSString *> *customTypes = [NSMutableSet new];
     NSMutableString *propertiesDeclaration = [NSMutableString new];
     
+    __block BOOL importEnums = NO;
     [self.properties enumerateObjectsUsingBlock:^(Property * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        [propertiesDeclaration appendFormat:@"@property (nonatomic, strong) %@%@;\n", [obj objC_fullTypeName], obj.name];
+        if (obj.enumList.count > 0) {
+            importEnums = YES;
+            [propertiesDeclaration appendFormat:@"@property (nonatomic) %@%@; //ENUM\n", [obj objC_fullTypeName], obj.name];
+            
+            if (obj.enumList.count > 0) {
+                [[SettingsManager sharedManager] addEnumName:obj.name withOptions:obj.enumList];
+            }
+            
+        } else {
+            [propertiesDeclaration appendFormat:@"@property (nonatomic, strong) %@%@;\n", [obj objC_fullTypeName], obj.name];
+        }
         
         [[obj allTypes] enumerateObjectsUsingBlock:^(NSString * _Nonnull type, NSUInteger idx, BOOL * _Nonnull stop) {
             if (isCustomClassType(type)) {
@@ -73,6 +85,7 @@
     NSMutableString *imports = [NSMutableString new];
     [customTypes enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, BOOL * _Nonnull stop) {
         [imports appendFormat:@"#import \"%@.h\"\n", obj];
+        //[imports appendFormat:@"@class %@;\n", obj];
     }];
     
     [declaration replaceOccurrencesOfString:CLASS_DECLARATION_MARKER withString:propertiesDeclaration options:0 range:NSMakeRange(0, declaration.length)];

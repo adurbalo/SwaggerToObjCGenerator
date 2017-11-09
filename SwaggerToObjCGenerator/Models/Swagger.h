@@ -23,8 +23,4 @@
 @property (nonatomic, strong) NSDictionary *securityDefinitions;
 @property (nonatomic, strong) NSArray<Definition*> *definitions;
 
-@property (nonatomic, strong) NSString *prefix;
-@property (nonatomic, strong) NSString *resourcesPath;
-@property (nonatomic, strong) NSString *destinationPath;
-
 @end

@@ -18,6 +18,9 @@
 		6139EC7F1FACB0C200248C4F /* APIConsts.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6190FE321FAC81AE0027E586 /* APIConsts.h */; };
 		6139EC831FACCDA600248C4F /* AbstractServerAPI.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6139EC811FACC41C00248C4F /* AbstractServerAPI.h */; };
 		6139EC841FACCDA600248C4F /* AbstractServerAPI.m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6139EC801FACC41B00248C4F /* AbstractServerAPI.m */; };
+		614DDAE01FB2000700BF0AEE /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 614DDADF1FB2000700BF0AEE /* SettingsManager.m */; };
+		614DDAE91FB222D000BF0AEE /* EnumsTemplate_h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 614DDAE71FB222BC00BF0AEE /* EnumsTemplate_h */; };
+		614DDAEA1FB222D000BF0AEE /* EnumsTemplate_m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 614DDAE81FB222BD00BF0AEE /* EnumsTemplate_m */; };
 		6173B8081FA9D02A00FAE8D9 /* PathParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6173B8071FA9D02A00FAE8D9 /* PathParameter.m */; };
 		6173B80B1FA9D89800FAE8D9 /* Response.m in Sources */ = {isa = PBXBuildFile; fileRef = 6173B80A1FA9D89800FAE8D9 /* Response.m */; };
 		6173B80E1FA9D8E400FAE8D9 /* Schema.m in Sources */ = {isa = PBXBuildFile; fileRef = 6173B80D1FA9D8E400FAE8D9 /* Schema.m */; };
@@ -40,6 +43,8 @@
 			dstPath = Resources;
 			dstSubfolderSpec = 16;
 			files = (
+				614DDAE91FB222D000BF0AEE /* EnumsTemplate_h in CopyFiles */,
+				614DDAEA1FB222D000BF0AEE /* EnumsTemplate_m in CopyFiles */,
 				6139EC831FACCDA600248C4F /* AbstractServerAPI.h in CopyFiles */,
 				6139EC841FACCDA600248C4F /* AbstractServerAPI.m in CopyFiles */,
 				6139EC7B1FACB0C200248C4F /* ParentServicesResource.h in CopyFiles */,
@@ -68,6 +73,10 @@
 		6139EC801FACC41B00248C4F /* AbstractServerAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractServerAPI.m; sourceTree = "<group>"; };
 		6139EC811FACC41C00248C4F /* AbstractServerAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractServerAPI.h; sourceTree = "<group>"; };
 		613FA3E31FB0B6DB00913983 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		614DDADE1FB2000700BF0AEE /* SettingsManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsManager.h; sourceTree = "<group>"; };
+		614DDADF1FB2000700BF0AEE /* SettingsManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsManager.m; sourceTree = "<group>"; };
+		614DDAE71FB222BC00BF0AEE /* EnumsTemplate_h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EnumsTemplate_h; sourceTree = "<group>"; };
+		614DDAE81FB222BD00BF0AEE /* EnumsTemplate_m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EnumsTemplate_m; sourceTree = "<group>"; };
 		6173B8061FA9D02A00FAE8D9 /* PathParameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PathParameter.h; sourceTree = "<group>"; };
 		6173B8071FA9D02A00FAE8D9 /* PathParameter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PathParameter.m; sourceTree = "<group>"; };
 		6173B8091FA9D89800FAE8D9 /* Response.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Response.h; sourceTree = "<group>"; };
@@ -122,6 +131,8 @@
 		6179FBCC1FAB3EB8005B817C /* Templates */ = {
 			isa = PBXGroup;
 			children = (
+				614DDAE71FB222BC00BF0AEE /* EnumsTemplate_h */,
+				614DDAE81FB222BD00BF0AEE /* EnumsTemplate_m */,
 				6139EC811FACC41C00248C4F /* AbstractServerAPI.h */,
 				6139EC801FACC41B00248C4F /* AbstractServerAPI.m */,
 				6139EC781FACAE2800248C4F /* ParentServicesResource.h */,
@@ -158,6 +169,8 @@
 				619365C71FA8AD52003B7B0B /* main.m */,
 				6139EC6F1FAC9B5700248C4F /* NSString+Helper.h */,
 				6139EC701FAC9B5700248C4F /* NSString+Helper.m */,
+				614DDADE1FB2000700BF0AEE /* SettingsManager.h */,
+				614DDADF1FB2000700BF0AEE /* SettingsManager.m */,
 				619365D01FA8B671003B7B0B /* Models */,
 			);
 			path = SwaggerToObjCGenerator;
@@ -317,6 +330,7 @@
 				6139EC711FAC9B5700248C4F /* NSString+Helper.m in Sources */,
 				6179FBD81FAB49E7005B817C /* Service.m in Sources */,
 				619365D91FA8B83D003B7B0B /* Info.m in Sources */,
+				614DDAE01FB2000700BF0AEE /* SettingsManager.m in Sources */,
 				619365DC1FA8B9B0003B7B0B /* Contact.m in Sources */,
 				619365DF1FA8BA2B003B7B0B /* License.m in Sources */,
 				619365D31FA8B6CF003B7B0B /* Swagger.m in Sources */,

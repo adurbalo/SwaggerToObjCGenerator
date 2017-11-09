@@ -11,12 +11,10 @@
 
 @interface PathParameter : Schema
 
-@property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *placedIn;
 @property (nonatomic) BOOL required;
 @property (nonatomic, strong) NSString *format;
 @property (nonatomic, strong) Schema *schema;
-@property (nonatomic) NSArray *enumList;
 
 - (Schema*)currentSchema;
 

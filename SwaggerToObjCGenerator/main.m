@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "Swagger.h"
 #import "Swagger+CodeGen.h"
+#import "SettingsManager.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-
+        
         NSString *filePath = @"/Users/andreydurbalo/Downloads/tux_m_swagger.json";
 
         filePath = @"/Users/andreydurbalo/Downloads/rental_swagger.json";
@@ -34,10 +35,9 @@ int main(int argc, const char * argv[]) {
                                      fromJSONDictionary:dictionary
                                                   error:&error];
         
-        swagger.prefix = @"TMW";
-        swagger.resourcesPath = [[mainBundle bundlePath] stringByAppendingPathComponent:@"Resources"];
-        swagger.destinationPath = @"/Users/andreydurbalo/Desktop/SWG_RESULT_FOLDER/";
-        
+        [SettingsManager sharedManager].prefix = @"SWG";
+        [SettingsManager sharedManager].resourcesPath = [[mainBundle bundlePath] stringByAppendingPathComponent:@"Resources"];
+        [SettingsManager sharedManager].destinationPath = @"/Users/andreydurbalo/Desktop/SWG_RESULT_FOLDER/";
         
         if (error) {
             NSLog(@"Error: %@", error);
