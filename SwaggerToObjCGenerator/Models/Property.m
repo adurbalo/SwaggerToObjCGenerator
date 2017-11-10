@@ -13,9 +13,7 @@
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
     NSMutableDictionary *keyPathDict = [NSMutableDictionary dictionaryWithDictionary:[super JSONKeyPathsByPropertyKey]];
-    [keyPathDict setObject:@"name" forKey:@"name"];
     [keyPathDict setObject:@"format" forKey:@"format"];
-    [keyPathDict setObject:@"enum" forKey:@"enumList"];
     return keyPathDict;
 }
 

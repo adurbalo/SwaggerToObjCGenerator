@@ -17,6 +17,7 @@
 {
     [self generateParentServiceResource];
     [self generateServicesClasses];
+    [self generateBaseEntity];
     [self generateDefinitionsClasses];
     [self generateEnumsClass];
 }
@@ -210,7 +211,7 @@
     
     
     [paths enumerateObjectsUsingBlock:^(Path * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSString *methodName = [obj methodName];
+        NSString *methodName = [obj methodDeclarationName];
         [methodsDeclarationString appendFormat:@"%@;\n", methodName];
         [customClassesNames addObjectsFromArray:[[obj customClassesNames] allObjects]];
     }];
@@ -304,6 +305,33 @@
     [contentOfFile replaceOccurrencesOfString:CLASS_IMPORT_MARKER withString:importsContent options:0 range:NSMakeRange(0, contentOfFile.length)];
     
     [self writeString:contentOfFile toFilePath:fullFilePath];
+}
+
+#pragma mark - BaseEntity
+
+- (void)generateBaseEntity
+{
+    NSMutableString *objcHtemplate = [[NSMutableString alloc] initWithContentsOfFile:[[SettingsManager sharedManager].resourcesPath stringByAppendingPathComponent:@"BaseEntity_h"]
+                                                                            encoding:NSUTF8StringEncoding
+                                                                               error:nil];
+    NSMutableString *objcMtemplate = [[NSMutableString alloc] initWithContentsOfFile:[[SettingsManager sharedManager].resourcesPath stringByAppendingPathComponent:@"BaseEntity_m"]
+                                                                            encoding:NSUTF8StringEncoding
+                                                                               error:nil];
+    
+    NSString *path = [SettingsManager sharedManager].destinationPath;
+    NSString *className = [SettingsManager sharedManager].definitionsSuperclassName;
+    NSString *hFilePath = [[path stringByAppendingPathComponent:className] stringByAppendingString:@".h"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:hFilePath]) {
+        [objcHtemplate replaceOccurrencesOfString:CLASS_NAME_MARKER withString:className options:0 range:NSMakeRange(0, objcHtemplate.length)];
+        [objcHtemplate replaceOccurrencesOfString:CLASS_IMPORT_MARKER withString:[NSString stringWithFormat:@"#import \"%@.h\"", [SettingsManager sharedManager].enumsClassName] options:0 range:NSMakeRange(0, objcHtemplate.length)];
+        [self writeString:objcHtemplate toFilePath:hFilePath];
+    }
+    
+    NSString *mFilePath = [[path stringByAppendingPathComponent:className] stringByAppendingString:@".m"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:mFilePath]) {
+        [objcMtemplate replaceOccurrencesOfString:CLASS_NAME_MARKER withString:className options:0 range:NSMakeRange(0, objcMtemplate.length)];
+        [self writeString:objcMtemplate toFilePath:mFilePath];
+    }
 }
 
 #pragma mark - Definitions

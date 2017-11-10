@@ -26,7 +26,7 @@
 
 - (NSString *)apiConstVariableName;
 
-- (NSString *)methodName;
+- (NSString *)methodDeclarationName;
 - (NSString *)methodImplementation;
 
 - (NSSet<NSString*> *)customClassesNames;

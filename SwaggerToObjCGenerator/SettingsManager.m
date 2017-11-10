@@ -59,7 +59,7 @@
 
 - (NSString *)definitionsSuperclassName
 {
-    return [NSString stringWithFormat:@"%@BaseDefinition", self.prefix];
+    return [NSString stringWithFormat:@"%@BaseEntity", self.prefix];
 }
 
 #pragma mark - Enums

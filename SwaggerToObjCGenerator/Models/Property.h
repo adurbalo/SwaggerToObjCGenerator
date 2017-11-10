@@ -11,8 +11,6 @@
 
 @interface Property : Schema
 
-@property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSString *format;
-@property(nonatomic, strong) NSArray<NSString *> *enumList;
 
 @end

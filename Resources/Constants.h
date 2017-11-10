@@ -33,10 +33,20 @@ static inline NSString* objC_classNameFromSwaggerType(NSString *swaggerType)
     } else if ([swaggerType isEqualToString:@"integer"] || [swaggerType isEqualToString:@"number"] || [swaggerType isEqualToString:@"boolean"]) {
         objCNameClass = @"NSNumber";
     } else {
-        NSLog(@"Custom type: %@ ?", swaggerType);
+        //NSLog(@"Custom type: %@ ?", swaggerType);
         objCNameClass = swaggerType;
     }
     return objCNameClass;
+}
+
+static inline NSString* objC_parameterNameFromSwaggerParameter(NSString *name)
+{
+    NSCharacterSet *charactersToRemove = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
+    NSString *updatedName = [[name componentsSeparatedByCharactersInSet:charactersToRemove] componentsJoinedByString:@""];
+    if ([updatedName isEqualToString:@"id"]) {
+        updatedName = [@"the" stringByAppendingString:[updatedName uppercaseString]];
+    }
+    return updatedName;
 }
 
 static inline BOOL isCustomClassType(NSString *className)

@@ -24,6 +24,8 @@
 		6173B8081FA9D02A00FAE8D9 /* PathParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6173B8071FA9D02A00FAE8D9 /* PathParameter.m */; };
 		6173B80B1FA9D89800FAE8D9 /* Response.m in Sources */ = {isa = PBXBuildFile; fileRef = 6173B80A1FA9D89800FAE8D9 /* Response.m */; };
 		6173B80E1FA9D8E400FAE8D9 /* Schema.m in Sources */ = {isa = PBXBuildFile; fileRef = 6173B80D1FA9D8E400FAE8D9 /* Schema.m */; };
+		617803731FB5E6BF0018A219 /* BaseEntity_h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 617803721FB5E4660018A219 /* BaseEntity_h */; };
+		617803741FB5E6BF0018A219 /* BaseEntity_m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 617803711FB5E4660018A219 /* BaseEntity_m */; };
 		6179FBCA1FAB33FD005B817C /* Swagger+CodeGen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6179FBC91FAB33FD005B817C /* Swagger+CodeGen.m */; };
 		6179FBD81FAB49E7005B817C /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 6179FBD71FAB49E7005B817C /* Service.m */; };
 		6179FBDB1FAB9F8E005B817C /* swagger.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 619365CF1FA8AE4B003B7B0B /* swagger.json */; };
@@ -43,6 +45,8 @@
 			dstPath = Resources;
 			dstSubfolderSpec = 16;
 			files = (
+				617803731FB5E6BF0018A219 /* BaseEntity_h in CopyFiles */,
+				617803741FB5E6BF0018A219 /* BaseEntity_m in CopyFiles */,
 				614DDAE91FB222D000BF0AEE /* EnumsTemplate_h in CopyFiles */,
 				614DDAEA1FB222D000BF0AEE /* EnumsTemplate_m in CopyFiles */,
 				6139EC831FACCDA600248C4F /* AbstractServerAPI.h in CopyFiles */,
@@ -83,6 +87,8 @@
 		6173B80A1FA9D89800FAE8D9 /* Response.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Response.m; sourceTree = "<group>"; };
 		6173B80C1FA9D8E400FAE8D9 /* Schema.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Schema.h; sourceTree = "<group>"; };
 		6173B80D1FA9D8E400FAE8D9 /* Schema.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Schema.m; sourceTree = "<group>"; };
+		617803711FB5E4660018A219 /* BaseEntity_m */ = {isa = PBXFileReference; lastKnownFileType = text; path = BaseEntity_m; sourceTree = "<group>"; };
+		617803721FB5E4660018A219 /* BaseEntity_h */ = {isa = PBXFileReference; lastKnownFileType = text; path = BaseEntity_h; sourceTree = "<group>"; };
 		6179FBC81FAB33FD005B817C /* Swagger+CodeGen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Swagger+CodeGen.h"; sourceTree = "<group>"; };
 		6179FBC91FAB33FD005B817C /* Swagger+CodeGen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Swagger+CodeGen.m"; sourceTree = "<group>"; };
 		6179FBD61FAB49E7005B817C /* Service.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Service.h; sourceTree = "<group>"; };
@@ -131,6 +137,8 @@
 		6179FBCC1FAB3EB8005B817C /* Templates */ = {
 			isa = PBXGroup;
 			children = (
+				617803721FB5E4660018A219 /* BaseEntity_h */,
+				617803711FB5E4660018A219 /* BaseEntity_m */,
 				614DDAE71FB222BC00BF0AEE /* EnumsTemplate_h */,
 				614DDAE81FB222BD00BF0AEE /* EnumsTemplate_m */,
 				6139EC811FACC41C00248C4F /* AbstractServerAPI.h */,

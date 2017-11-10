@@ -139,30 +139,32 @@
     return varNameString;
 }
 
-- (NSString *)objC_methodParameterNameByName:(NSString *)name
+- (NSString *)methodDeclarationName
 {
-    NSCharacterSet *charactersToRemove = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
-    NSString *updatedName = [[name componentsSeparatedByCharactersInSet:charactersToRemove] componentsJoinedByString:@""];
-    if ([updatedName isEqualToString:@"id"]) {
-        updatedName = [@"_" stringByAppendingString:updatedName];
-    }
-    return updatedName;
+    return [self methodNameForDeclaration:YES];
 }
 
-- (NSString *)methodName
+- (NSString *)methodNameForDeclaration:(BOOL)forDeclaration
 {
-    NSArray *components = [self.pathString componentsSeparatedByString:@"/"];
-    if (components.count == 0) {
-        components = @[self.pathString];
+    //    NSArray *components = [self.pathString componentsSeparatedByString:@"/"];
+    //    if (components.count == 0) {
+    //        components = @[self.pathString];
+    //    }
+    //
+    //    NSMutableString *methodTitleString = [[NSMutableString alloc] initWithFormat:@"- (NSURLSessionTask *)%@", self.method];
+    //    [components enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    //        if (![obj hasPrefix:@"{"]) {
+    //            NSString *component = [objC_parameterNameFromSwaggerParameter(obj) capitalizeFirstCharacter];
+    //            [methodTitleString appendString:component];
+    //        }
+    //    }];
+    //
+    //
+    NSMutableString *methodTitleString = [[NSMutableString alloc] init];
+    if (self.summary.length > 0 && forDeclaration) {
+        [methodTitleString appendFormat:@"\n/**\n * %@ \n */\n", self.summary];
     }
-    
-    NSMutableString *methodTitleString = [[NSMutableString alloc] initWithFormat:@"- (NSURLSessionTask *)%@", self.method];
-    [components enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (![obj hasPrefix:@"{"]) {
-            NSString *component = [[self objC_methodParameterNameByName:obj] capitalizeFirstCharacter];
-            [methodTitleString appendString:component];
-        }
-    }];
+    [methodTitleString appendFormat:@"- (NSURLSessionTask *)%@", self.operationId];
     
     BOOL parametersExists = NO;
     if (self.parameters.count > 0) {
@@ -172,7 +174,7 @@
     
     [self.parameters enumerateObjectsUsingBlock:^(PathParameter * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        NSString *name = [self objC_methodParameterNameByName:obj.name];
+        NSString *name = objC_parameterNameFromSwaggerParameter(obj.name);
         NSString *title = [name copy];
         if (idx == 0) {
             title = [title capitalizeFirstCharacter];
@@ -201,7 +203,7 @@
 - (NSString *)methodImplementation
 {
     NSMutableString *methodImplementationString = [NSMutableString new];
-    NSString *methodName = [self methodName];
+    NSString *methodName = [self methodNameForDeclaration:NO];
     [methodImplementationString appendFormat:@"%@\n{\n", methodName];
     [methodImplementationString appendFormat:@"\tNSString *thePath = %@;", [self apiConstVariableName]];
     
@@ -222,7 +224,7 @@
         }
         [[self parametersByPlacedIn:parameterType] enumerateObjectsUsingBlock:^(PathParameter * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             
-            NSString *parameterVariableName = [self objC_methodParameterNameByName:obj.name];
+            NSString *parameterVariableName = objC_parameterNameFromSwaggerParameter(obj.name);
             if ([parameterType isEqualToString:pathParameterName]) {
                 [methodImplementationString appendFormat:@"\n\t\tif ([obj isEqualToString:@\"{%@}\"]) {\n", obj.name];
                 if (obj.enumList.count > 0) {
