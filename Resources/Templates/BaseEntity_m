@@ -1,0 +1,242 @@
+
+#import "<class_name_marker>.h"
+#import <objc/runtime.h>
+
+@interface <class_name_marker>()
+
+@end
+
+@implementation <class_name_marker>
+
++ (NSDictionary<NSString *, NSString *> *)mappedKeysByProperties
+{
+    return nil;
+}
+
++ (NSString *)enumNameForMappedField:(NSString*)fieldName
+{
+    return nil;
+}
+
++ (NSString *)classNameOfMembersForMappedField:(NSString*)fieldName
+{
+    return nil;
+}
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionaryValue
+{
+    self = [super init];
+    if (self) {
+        [self setDictionaryValue:dictionaryValue];
+    }
+    return self;
+}
+
+- (void)setDictionaryValue:(NSDictionary *)dictionaryValue
+{
+    Class selfClass = [self class];
+    [[selfClass mappedKeysByProperties] enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull jsonKey, NSString * _Nonnull propertyName, BOOL * _Nonnull stop) {
+        
+        id valueForKey = [dictionaryValue objectForKey:jsonKey];
+        if (!valueForKey || [valueForKey isKindOfClass:[NSNull class]]) {
+            return;
+        }
+        
+        objc_property_t property = class_getProperty([self class], [propertyName UTF8String]);
+        const char *propertyAttributes = property_getAttributes(property);
+        NSArray *attributes = [[NSString stringWithUTF8String:propertyAttributes] componentsSeparatedByString:@","];
+        NSString *propertyTypeStr = attributes[0];
+        BOOL isPrimitive = [propertyTypeStr characterAtIndex:1] != '@'; // is it class
+        NSString *className = [propertyTypeStr substringFromIndex:2]; // 2 is length of "T@""
+        className = [className stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+        Class propClass = NSClassFromString(className);
+        
+        if (isPrimitive){ // isEnum
+            NSString *enumName = [selfClass enumNameForMappedField:propertyName];
+            if ( enumName ){
+                NSUInteger enumValue = [SWGEnums enumValueForObject:valueForKey enumName:enumName];
+                [self setValue:@(enumValue) forKey:propertyName];
+            }
+            else{
+                [self setValue:valueForKey forKey:propertyName];
+            }
+        }
+        else if ([propClass isSubclassOfClass:[<class_name_marker> class]]){
+            <class_name_marker> *entity = [[propClass alloc] initWithDictionary:valueForKey];
+            [self setValue:entity forKey:propertyName];
+        }
+        else if ([propClass isSubclassOfClass:[NSArray class]]){
+            NSArray *array = valueForKey;
+            if (array.count == 0) {
+                [self setValue:array forKey:propertyName];
+                return;
+            }
+            NSString *memberClassName = [[self class] classNameOfMembersForMappedField:propertyName];
+            Class memberClass = NSClassFromString(memberClassName);
+            if ( [memberClass isSubclassOfClass:[<class_name_marker> class]] ){
+                NSMutableArray *members = [NSMutableArray new];
+                [array enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    <class_name_marker> *entity = [[memberClass alloc] initWithDictionary:obj];
+                    [members addObject:entity];
+                }];
+                [self setValue:members forKey:propertyName];
+            } else {
+                [self setValue:array forKey:propertyName];
+            }
+        }
+        else{
+            [self setValue:valueForKey forKey:propertyName];
+        }
+    }];
+}
+
+- (NSDictionary *)dictionaryValue
+{
+    NSMutableDictionary *dictionaryValue = [NSMutableDictionary new];
+    Class selfClass = [self class];
+    [[selfClass mappedKeysByProperties] enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull jsonKey, NSString * _Nonnull propertyName, BOOL * _Nonnull stop) {
+        
+        id value = [self valueForKeyPath:propertyName];
+        if (!value) {
+            return;
+        }
+        
+        objc_property_t property = class_getProperty([self class], [propertyName UTF8String]);
+        const char *propertyAttributes = property_getAttributes(property);
+        NSArray *attributes = [[NSString stringWithUTF8String:propertyAttributes] componentsSeparatedByString:@","];
+        NSString *propertyTypeStr = attributes[0];
+        BOOL isPrimitive = [propertyTypeStr characterAtIndex:1] != '@'; // is it class
+        NSString *className = [propertyTypeStr substringFromIndex:2]; // 2 is length of "T@""
+        className = [className stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+        Class propClass = NSClassFromString(className);
+        if (isPrimitive){
+            NSString *enumName = [selfClass enumNameForMappedField:propertyName];
+            if ( enumName ){
+                NSUInteger enumValue = [(NSNumber*)value unsignedIntegerValue];
+                id enumObj = [SWGEnums objectForEnumValue:enumValue enumName:enumName];
+                value = enumObj;
+            }
+        } else if ([propClass isSubclassOfClass:[<class_name_marker> class]]) {
+            value = [value dictionaryValue];
+        } else if ([propClass isSubclassOfClass:[NSArray class]]) {
+            NSString *memberClassName = [selfClass classNameOfMembersForMappedField:propertyName];
+            Class memberClass = NSClassFromString(memberClassName);
+            if ( [memberClass isSubclassOfClass:[<class_name_marker> class]] ){
+                NSArray *array = [value valueForKey:@"dictionaryValue"];
+                if (array.count == 0) {
+                    value = nil;
+                } else {
+                    value = array;
+                }
+            }
+        }
+        
+        if (value && ![value isKindOfClass:[NSNull class]]){
+            [dictionaryValue setObject:value forKey:jsonKey];
+        }
+    }];
+    return dictionaryValue;
+}
+
+#pragma mark -
+
+- (BOOL)isEqual:(id)object
+{
+    if ( ![object isKindOfClass:[self class]] )
+        return NO;
+    
+    NSArray *allProperties = [[[self class] mappedKeysByProperties] allValues];
+    for (NSString *key in allProperties) {
+        id selfValue = [self valueForKey:key];
+        id anotherObjectValue = [object valueForKey:key];
+        
+        if (([selfValue isKindOfClass:[NSString class]]) && [anotherObjectValue isKindOfClass:[NSString class]]) {
+            if (![[selfValue lowercaseString] isEqualToString:[anotherObjectValue lowercaseString]]) {
+                return NO;
+            }
+        }
+        else if ([selfValue isKindOfClass:[NSString class]] && [selfValue length] == 0 && anotherObjectValue == nil) {
+            continue;
+        }
+        else if ([anotherObjectValue isKindOfClass:[NSString class]] && [anotherObjectValue length] == 0 && selfValue == nil) {
+            continue;
+        }
+        else if ( (selfValue != anotherObjectValue) && ![selfValue isEqual:anotherObjectValue] ) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (NSUInteger)hash
+{
+    NSUInteger hash = [NSStringFromClass(self.class) hash];
+    NSUInteger i = 0;
+    NSArray *allProperties = [[[self class] mappedKeysByProperties] allValues];
+    for (NSString *key in allProperties) {
+        id selfValue = [self valueForKey:key];
+        hash ^= [selfValue hash] << ((++i) % 16);
+    }
+    return hash;
+}
+
+#pragma mark - NSCoding
+
+- (void)encodeWithCoder:(NSCoder *)encoder
+{
+    unsigned int outCount, i;
+    objc_property_t *properties = class_copyPropertyList([self class], &outCount);
+    for(i = 0; i < outCount; i++) {
+        objc_property_t property = properties[i];
+        const char *propName = property_getName(property);
+        if(propName) {
+            NSString *propertyName = [NSString stringWithUTF8String: propName];
+            id value = [self valueForKey:propertyName];
+            [encoder encodeObject:value forKey:propertyName];
+        }
+    }
+    free(properties);
+}
+
+- (id)initWithCoder:(NSCoder *)decoder
+{
+    if((self = [super init])) {
+        unsigned int outCount, i;
+        objc_property_t *properties = class_copyPropertyList([self class], &outCount);
+        for(i = 0; i < outCount; i++) {
+            objc_property_t property = properties[i];
+            const char *propName = property_getName(property);
+            if(propName) {
+                NSString *propertyName = [NSString stringWithUTF8String: propName];
+                id value = [decoder decodeObjectForKey:propertyName];
+                [self setValue:value forKey:propertyName];
+            }
+        }
+        free(properties);
+    }
+    return self;
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone*)zone
+{
+    <class_name_marker>* copy = [[[self class] allocWithZone:zone] init];
+    NSArray *allProperties = [[[self class] mappedKeysByProperties] allValues];
+    for (NSString *key in allProperties) {
+        
+        id sourceValue = [self valueForKey:key];
+        id resultValue = nil;
+        
+        if ([sourceValue isKindOfClass:[NSArray class]]) {
+            resultValue = [[NSArray alloc] initWithArray:sourceValue copyItems:YES];
+        } else {
+            resultValue = [sourceValue copy];
+        }
+        
+        [copy setValue:resultValue forKey:key];
+    }
+    return copy;
+}
+
+@end
