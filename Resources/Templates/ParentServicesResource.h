@@ -1,3 +1,4 @@
+//! DO NOT MODIFY THIS CLASS !
 
 #import <Foundation/Foundation.h>
 #import "<abstract_server_class_name>.h"

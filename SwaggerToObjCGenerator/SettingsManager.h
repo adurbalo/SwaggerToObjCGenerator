@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#define HELP_KEY @"-help"
+#define SHORT_HELP_KEY @"-h"
+
 @interface SettingsManager : NSObject
 
 @property (nonatomic, strong) NSString *prefix;
@@ -15,7 +18,10 @@
 @property (nonatomic, strong) NSString *destinationPath;
 
 + (instancetype)sharedManager;
+- (void)configurateWithArgumentsDictionary:(NSDictionary<NSString*, NSString*> *)argumentsDictionary;
+- (void)showHelp;
 
+- (NSData *)jsonData;
 - (NSString *)parentServiceRecourseName;
 - (NSString *)apiConstantName;
 - (NSString *)abstractServerName;

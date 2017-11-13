@@ -63,6 +63,28 @@
             ReferencedContainer = "container:SwaggerToObjCGenerator.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "-destinationPath &quot;/Users/andreydurbalo/Desktop/DESTINATION_PATH/&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-help"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-jsonPath &quot;/Users/andreydurbalo/Downloads/rental_swagger.json&quot;"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-jsonURL &quot;http://engagedevapp601:8080/tuxmobile/services/swagger.json&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-prefix &quot;TMW&quot;"
+            isEnabled = "NO">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

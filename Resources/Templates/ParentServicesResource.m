@@ -1,3 +1,4 @@
+//! DO NOT MODIFY THIS CLASS !
 
 #import "<class_name_marker>.h"
 

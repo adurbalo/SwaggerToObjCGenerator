@@ -10,6 +10,7 @@
 #import "NSString+Helper.h"
 #import "Constants.h"
 #import "SettingsManager.h"
+#import "NSError+Extension.h"
 
 @implementation Swagger (CodeGen)
 
@@ -31,7 +32,7 @@
         NSError* error;
         [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error];
         if (error) {
-            NSLog(@"Error: %@", error);
+            [error terminate];
         }
     }
 }
@@ -150,7 +151,7 @@
     while (file = [en nextObject]) {
         res = [[NSFileManager defaultManager] removeItemAtPath:[path stringByAppendingPathComponent:file] error:&err];
         if (!res && err) {
-            NSLog(@"oops: %@", err);
+            [err terminate];
         }
     }
 }
@@ -165,7 +166,9 @@
     [contentString writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
     
     if (error) {
-        NSLog(@"Error: %@", error);
+        [error terminate];
+    } else {
+        NSLog(@"%@ generated ✅", [filePath lastPathComponent]);
     };
 }
 

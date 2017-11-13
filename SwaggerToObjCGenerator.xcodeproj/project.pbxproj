@@ -29,6 +29,7 @@
 		6179FBCA1FAB33FD005B817C /* Swagger+CodeGen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6179FBC91FAB33FD005B817C /* Swagger+CodeGen.m */; };
 		6179FBD81FAB49E7005B817C /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 6179FBD71FAB49E7005B817C /* Service.m */; };
 		6179FBDB1FAB9F8E005B817C /* swagger.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 619365CF1FA8AE4B003B7B0B /* swagger.json */; };
+		619295C71FB9D7CE0024CB78 /* NSError+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 619295C61FB9D7CE0024CB78 /* NSError+Extension.m */; };
 		619365C81FA8AD52003B7B0B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365C71FA8AD52003B7B0B /* main.m */; };
 		619365D31FA8B6CF003B7B0B /* Swagger.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365D21FA8B6CF003B7B0B /* Swagger.m */; };
 		619365D61FA8B7FD003B7B0B /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365D51FA8B7FD003B7B0B /* BaseModel.m */; };
@@ -94,6 +95,8 @@
 		6179FBD61FAB49E7005B817C /* Service.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Service.h; sourceTree = "<group>"; };
 		6179FBD71FAB49E7005B817C /* Service.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Service.m; sourceTree = "<group>"; };
 		6190FE321FAC81AE0027E586 /* APIConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIConsts.h; sourceTree = "<group>"; };
+		619295C51FB9D7CE0024CB78 /* NSError+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSError+Extension.h"; sourceTree = "<group>"; };
+		619295C61FB9D7CE0024CB78 /* NSError+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+Extension.m"; sourceTree = "<group>"; };
 		619365C41FA8AD52003B7B0B /* SwaggerToObjCGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwaggerToObjCGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		619365C71FA8AD52003B7B0B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		619365CF1FA8AE4B003B7B0B /* swagger.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = swagger.json; sourceTree = "<group>"; };
@@ -175,6 +178,8 @@
 			isa = PBXGroup;
 			children = (
 				619365C71FA8AD52003B7B0B /* main.m */,
+				619295C51FB9D7CE0024CB78 /* NSError+Extension.h */,
+				619295C61FB9D7CE0024CB78 /* NSError+Extension.m */,
 				6139EC6F1FAC9B5700248C4F /* NSString+Helper.h */,
 				6139EC701FAC9B5700248C4F /* NSString+Helper.m */,
 				614DDADE1FB2000700BF0AEE /* SettingsManager.h */,
@@ -345,6 +350,7 @@
 				6173B80E1FA9D8E400FAE8D9 /* Schema.m in Sources */,
 				6173B80B1FA9D89800FAE8D9 /* Response.m in Sources */,
 				619365C81FA8AD52003B7B0B /* main.m in Sources */,
+				619295C71FB9D7CE0024CB78 /* NSError+Extension.m in Sources */,
 				619365E21FA8C915003B7B0B /* Path.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
