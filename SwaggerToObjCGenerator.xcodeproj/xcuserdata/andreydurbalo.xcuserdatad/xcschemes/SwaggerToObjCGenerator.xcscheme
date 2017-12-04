@@ -81,7 +81,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-prefix &quot;SWG&quot;"
+            argument = "-prefix &quot;TB&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

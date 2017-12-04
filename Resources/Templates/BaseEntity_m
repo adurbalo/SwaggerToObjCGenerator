@@ -113,7 +113,7 @@
             NSString *enumName = [selfClass enumNameForMappedField:propertyName];
             if ( enumName ){
                 NSUInteger enumValue = [(NSNumber*)value unsignedIntegerValue];
-                id enumObj = [SWGEnums objectForEnumValue:enumValue enumName:enumName];
+                id enumObj = [<enum_class_name> objectForEnumValue:enumValue enumName:enumName];
                 value = enumObj;
             }
         } else if ([propClass isSubclassOfClass:[<class_name_marker> class]]) {

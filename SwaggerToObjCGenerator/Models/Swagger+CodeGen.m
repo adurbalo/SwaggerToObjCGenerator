@@ -332,6 +332,7 @@
     
     NSString *mFilePath = [[path stringByAppendingPathComponent:className] stringByAppendingString:@".m"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:mFilePath]) {
+        [objcMtemplate replaceOccurrencesOfString:ENUM_CLASS_NAME_MARKER withString:[[SettingsManager sharedManager] enumsClassName] options:0 range:NSMakeRange(0, objcMtemplate.length)];
         [objcMtemplate replaceOccurrencesOfString:CLASS_NAME_MARKER withString:className options:0 range:NSMakeRange(0, objcMtemplate.length)];
         [self writeString:objcMtemplate toFilePath:mFilePath];
     }

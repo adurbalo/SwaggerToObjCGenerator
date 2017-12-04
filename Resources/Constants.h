@@ -21,6 +21,7 @@
 #define ABSTRACT_SERVER_API_NAME_MARKER @"<abstract_server_class_name>"
 #define PARENT_SERVICE_RESOURCE_MARKER @"<parent_service_resource_marker>"
 #define CLASS_IVAR_DECLARATION @"<class_ivar_declaration>"
+#define ENUM_CLASS_NAME_MARKER @"<enum_class_name>"
 
 static inline NSString* objC_classNameFromSwaggerType(NSString *swaggerType)
 {
