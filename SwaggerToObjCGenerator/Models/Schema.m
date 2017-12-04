@@ -38,7 +38,7 @@
 - (NSString *)objC_mainTypeName
 {
     if (self.reference) {
-        return [self.reference lastPathComponent];
+        return objC_classNameFromSwaggerType([self.reference lastPathComponent]);
     }
     return objC_classNameFromSwaggerType(self.type);
 }

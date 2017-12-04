@@ -50,10 +50,15 @@
 
 #pragma mark - Public
 
+- (NSString *)className
+{
+    return [NSString stringWithFormat:@"%@%@", [SettingsManager sharedManager].prefix, self.name];
+}
+
 - (NSString *)machineDeclarationFromTemplate:(NSString*)templateString
 {
     NSMutableString *declaration = [[NSMutableString alloc] initWithString:templateString];
-    NSString *className = [NSString stringWithFormat:@"_%@", self.name];
+    NSString *className = [NSString stringWithFormat:@"_%@", [self className]];
     [declaration replaceOccurrencesOfString:CLASS_NAME_MARKER withString:className options:0 range:NSMakeRange(0, declaration.length)];
     [declaration replaceOccurrencesOfString:SUPERCLASS_NAME_MARKER withString:[[SettingsManager sharedManager] definitionsSuperclassName] options:0 range:NSMakeRange(0, declaration.length)];
     
@@ -97,7 +102,7 @@
 - (NSString *)machineImplementationFromTemplate:(NSString *)templateString
 {
     NSMutableString *implamentation = [[NSMutableString alloc] initWithString:templateString];
-    NSString *className = [NSString stringWithFormat:@"_%@", self.name];
+    NSString *className = [NSString stringWithFormat:@"_%@", [self className]];
     [implamentation replaceOccurrencesOfString:CLASS_NAME_MARKER withString:className options:0 range:NSMakeRange(0, implamentation.length)];
     [implamentation replaceOccurrencesOfString:CLASS_IMPORT_MARKER withString:@"" options:0 range:NSMakeRange(0, implamentation.length)];
     
@@ -136,7 +141,7 @@
 - (NSString *)humanDeclarationFromTemplate:(NSString *)templateString
 {
     NSMutableString *declaration = [[NSMutableString alloc] initWithString:templateString];
-    NSString *className = self.name;
+    NSString *className = [self className];
     [declaration replaceOccurrencesOfString:CLASS_NAME_MARKER withString:className options:0 range:NSMakeRange(0, declaration.length)];
     [declaration replaceOccurrencesOfString:SUPERCLASS_NAME_MARKER withString:[NSString stringWithFormat:@"_%@", className] options:0 range:NSMakeRange(0, declaration.length)];
     [declaration replaceOccurrencesOfString:CLASS_DECLARATION_MARKER withString:@"" options:0 range:NSMakeRange(0, declaration.length)];
@@ -147,7 +152,7 @@
 - (NSString *)humanImplementationFromTemplate:(NSString *)templateString
 {
     NSMutableString *implamentation = [[NSMutableString alloc] initWithString:templateString];
-    [implamentation replaceOccurrencesOfString:CLASS_NAME_MARKER withString:self.name options:0 range:NSMakeRange(0, implamentation.length)];
+    [implamentation replaceOccurrencesOfString:CLASS_NAME_MARKER withString:[self className] options:0 range:NSMakeRange(0, implamentation.length)];
     [implamentation replaceOccurrencesOfString:CLASS_IMPORT_MARKER withString:@"" options:0 range:NSMakeRange(0, implamentation.length)];
     [implamentation replaceOccurrencesOfString:CLASS_IMPLEMENTATION_MARKER withString:@"" options:0 range:NSMakeRange(0, implamentation.length)];
     return implamentation;;

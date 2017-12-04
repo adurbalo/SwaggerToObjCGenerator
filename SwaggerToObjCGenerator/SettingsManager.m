@@ -119,6 +119,11 @@
     return [NSString stringWithFormat:@"%@BaseEntity", self.prefix];
 }
 
+- (NSString *)typeNameWithType:(NSString *)type
+{
+    return [NSString stringWithFormat:@"%@%@", self.prefix, type];
+}
+
 #pragma mark - Enums
 
 - (void)addEnumName:(NSString *)enumName withOptions:(NSArray<NSString *> *)options

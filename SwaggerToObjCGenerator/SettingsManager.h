@@ -27,6 +27,7 @@
 - (NSString *)abstractServerName;
 - (NSString *)enumsClassName;
 - (NSString *)definitionsSuperclassName;
+- (NSString *)typeNameWithType:(NSString *)type;
 
 - (NSDictionary<NSString* ,NSArray<NSString *> *> *)enumsDictionary;
 - (void)addEnumName:(NSString *)enumName withOptions:(NSArray<NSString *> *)options;
