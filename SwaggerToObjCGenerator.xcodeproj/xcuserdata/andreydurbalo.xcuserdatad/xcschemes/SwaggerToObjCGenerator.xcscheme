@@ -65,7 +65,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-destinationPath &quot;/Users/andreydurbalo/Desktop/DESTINATION_PATH/&quot;"
+            argument = "-destinationPath &quot;/Users/andreydurbalo/Desktop/DESTINATION_PATH&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -74,15 +74,15 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-jsonPath &quot;/Users/andreydurbalo/Downloads/rental_swagger.json&quot;"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-jsonURL &quot;http://engagedevapp601:8080/tuxmobile/services/swagger.json&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-prefix &quot;TMW&quot;"
+            argument = "-jsonURL &quot;http://10.128.1.107:8080/tailoring-rest-app/dist/swagger.json&quot;"
             isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-prefix &quot;SWG&quot;"
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>

@@ -10,6 +10,7 @@
 #define Constants_h
 
 #import "NSString+Helper.h"
+#import "SettingsManager.h"
 
 #define CLASS_IMPORT_MARKER @"<import_marker>"
 #define CLASS_DERECTIVE_DECLARATION_MARKER @"<class_derective_declaration_marker>"
@@ -34,7 +35,7 @@ static inline NSString* objC_classNameFromSwaggerType(NSString *swaggerType)
         objCNameClass = @"NSNumber";
     } else {
         //NSLog(@"Custom type: %@ ?", swaggerType);
-        objCNameClass = swaggerType;
+        objCNameClass = [[SettingsManager sharedManager] typeNameWithType:swaggerType];
     }
     return objCNameClass;
 }
@@ -59,7 +60,7 @@ static inline BOOL isCustomClassType(NSString *className)
 
 static inline NSString* enumTypeNameByParameterName(NSString *parameterName)
 {
-    return [NSString stringWithFormat:@"%@EnumType", [parameterName capitalizeFirstCharacter]];
+    return [NSString stringWithFormat:@"%@%@EnumType", [SettingsManager sharedManager].prefix, [parameterName capitalizeFirstCharacter]];
 }
 
 static inline NSString* enumValueName(NSString *enumTypeName, NSString *stringValue)

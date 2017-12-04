@@ -357,18 +357,18 @@
     
     [self.definitions enumerateObjectsUsingBlock:^(Definition * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        NSString *machineH_Path = [[pathToMachineDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"_%@", obj.name]] stringByAppendingString:@".h"];
-        NSString *machineM_path = [[pathToMachineDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"_%@", obj.name]] stringByAppendingString:@".m"];
+        NSString *machineH_Path = [[pathToMachineDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"_%@", [obj className]]] stringByAppendingString:@".h"];
+        NSString *machineM_path = [[pathToMachineDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"_%@", [obj className]]] stringByAppendingString:@".m"];
         
         [self writeString:[obj machineDeclarationFromTemplate:objcHtemplate] toFilePath:machineH_Path];
         [self writeString:[obj machineImplementationFromTemplate:objcMtemplate] toFilePath:machineM_path];
         
-        NSString *humanH_Path = [[pathToHumanDirectory stringByAppendingPathComponent:obj.name] stringByAppendingString:@".h"];
+        NSString *humanH_Path = [[pathToHumanDirectory stringByAppendingPathComponent:[obj className]] stringByAppendingString:@".h"];
         if (![[NSFileManager defaultManager] fileExistsAtPath:humanH_Path]) {
             [self writeString:[obj humanDeclarationFromTemplate:objcHtemplate] toFilePath:humanH_Path];
         }
         
-        NSString *humanM_path = [[pathToHumanDirectory stringByAppendingPathComponent:obj.name] stringByAppendingString:@".m"];
+        NSString *humanM_path = [[pathToHumanDirectory stringByAppendingPathComponent:[obj className]] stringByAppendingString:@".m"];
         if (![[NSFileManager defaultManager] fileExistsAtPath:humanM_path]) {
             [self writeString:[obj humanImplementationFromTemplate:objcMtemplate] toFilePath:humanM_path];
         }
