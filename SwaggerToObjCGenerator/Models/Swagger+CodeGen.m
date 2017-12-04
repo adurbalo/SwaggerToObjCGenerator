@@ -136,7 +136,7 @@
 
 - (NSString *)abstractServerImplementationForResourceName:(NSString*)resourceName andResourceClassName:(NSString*)resourceClassName
 {
-    NSString *classMethodImplementation = [NSString stringWithFormat:@"+ (%@ *)%@\n{\n\treturn [[self sharedServerAPI] %@];\n}\n", resourceClassName, resourceName, resourceName];
+    NSString *classMethodImplementation = [NSString stringWithFormat:@"+ (%@ *)%@\n{\n\treturn [[%@ sharedServerAPI] %@];\n}\n", resourceClassName, resourceName, [[SettingsManager sharedManager] abstractServerName], resourceName];
     NSString *instanseMethodImplementation = [NSString stringWithFormat:@"- (%@ *)%@\n{\n\tif(!_%@) _%@ = [[%@ alloc] initWithServerAPI:self.child];\n\treturn _%@;\n}", resourceClassName, resourceName, resourceName, resourceName, resourceClassName, resourceName];
     return [NSString stringWithFormat:@"\n%@\n%@\n", classMethodImplementation, instanseMethodImplementation];
 }

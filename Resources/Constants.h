@@ -45,7 +45,13 @@ static inline NSString* objC_parameterNameFromSwaggerParameter(NSString *name)
 {
     NSCharacterSet *charactersToRemove = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
     NSString *updatedName = [[name componentsSeparatedByCharactersInSet:charactersToRemove] componentsJoinedByString:@""];
-    if ([updatedName isEqualToString:@"id"]) {
+    
+    NSArray<NSString *> *restrictedNames = @[
+                                             @"id",
+                                             @"new",
+                                             ];
+    
+    if ([restrictedNames containsObject:name]) {
         updatedName = [@"the" stringByAppendingString:[updatedName uppercaseString]];
     }
     return updatedName;

@@ -54,7 +54,11 @@
 -(NSString *)objC_fullTypeName
 {
     if (self.enumList.count > 0) {
-        return [enumTypeNameByParameterName(self.name) stringByAppendingString:@" "];
+        if (self.name) {
+            return [enumTypeNameByParameterName(self.name) stringByAppendingString:@" "];
+        } else {
+            return [objC_classNameFromSwaggerType(self.type) stringByAppendingString:@" *"];
+        }
     }
     NSString *generic = [self objC_genericTypeName];
     if (generic) {

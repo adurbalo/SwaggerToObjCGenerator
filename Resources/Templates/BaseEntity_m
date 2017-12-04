@@ -54,7 +54,7 @@
         if (isPrimitive){ // isEnum
             NSString *enumName = [selfClass enumNameForMappedField:propertyName];
             if ( enumName ){
-                NSUInteger enumValue = [SWGEnums enumValueForObject:valueForKey enumName:enumName];
+                NSUInteger enumValue = [<enum_class_name> enumValueForObject:valueForKey enumName:enumName];
                 [self setValue:@(enumValue) forKey:propertyName];
             }
             else{
