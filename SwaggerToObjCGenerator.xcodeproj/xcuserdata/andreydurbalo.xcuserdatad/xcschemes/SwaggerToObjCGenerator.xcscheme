@@ -74,11 +74,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-jsonPath &quot;/Users/andreydurbalo/Downloads/rental_swagger.json&quot;"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-jsonURL &quot;http://10.128.1.107:8080/tailoring-rest-app/dist/swagger.json&quot;"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-prefix &quot;SWG&quot;"

@@ -28,7 +28,6 @@
 		617803741FB5E6BF0018A219 /* BaseEntity_m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 617803711FB5E4660018A219 /* BaseEntity_m */; };
 		6179FBCA1FAB33FD005B817C /* Swagger+CodeGen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6179FBC91FAB33FD005B817C /* Swagger+CodeGen.m */; };
 		6179FBD81FAB49E7005B817C /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 6179FBD71FAB49E7005B817C /* Service.m */; };
-		6179FBDB1FAB9F8E005B817C /* swagger.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 619365CF1FA8AE4B003B7B0B /* swagger.json */; };
 		619295C71FB9D7CE0024CB78 /* NSError+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 619295C61FB9D7CE0024CB78 /* NSError+Extension.m */; };
 		619365C81FA8AD52003B7B0B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365C71FA8AD52003B7B0B /* main.m */; };
 		619365D31FA8B6CF003B7B0B /* Swagger.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365D21FA8B6CF003B7B0B /* Swagger.m */; };
@@ -57,7 +56,6 @@
 				6139EC7D1FACB0C200248C4F /* ObjectiveCClassTemplate.h in CopyFiles */,
 				6139EC7E1FACB0C200248C4F /* ObjectiveCClassTemplate.m in CopyFiles */,
 				6139EC7F1FACB0C200248C4F /* APIConsts.h in CopyFiles */,
-				6179FBDB1FAB9F8E005B817C /* swagger.json in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,7 +97,6 @@
 		619295C61FB9D7CE0024CB78 /* NSError+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+Extension.m"; sourceTree = "<group>"; };
 		619365C41FA8AD52003B7B0B /* SwaggerToObjCGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwaggerToObjCGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		619365C71FA8AD52003B7B0B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		619365CF1FA8AE4B003B7B0B /* swagger.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = swagger.json; sourceTree = "<group>"; };
 		619365D11FA8B6CF003B7B0B /* Swagger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Swagger.h; sourceTree = "<group>"; };
 		619365D21FA8B6CF003B7B0B /* Swagger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Swagger.m; sourceTree = "<group>"; };
 		619365D41FA8B7FD003B7B0B /* BaseModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
@@ -194,7 +191,6 @@
 			children = (
 				613FA3E31FB0B6DB00913983 /* Constants.h */,
 				6179FBCC1FAB3EB8005B817C /* Templates */,
-				619365CF1FA8AE4B003B7B0B /* swagger.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
