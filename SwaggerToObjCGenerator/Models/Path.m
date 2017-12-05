@@ -209,14 +209,24 @@
     
     NSMutableArray<NSString *> *parameters = [[self availableParametersTypes] mutableCopy];
     NSString *pathParameterName = @"path";
+    NSString *bodyParameterName = @"body";
 
     if ([parameters containsObject:pathParameterName]) {
         [parameters replaceObjectAtIndex:[parameters indexOfObject:pathParameterName] withObject:[parameters firstObject]];
     }
     
+    if ([parameters containsObject:bodyParameterName]) {
+        [parameters replaceObjectAtIndex:[parameters indexOfObject:bodyParameterName] withObject:[parameters lastObject]];
+    }
+    
     [parameters enumerateObjectsUsingBlock:^(NSString * _Nonnull parameterType, NSUInteger idx, BOOL * _Nonnull stop) {
         
+        if ([parameterType isEqualToString:bodyParameterName]) {
+            return;
+        }
+        
         NSString *variableName = [NSString stringWithFormat:@"%@Parmeters", parameterType];
+        
         if (![parameterType isEqualToString:pathParameterName]) {
             [methodImplementationString appendFormat:@"\n\tNSMutableDictionary *%@ = [[NSMutableDictionary alloc] init];", variableName];
         } else {
@@ -252,12 +262,27 @@
     } else {
         [methodImplementationString appendString:@"\n\tNSMutableDictionary<NSString*, id> *requestParmeters = [[NSMutableDictionary alloc] init];"];
         [parameters enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [methodImplementationString appendFormat:@"\n\trequestParmeters[@\"%@\"] = %@Parmeters;", obj, obj];
+            if ([obj isEqualToString:bodyParameterName]) {
+                [methodImplementationString appendFormat:@"\n\trequestParmeters[@\"%@\"] = [%@ dictionaryValue];", obj, obj];
+            } else {
+                [methodImplementationString appendFormat:@"\n\trequestParmeters[@\"%@\"] = %@Parmeters;", obj, obj];
+            }
         }];
     }
     
     //Return
+    Response *response = [self successResponse];
     NSString *outputClass = nil;
+    if (response.schema) {
+        if (response.schema.reference) {
+            outputClass = objC_classNameFromSwaggerType([response.schema.reference lastPathComponent]);
+        } else if (response.schema.itemsType) {
+            outputClass = objC_classNameFromSwaggerType([response.schema.itemsType lastPathComponent]);
+        } else if (response.schema.type) {
+            outputClass = objC_classNameFromSwaggerType([response.schema.type lastPathComponent]);
+        }
+    }
+    
     if (outputClass){
         outputClass = [NSString stringWithFormat:@"[%@ class]", outputClass];
     }
