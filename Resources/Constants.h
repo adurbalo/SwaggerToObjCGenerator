@@ -49,10 +49,11 @@ static inline NSString* objC_parameterNameFromSwaggerParameter(NSString *name)
     NSArray<NSString *> *restrictedNames = @[
                                              @"id",
                                              @"new",
+                                             @"description"
                                              ];
     
     if ([restrictedNames containsObject:name]) {
-        updatedName = [@"the" stringByAppendingString:[updatedName uppercaseString]];
+        updatedName = [@"the" stringByAppendingString:[updatedName capitalizedString]];
     }
     return updatedName;
 }
