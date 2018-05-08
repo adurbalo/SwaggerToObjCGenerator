@@ -164,7 +164,22 @@
     if (self.summary.length > 0 && forDeclaration) {
         [methodTitleString appendFormat:@"\n/**\n * %@ \n */\n", self.summary];
     }
-    [methodTitleString appendFormat:@"- (NSURLSessionTask *)%@", self.operationId];
+    __block NSString *operationName = self.operationId?:@"";
+    if (operationName.length == 0) {
+        NSArray<NSString *> *summaryArray = [self.summary componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        [summaryArray enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (idx == 0) {
+                operationName = [operationName stringByAppendingString:[obj lowercaseString]];
+            } else {
+                operationName = [operationName stringByAppendingString:[obj capitalizedString]];
+            }
+        }];
+        if (operationName.length == 0) {
+            operationName = self.method;
+        }
+    }
+    
+    [methodTitleString appendFormat:@"- (NSURLSessionTask *)%@", operationName];
     
     BOOL parametersExists = NO;
     if (self.parameters.count > 0) {
