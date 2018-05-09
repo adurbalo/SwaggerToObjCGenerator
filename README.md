@@ -7,16 +7,16 @@ Objective C code genegator for Swagger
 - Unzip and copy **SwaggerToObjCGenerator** file and **Resource** directory into created **SwaggerCodeGenerator** directory
 - Create **SwagerSources** directory where you'll generate swagger classes
 
-![alt text](https://preview.ibb.co/fo9eZS/1.png)
+<img src="https://i.imgur.com/K1jaTfT.png" border="0">
 
 - Select Project -> Editor -> Add New Target -> Cross-platform -> Aggregate
 
-![alt text](https://preview.ibb.co/gGf6g7/2.png)
+<img src="https://i.imgur.com/WdMfdx2.png" border="0">
 
 - Name it **SwaggerCodeGenerator** and press Finish
 - Select **SwaggerCodeGenerator** -> Build Phases -> New Run Script Phase
 
-![alt text](https://preview.ibb.co/icKhM7/3.png)
+<img src="https://i.imgur.com/ivaFdhd.png" border="0">
 
 - Write bash script and provided needed parameters
   - **-destinationPath** path where generator should place files. 
@@ -31,16 +31,17 @@ destinationPath="$path/SwagerSources"
 cd $path
 ./SwaggerToObjCGenerator -prefix "PFX" -jsonPath "$path/swager_uber.json" -destinationPath "$destinationPath"
 ```
-![alt text](https://preview.ibb.co/kS0iTn/4.png)
+
+<img src="https://i.imgur.com/LVmN2X7.png" border="0">
 
 - Select **SwaggerCodeGenerator** scheme and press Run
 - Check your **SwagerSources** directory and add new files to project
 
-![alt text](https://preview.ibb.co/jOoL8n/5.png)
+<img src="https://i.imgur.com/dC4FLdS.png" border="0">
 
 - Create subclass for your **<YOUR_PREFIX>AbstractServerAPI** and implement **ServerAPIInheritor** protocol
 
-![alt text](https://preview.ibb.co/kAVuZS/6.png)
+<img src="https://i.imgur.com/isNusED.png" border="0">
 
 - Have a fun
 
