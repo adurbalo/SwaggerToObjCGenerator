@@ -14,15 +14,6 @@
 
 @implementation Swagger (CodeGen)
 
-- (void)generateObjC_Classes
-{
-    [self generateParentServiceResource];
-    [self generateServicesClasses];
-    [self generateBaseEntity];
-    [self generateDefinitionsClasses];
-    [self generateEnumsClass];
-}
-
 #pragma mark - Preparation
 
 - (void)createDirectoryForPathIfNeeded:(NSString*)path

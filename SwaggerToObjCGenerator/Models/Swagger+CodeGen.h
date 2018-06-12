@@ -10,6 +10,10 @@
 
 @interface Swagger (CodeGen)
 
-- (void)generateObjC_Classes;
+- (void)generateParentServiceResource;
+- (void)generateServicesClasses;
+- (void)generateBaseEntity;
+- (void)generateDefinitionsClasses;
+- (void)generateEnumsClass;
 
 @end

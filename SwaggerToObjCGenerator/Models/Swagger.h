@@ -11,8 +11,9 @@
 #import "Path.h"
 #import "Definition.h"
 #import "Service.h"
+#import "Protocols.h"
 
-@interface Swagger : BaseModel
+@interface Swagger : BaseModel <Generatable>
 
 @property (nonatomic, strong) NSString *swagger;
 @property (nonatomic, strong) Info *info;

@@ -7,9 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Protocols.h"
 
 #define HELP_KEY @"-help"
 #define SHORT_HELP_KEY @"-h"
+
+typedef NS_ENUM(NSUInteger, ContentType) {
+    ContentTypeJSON,
+    ContentTypeYAML,
+    ContentTypeUndefined
+};
 
 @interface SettingsManager : NSObject
 
@@ -21,7 +28,7 @@
 - (void)configurateWithArgumentsDictionary:(NSDictionary<NSString*, NSString*> *)argumentsDictionary;
 - (void)showHelp;
 
-- (NSData *)jsonData;
+- (id<Generatable>)generator;
 - (NSString *)parentServiceRecourseName;
 - (NSString *)apiConstantName;
 - (NSString *)abstractServerName;

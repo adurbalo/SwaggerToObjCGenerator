@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		07378172923714F62E87CD81 /* libPods-SwaggerToObjCGenerator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7926E697BBC2BBE9B79126EF /* libPods-SwaggerToObjCGenerator.a */; };
+		1A4DB0B620D05D6400DA16B6 /* OpenAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A4DB0B520D05D6400DA16B6 /* OpenAPI.m */; };
+		1A4DB0B920D0624A00DA16B6 /* Components.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A4DB0B820D0624A00DA16B6 /* Components.m */; };
 		61124E4A1FA9F6690082BDA5 /* Definition.m in Sources */ = {isa = PBXBuildFile; fileRef = 61124E491FA9F6690082BDA5 /* Definition.m */; };
 		61124E4D1FA9F72B0082BDA5 /* Property.m in Sources */ = {isa = PBXBuildFile; fileRef = 61124E4C1FA9F72B0082BDA5 /* Property.m */; };
 		6139EC711FAC9B5700248C4F /* NSString+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6139EC701FAC9B5700248C4F /* NSString+Helper.m */; };
@@ -63,6 +65,11 @@
 
 /* Begin PBXFileReference section */
 		0F5D4C492C9406BFEA4D6542 /* Pods-SwaggerToObjCGenerator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwaggerToObjCGenerator.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwaggerToObjCGenerator/Pods-SwaggerToObjCGenerator.release.xcconfig"; sourceTree = "<group>"; };
+		1A4DB0B220D057DE00DA16B6 /* Protocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Protocols.h; sourceTree = "<group>"; };
+		1A4DB0B420D05D6400DA16B6 /* OpenAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenAPI.h; sourceTree = "<group>"; };
+		1A4DB0B520D05D6400DA16B6 /* OpenAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenAPI.m; sourceTree = "<group>"; };
+		1A4DB0B720D0624A00DA16B6 /* Components.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Components.h; sourceTree = "<group>"; };
+		1A4DB0B820D0624A00DA16B6 /* Components.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Components.m; sourceTree = "<group>"; };
 		61124E481FA9F6690082BDA5 /* Definition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Definition.h; sourceTree = "<group>"; };
 		61124E491FA9F6690082BDA5 /* Definition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Definition.m; sourceTree = "<group>"; };
 		61124E4B1FA9F72B0082BDA5 /* Property.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Property.h; sourceTree = "<group>"; };
@@ -134,6 +141,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		1A4DB0B320D05D4E00DA16B6 /* OpenAPI */ = {
+			isa = PBXGroup;
+			children = (
+				1A4DB0B420D05D6400DA16B6 /* OpenAPI.h */,
+				1A4DB0B520D05D6400DA16B6 /* OpenAPI.m */,
+				1A4DB0B720D0624A00DA16B6 /* Components.h */,
+				1A4DB0B820D0624A00DA16B6 /* Components.m */,
+			);
+			path = OpenAPI;
+			sourceTree = "<group>";
+		};
 		6179FBCC1FAB3EB8005B817C /* Templates */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +200,7 @@
 				614DDADE1FB2000700BF0AEE /* SettingsManager.h */,
 				614DDADF1FB2000700BF0AEE /* SettingsManager.m */,
 				619365D01FA8B671003B7B0B /* Models */,
+				1A4DB0B220D057DE00DA16B6 /* Protocols.h */,
 			);
 			path = SwaggerToObjCGenerator;
 			sourceTree = "<group>";
@@ -198,6 +217,7 @@
 		619365D01FA8B671003B7B0B /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1A4DB0B320D05D4E00DA16B6 /* OpenAPI */,
 				619365D41FA8B7FD003B7B0B /* BaseModel.h */,
 				619365D51FA8B7FD003B7B0B /* BaseModel.m */,
 				619365D11FA8B6CF003B7B0B /* Swagger.h */,
@@ -345,7 +365,9 @@
 				619365D31FA8B6CF003B7B0B /* Swagger.m in Sources */,
 				6173B80E1FA9D8E400FAE8D9 /* Schema.m in Sources */,
 				6173B80B1FA9D89800FAE8D9 /* Response.m in Sources */,
+				1A4DB0B620D05D6400DA16B6 /* OpenAPI.m in Sources */,
 				619365C81FA8AD52003B7B0B /* main.m in Sources */,
+				1A4DB0B920D0624A00DA16B6 /* Components.m in Sources */,
 				619295C71FB9D7CE0024CB78 /* NSError+Extension.m in Sources */,
 				619365E21FA8C915003B7B0B /* Path.m in Sources */,
 			);

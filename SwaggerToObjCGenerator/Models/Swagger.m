@@ -7,6 +7,7 @@
 //
 
 #import "Swagger.h"
+#import "Swagger+CodeGen.h"
 
 @implementation Swagger
 
@@ -89,6 +90,17 @@
         }];
         return (definitionsArray.count > 0)?definitionsArray:nil;
     }];
+}
+
+#pragma mark - Generatable
+
+- (void)generateObjC_Classes
+{
+    [self generateParentServiceResource];
+    [self generateServicesClasses];
+    [self generateBaseEntity];
+    [self generateDefinitionsClasses];
+    [self generateEnumsClass];
 }
 
 @end

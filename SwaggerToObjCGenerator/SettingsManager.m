@@ -9,11 +9,17 @@
 #import "SettingsManager.h"
 #import "Constants.h"
 #import "NSError+Extension.h"
+#import "YAMLSerialization.h"
+#import "Swagger.h"
+#import "OpenAPI.h"
 
 #define DESTINATION_PATH_KEY @"-destinationPath"
 #define JSON_PATH_KEY @"-jsonPath"
 #define JSON_URL_KEY @"-jsonURL"
 #define PREFIX_KEY @"-prefix"
+
+#define CONTENT_PATH_KEY @"-contentPath"
+#define CONTENT_URL_KEY @"-contentURL"
 
 
 @interface SettingsManager ()
@@ -21,6 +27,9 @@
 @property (nonatomic, strong) NSMutableDictionary<NSString* , NSArray<NSString *> *> *enumsDictionary;
 @property (nonatomic, strong) NSString *jsonPath;
 @property (nonatomic, strong) NSString *jsonURL;
+
+@property (nonatomic, strong) NSString *contentPath;
+@property (nonatomic, strong) NSString *contentURL;
 
 @end
 
@@ -55,12 +64,15 @@
     self.jsonPath = argumentsDictionary[JSON_PATH_KEY];
     self.jsonURL = argumentsDictionary[JSON_URL_KEY];
     
+    self.contentPath = argumentsDictionary[CONTENT_PATH_KEY];
+    self.contentURL = argumentsDictionary[CONTENT_URL_KEY];
+    
     [self validateInputParameters];
 }
 
 - (void)showHelp
 {
-    NSLog(@"Available parameters:\n\n\t-destinationPath path where generator should place files. \n\t-prefix prefix for files. \n\t-jsonPath local path json file. \n\t-jsonURL json file URL.\n\n");
+    NSLog(@"Available parameters:\n\n\t-destinationPath path where generator should place files. \n\t-prefix prefix for files. \n\t-contentPath local path for content file. \n\t-contentURL URL for content.\n\n");
     exit(0);
 }
 
@@ -72,27 +84,105 @@
     }
 }
 
-- (NSData *)jsonData
+- (ContentType)contentType
 {
-    NSURL *jsonURL = nil;
-    if (self.jsonURL) {
-        jsonURL = [NSURL URLWithString:self.jsonURL];
+    NSString *pathExtension = [self.contentURL pathExtension];
+    
+    if (!pathExtension) {
+        pathExtension = [self.contentPath pathExtension];
     }
     
-    if (!jsonURL || ![jsonURL scheme] || ![jsonURL host]) {
+    if ([pathExtension isEqualToString:@"json"]) {
+        return ContentTypeJSON;
+    } else if ([pathExtension isEqualToString:@"yaml"]) {
+        return ContentTypeYAML;
+    }
+    return ContentTypeUndefined;
+}
+
+- (NSData *)jsonData
+{
+    NSURL *contentURL = nil;
+    if (self.contentURL) {
+        contentURL = [NSURL URLWithString:self.contentURL];
+    }
+    
+    if (!contentURL || ![contentURL scheme] || ![contentURL host]) {
         
-        if ( ![[NSFileManager defaultManager] isReadableFileAtPath:self.jsonPath]) {
+        if ( ![[NSFileManager defaultManager] isReadableFileAtPath:self.contentPath]) {
             NSError *error = [NSError errorWithLocalizedDescription:@"Please specify URL or local path to .json file using -jsonPath or -jsonURL parameters"];
             [error terminate];
         } else {
-            return [NSData dataWithContentsOfFile:self.jsonPath];
+            return [NSData dataWithContentsOfFile:self.contentPath];
         }
     }
-    NSLog(@"Downloading json file 🔜");
-    return [NSData dataWithContentsOfURL:jsonURL];
+    NSLog(@"Downloading content file 🔜");
+    return [NSData dataWithContentsOfURL:contentURL];
+}
+
+- (NSDictionary *)dictionaryWithError:(NSError *__autoreleasing *)error
+{
+    NSDictionary *result = nil;
+    switch (self.contentType) {
+        case ContentTypeJSON:
+            result = [NSJSONSerialization JSONObjectWithData:[self jsonData] options:NSJSONReadingAllowFragments error:error];
+            break;
+        case ContentTypeYAML:
+        {
+            NSInputStream *stream = nil;
+            if (self.contentPath) {
+                stream = [[NSInputStream alloc] initWithFileAtPath:self.contentPath];
+            } else if (self.contentURL) {
+                stream = [[NSInputStream alloc] initWithURL:[NSURL URLWithString:self.contentURL]];
+            }
+            result = [YAMLSerialization objectWithYAMLStream:stream
+                                                     options:kYAMLReadOptionStringScalars
+                                                       error:error];
+        }
+            break;
+        default:
+            break;
+    }
+    return result?[result copy]:nil;
 }
 
 #pragma mark - Public
+
+- (id<Generatable>)generator
+{
+    NSError *error = nil;
+    NSDictionary *dictionary = [self dictionaryWithError:&error];
+    if (error) {
+        [error terminate];
+        return nil;
+    }
+    
+    id<Generatable> generator = nil;
+    
+    if (dictionary[@"swagger"]) {
+        
+        Swagger *swagger = [MTLJSONAdapter modelOfClass:[Swagger class]
+                                     fromJSONDictionary:dictionary
+                                                  error:&error];
+        
+        if (error) {
+            [error terminate];
+        }
+        generator = swagger;
+        
+    } else if (dictionary[@"openapi"]) {
+        
+        OpenAPI *openApi = [MTLJSONAdapter modelOfClass:[OpenAPI class]
+                                     fromJSONDictionary:dictionary
+                                                  error:&error];
+        if (error) {
+            [error terminate];
+        }
+        generator = openApi;
+    }
+    
+    return generator;
+}
 
 - (NSString *)parentServiceRecourseName
 {
