@@ -14,8 +14,6 @@
 #import "OpenAPI.h"
 
 #define DESTINATION_PATH_KEY @"-destinationPath"
-#define JSON_PATH_KEY @"-jsonPath"
-#define JSON_URL_KEY @"-jsonURL"
 #define PREFIX_KEY @"-prefix"
 
 #define CONTENT_PATH_KEY @"-contentPath"
@@ -25,8 +23,6 @@
 @interface SettingsManager ()
 
 @property (nonatomic, strong) NSMutableDictionary<NSString* , NSArray<NSString *> *> *enumsDictionary;
-@property (nonatomic, strong) NSString *jsonPath;
-@property (nonatomic, strong) NSString *jsonURL;
 
 @property (nonatomic, strong) NSString *contentPath;
 @property (nonatomic, strong) NSString *contentURL;
@@ -60,9 +56,6 @@
 {
     self.destinationPath = argumentsDictionary[DESTINATION_PATH_KEY];
     self.prefix = argumentsDictionary[PREFIX_KEY]?:@"";
-    
-    self.jsonPath = argumentsDictionary[JSON_PATH_KEY];
-    self.jsonURL = argumentsDictionary[JSON_URL_KEY];
     
     self.contentPath = argumentsDictionary[CONTENT_PATH_KEY];
     self.contentURL = argumentsDictionary[CONTENT_URL_KEY];
