@@ -12,5 +12,6 @@
 @interface Property : Schema
 
 @property(nonatomic, strong) NSString *format;
+@property(nonatomic, strong) NSString *propertyDescription;
 
 @end

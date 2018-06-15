@@ -7,6 +7,12 @@
 //
 
 #import "OpenAPI.h"
+#import "Constants.h"
+#import "Info.h"
+#import "Path.h"
+#import "Components.h"
+#import "OAServer.h"
+#import "OASchema.h"
 
 @implementation OpenAPI
 
@@ -15,12 +21,23 @@
     NSMutableDictionary *keyPathDict = [NSMutableDictionary dictionaryWithDictionary:[super JSONKeyPathsByPropertyKey]];
     [keyPathDict setObject:@"openapi" forKey:@"openapi"];
     [keyPathDict setObject:@"info" forKey:@"info"];
+    [keyPathDict setObject:@"servers" forKey:@"servers"];
+    
+    [keyPathDict setObject:@"components" forKey:@"components"];
     [keyPathDict setObject:@"paths" forKey:@"paths"];
     return keyPathDict;
 }
 
 + (NSValueTransformer *)infoJSONTransformer {
     return [MTLJSONAdapter dictionaryTransformerWithModelClass:Info.class];
+}
+
++ (NSValueTransformer *)serversJSONTransformer {
+    return [MTLJSONAdapter arrayTransformerWithModelClass:OAServer.class];
+}
+
++ (NSValueTransformer *)componentsJSONTransformer {
+    return [MTLJSONAdapter dictionaryTransformerWithModelClass:Components.class];
 }
 
 + (NSValueTransformer *)pathsJSONTransformer
@@ -63,9 +80,80 @@
 
 #pragma mark - Generatable
 
-- (void)generateObjC_Classes
+-(NSDictionary<NSString *,NSArray<id<GeneratablePath>> *> *)pathsByServiceNames
 {
-    NSLog(@"Do nothing currently");
+    NSMutableDictionary<NSString*, NSArray<GeneratablePath*> *> *resultDictionary = [NSMutableDictionary new];
+    
+    NSMutableSet<NSString *> *servicesNames = [NSMutableSet new];
+    
+    [[self.paths allKeys] enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSMutableArray *components = [[obj componentsSeparatedByString:@"/"] mutableCopy];
+        [components removeObject:@""];
+        
+        if ([components firstObject]) {
+            [servicesNames addObject:[components firstObject]];
+        }
+    }];
+    
+    [servicesNames enumerateObjectsUsingBlock:^(NSString * _Nonnull serviceName, BOOL * _Nonnull stop) {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSString * _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+            
+            if (![evaluatedObject hasPrefix:[NSString stringWithFormat:@"/%@", serviceName]]) {
+                return NO;
+            }
+            return YES;
+        }];
+        NSArray<NSString*> *filteredKeys = [[self.paths allKeys] filteredArrayUsingPredicate:predicate];
+        
+        NSMutableArray<id<GeneratablePath>> *pathsForService = [NSMutableArray new];
+        
+        [filteredKeys enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            NSArray<Path*> *pathsArray = self.paths[obj];
+            if (pathsArray.count > 0) {
+                [pathsForService addObjectsFromArray:pathsArray];
+            }
+        }];
+        
+        if (pathsForService.count) {
+            resultDictionary[serviceName] = [pathsForService copy];
+        }
+    }];
+    
+    return [resultDictionary copy];
+}
+
+- (NSArray<id<GeneratableDTO>> *)allGeneratableDTO
+{
+    NSMutableArray<id<GeneratableDTO>> *result = [NSMutableArray new];
+    
+    [SettingsManager sharedManager].allSchemas = [self.components.schemas copy];
+    
+    [self.components.schemas enumerateObjectsUsingBlock:^(OASchema * _Nonnull schema, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if (schema.enumList) {
+            return;
+        }
+        [result addObject:schema];
+    }];
+    
+    return [result copy];
+}
+
+- (NSDictionary<NSString *,NSArray<NSString *> *> *)enumsNamesByOptions
+{
+    NSMutableDictionary<NSString*, NSArray<NSString*> *> *result = [NSMutableDictionary new];
+    
+    [self.components.schemas enumerateObjectsUsingBlock:^(OASchema * _Nonnull schema, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if (!schema.enumList || !schema.name) {
+            return;
+        }
+        result[[schema.name capitalizeFirstCharacter]] = [schema.enumList copy];
+    }];
+    
+    return [result copy];
 }
 
 @end

@@ -9,8 +9,9 @@
 #import "BaseModel.h"
 #import "PathParameter.h"
 #import "Response.h"
+#import "Protocols.h"
 
-@interface Path : BaseModel
+@interface Path : BaseModel <GeneratablePath>
 
 @property (nonatomic, strong) NSString *method;
 @property (nonatomic, strong) NSString *pathString;

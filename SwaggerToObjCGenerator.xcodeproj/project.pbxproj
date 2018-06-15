@@ -12,6 +12,8 @@
 		1A4DB0B920D0624A00DA16B6 /* Components.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A4DB0B820D0624A00DA16B6 /* Components.m */; };
 		61124E4A1FA9F6690082BDA5 /* Definition.m in Sources */ = {isa = PBXBuildFile; fileRef = 61124E491FA9F6690082BDA5 /* Definition.m */; };
 		61124E4D1FA9F72B0082BDA5 /* Property.m in Sources */ = {isa = PBXBuildFile; fileRef = 61124E4C1FA9F72B0082BDA5 /* Property.m */; };
+		61264B9820D2637500704C06 /* CodeGeneratorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 61264B9720D2637500704C06 /* CodeGeneratorHelper.m */; };
+		61264B9B20D2703600704C06 /* Generator.m in Sources */ = {isa = PBXBuildFile; fileRef = 61264B9A20D2703600704C06 /* Generator.m */; };
 		6139EC711FAC9B5700248C4F /* NSString+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6139EC701FAC9B5700248C4F /* NSString+Helper.m */; };
 		6139EC7B1FACB0C200248C4F /* ParentServicesResource.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6139EC781FACAE2800248C4F /* ParentServicesResource.h */; };
 		6139EC7C1FACB0C200248C4F /* ParentServicesResource.m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6139EC791FACAE2800248C4F /* ParentServicesResource.m */; };
@@ -30,6 +32,10 @@
 		617803741FB5E6BF0018A219 /* BaseEntity_m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 617803711FB5E4660018A219 /* BaseEntity_m */; };
 		6179FBCA1FAB33FD005B817C /* Swagger+CodeGen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6179FBC91FAB33FD005B817C /* Swagger+CodeGen.m */; };
 		6179FBD81FAB49E7005B817C /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 6179FBD71FAB49E7005B817C /* Service.m */; };
+		61852CFF20D1440A00AF91D7 /* OASchema.m in Sources */ = {isa = PBXBuildFile; fileRef = 61852CFE20D1440A00AF91D7 /* OASchema.m */; };
+		61852D0220D144CA00AF91D7 /* OAProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 61852D0120D144CA00AF91D7 /* OAProperty.m */; };
+		61852D0520D1666100AF91D7 /* OAServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 61852D0420D1666100AF91D7 /* OAServer.m */; };
+		61852D0920D16BBF00AF91D7 /* FilesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 61852D0820D16BBF00AF91D7 /* FilesHandler.m */; };
 		619295C71FB9D7CE0024CB78 /* NSError+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 619295C61FB9D7CE0024CB78 /* NSError+Extension.m */; };
 		619365C81FA8AD52003B7B0B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365C71FA8AD52003B7B0B /* main.m */; };
 		619365D31FA8B6CF003B7B0B /* Swagger.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365D21FA8B6CF003B7B0B /* Swagger.m */; };
@@ -74,6 +80,10 @@
 		61124E491FA9F6690082BDA5 /* Definition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Definition.m; sourceTree = "<group>"; };
 		61124E4B1FA9F72B0082BDA5 /* Property.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Property.h; sourceTree = "<group>"; };
 		61124E4C1FA9F72B0082BDA5 /* Property.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Property.m; sourceTree = "<group>"; };
+		61264B9620D2637500704C06 /* CodeGeneratorHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodeGeneratorHelper.h; sourceTree = "<group>"; };
+		61264B9720D2637500704C06 /* CodeGeneratorHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodeGeneratorHelper.m; sourceTree = "<group>"; };
+		61264B9920D2703600704C06 /* Generator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Generator.h; sourceTree = "<group>"; };
+		61264B9A20D2703600704C06 /* Generator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Generator.m; sourceTree = "<group>"; };
 		6139EC6F1FAC9B5700248C4F /* NSString+Helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Helper.h"; sourceTree = "<group>"; };
 		6139EC701FAC9B5700248C4F /* NSString+Helper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Helper.m"; sourceTree = "<group>"; };
 		6139EC731FACAB0100248C4F /* ObjectiveCClassTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectiveCClassTemplate.m; sourceTree = "<group>"; };
@@ -99,6 +109,14 @@
 		6179FBC91FAB33FD005B817C /* Swagger+CodeGen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Swagger+CodeGen.m"; sourceTree = "<group>"; };
 		6179FBD61FAB49E7005B817C /* Service.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Service.h; sourceTree = "<group>"; };
 		6179FBD71FAB49E7005B817C /* Service.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Service.m; sourceTree = "<group>"; };
+		61852CFD20D1440A00AF91D7 /* OASchema.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OASchema.h; sourceTree = "<group>"; };
+		61852CFE20D1440A00AF91D7 /* OASchema.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OASchema.m; sourceTree = "<group>"; };
+		61852D0020D144CA00AF91D7 /* OAProperty.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OAProperty.h; sourceTree = "<group>"; };
+		61852D0120D144CA00AF91D7 /* OAProperty.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OAProperty.m; sourceTree = "<group>"; };
+		61852D0320D1666100AF91D7 /* OAServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OAServer.h; sourceTree = "<group>"; };
+		61852D0420D1666100AF91D7 /* OAServer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OAServer.m; sourceTree = "<group>"; };
+		61852D0720D16BBF00AF91D7 /* FilesHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesHandler.h; sourceTree = "<group>"; };
+		61852D0820D16BBF00AF91D7 /* FilesHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesHandler.m; sourceTree = "<group>"; };
 		6190FE321FAC81AE0027E586 /* APIConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIConsts.h; sourceTree = "<group>"; };
 		619295C51FB9D7CE0024CB78 /* NSError+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSError+Extension.h"; sourceTree = "<group>"; };
 		619295C61FB9D7CE0024CB78 /* NSError+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+Extension.m"; sourceTree = "<group>"; };
@@ -148,6 +166,12 @@
 				1A4DB0B520D05D6400DA16B6 /* OpenAPI.m */,
 				1A4DB0B720D0624A00DA16B6 /* Components.h */,
 				1A4DB0B820D0624A00DA16B6 /* Components.m */,
+				61852CFD20D1440A00AF91D7 /* OASchema.h */,
+				61852CFE20D1440A00AF91D7 /* OASchema.m */,
+				61852D0020D144CA00AF91D7 /* OAProperty.h */,
+				61852D0120D144CA00AF91D7 /* OAProperty.m */,
+				61852D0320D1666100AF91D7 /* OAServer.h */,
+				61852D0420D1666100AF91D7 /* OAServer.m */,
 			);
 			path = OpenAPI;
 			sourceTree = "<group>";
@@ -199,6 +223,12 @@
 				6139EC701FAC9B5700248C4F /* NSString+Helper.m */,
 				614DDADE1FB2000700BF0AEE /* SettingsManager.h */,
 				614DDADF1FB2000700BF0AEE /* SettingsManager.m */,
+				61264B9920D2703600704C06 /* Generator.h */,
+				61264B9A20D2703600704C06 /* Generator.m */,
+				61264B9620D2637500704C06 /* CodeGeneratorHelper.h */,
+				61264B9720D2637500704C06 /* CodeGeneratorHelper.m */,
+				61852D0720D16BBF00AF91D7 /* FilesHandler.h */,
+				61852D0820D16BBF00AF91D7 /* FilesHandler.m */,
 				619365D01FA8B671003B7B0B /* Models */,
 				1A4DB0B220D057DE00DA16B6 /* Protocols.h */,
 			);
@@ -299,6 +329,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 619365BB1FA8AD52003B7B0B;
 			productRefGroup = 619365C51FA8AD52003B7B0B /* Products */;
@@ -354,6 +385,7 @@
 				6173B8081FA9D02A00FAE8D9 /* PathParameter.m in Sources */,
 				619365D61FA8B7FD003B7B0B /* BaseModel.m in Sources */,
 				6179FBCA1FAB33FD005B817C /* Swagger+CodeGen.m in Sources */,
+				61264B9B20D2703600704C06 /* Generator.m in Sources */,
 				61124E4D1FA9F72B0082BDA5 /* Property.m in Sources */,
 				61124E4A1FA9F6690082BDA5 /* Definition.m in Sources */,
 				6139EC711FAC9B5700248C4F /* NSString+Helper.m in Sources */,
@@ -364,9 +396,14 @@
 				619365DF1FA8BA2B003B7B0B /* License.m in Sources */,
 				619365D31FA8B6CF003B7B0B /* Swagger.m in Sources */,
 				6173B80E1FA9D8E400FAE8D9 /* Schema.m in Sources */,
+				61852D0220D144CA00AF91D7 /* OAProperty.m in Sources */,
 				6173B80B1FA9D89800FAE8D9 /* Response.m in Sources */,
+				61852D0920D16BBF00AF91D7 /* FilesHandler.m in Sources */,
+				61852CFF20D1440A00AF91D7 /* OASchema.m in Sources */,
 				1A4DB0B620D05D6400DA16B6 /* OpenAPI.m in Sources */,
+				61264B9820D2637500704C06 /* CodeGeneratorHelper.m in Sources */,
 				619365C81FA8AD52003B7B0B /* main.m in Sources */,
+				61852D0520D1666100AF91D7 /* OAServer.m in Sources */,
 				1A4DB0B920D0624A00DA16B6 /* Components.m in Sources */,
 				619295C71FB9D7CE0024CB78 /* NSError+Extension.m in Sources */,
 				619365E21FA8C915003B7B0B /* Path.m in Sources */,

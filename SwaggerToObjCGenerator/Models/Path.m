@@ -161,8 +161,19 @@
     //
     //
     NSMutableString *methodTitleString = [[NSMutableString alloc] init];
-    if (self.summary.length > 0 && forDeclaration) {
-        [methodTitleString appendFormat:@"\n/**\n * %@ \n */\n", self.summary];
+    NSString *description = nil;
+    if (self.summary.length > 0) {
+        description = [self.summary copy];
+    }
+    if (self.pathDescription.length > 0) {
+        if (!description) {
+            description = [self.pathDescription copy];
+        } else {
+            description = [description stringByAppendingFormat:@"\n%@", self.pathDescription];
+        }
+    }
+    if (description && forDeclaration) {
+        [methodTitleString appendFormat:@"\n%@", [description documentationStyleString]];
     }
     __block NSString *operationName = self.operationId?:@"";
     if (operationName.length == 0) {

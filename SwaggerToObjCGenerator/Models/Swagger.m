@@ -8,6 +8,8 @@
 
 #import "Swagger.h"
 #import "Swagger+CodeGen.h"
+#import "Constants.h"
+#import "CodeGeneratorHelper.h"
 
 @implementation Swagger
 
@@ -94,13 +96,81 @@
 
 #pragma mark - Generatable
 
-- (void)generateObjC_Classes
+//- (void)generateObjC_Classes
+//{
+//    [CodeGeneratorHelper generateParentServiceResource];
+//    [CodeGeneratorHelper generateBaseEntity];
+//    
+//    [self generateServicesClasses];
+//    [self generateDefinitionsClasses];
+//    [self generateEnumsClass];
+//}
+
+- (NSDictionary<NSString*, NSArray< id<GeneratablePath> > *> *)pathsByServiceNames
 {
-    [self generateParentServiceResource];
-    [self generateServicesClasses];
-    [self generateBaseEntity];
-    [self generateDefinitionsClasses];
-    [self generateEnumsClass];
+    NSMutableDictionary<NSString*, NSArray<Path*> *> *splitedDictionary = [NSMutableDictionary new];
+    
+    NSMutableSet<NSString *> *servicesNames = [NSMutableSet new];
+    
+    [[self.paths allKeys] enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSMutableArray *components = [[obj componentsSeparatedByString:@"/"] mutableCopy];
+        [components removeObject:@""];
+        
+        if ([components firstObject]) {
+            [servicesNames addObject:[components firstObject]];
+        }
+    }];
+    
+    [servicesNames enumerateObjectsUsingBlock:^(NSString * _Nonnull serviceName, BOOL * _Nonnull stop) {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSString * _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+            
+            if (![evaluatedObject hasPrefix:[NSString stringWithFormat:@"/%@", serviceName]]) {
+                return NO;
+            }
+            return YES;
+        }];
+        NSArray<NSString*> *filteredKeys = [[self.paths allKeys] filteredArrayUsingPredicate:predicate];
+        
+        NSMutableArray<Path*> *pathsForService = [NSMutableArray new];
+        
+        [filteredKeys enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            NSArray<Path*> *pathsArray = self.paths[obj];
+            if (pathsArray.count > 0) {
+                [pathsForService addObjectsFromArray:pathsArray];
+            }
+        }];
+        
+        if (pathsForService.count) {
+            splitedDictionary[serviceName] = pathsForService;
+        }
+    }];
+    
+    return splitedDictionary;
+}
+
+- (NSArray< id<GeneratableDTO> > *)allGeneratableDTO
+{
+    return [self.definitions copy];
+}
+
+- (NSDictionary<NSString *,NSArray<NSString *> *> *)enumsNamesByOptions
+{
+    NSMutableDictionary<NSString *,NSArray<NSString *> *> *result = [NSMutableDictionary new];
+    
+    [self.definitions enumerateObjectsUsingBlock:^(Definition * _Nonnull definition, NSUInteger idx, BOOL * _Nonnull stop) {
+       
+        [definition.properties enumerateObjectsUsingBlock:^(Property * _Nonnull property, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if (property.enumList.count == 0 || !property.name) {
+                return;
+            }
+            result[[property.name capitalizeFirstCharacter]] = property.enumList;
+        }];
+    }];
+    
+    return [result copy];
 }
 
 @end

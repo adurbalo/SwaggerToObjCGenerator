@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SettingsManager.h"
+#import "Generator.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -35,9 +36,14 @@ int main(int argc, const char * argv[]) {
     
         [[SettingsManager sharedManager] configurateWithArgumentsDictionary:arguments];
        
-        id<Generatable> generator = [[SettingsManager sharedManager] generator];
-        [generator generateObjC_Classes];
+        id<Generatable> generatableObject = [[SettingsManager sharedManager] generator];
+//        [generator generateObjC_Classes];
+        
+        Generator *generator = [[Generator alloc] initWithGeneratableObject:generatableObject];
+        [generator start];
+        
+        NSLog(@"Files generation complete 🛬");
     }
-    NSLog(@"Files generation complete 🛬");
+    
     return 0;
 }

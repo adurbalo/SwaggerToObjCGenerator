@@ -8,8 +8,9 @@
 
 #import "BaseModel.h"
 #import "Property.h"
+#import "Protocols.h"
 
-@interface Definition : BaseModel
+@interface Definition : BaseModel <GeneratableDTO>
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *type;
@@ -23,5 +24,10 @@
 
 - (NSString *)humanDeclarationFromTemplate:(NSString*)templateString;
 - (NSString *)humanImplementationFromTemplate:(NSString*)templateString;
+
+- (NSString *)humanClassDeclaration;
+- (NSString *)humanClassImplementation;
+- (NSString *)machineClassDeclaration;
+- (NSString *)machineClassImplementation;
 
 @end

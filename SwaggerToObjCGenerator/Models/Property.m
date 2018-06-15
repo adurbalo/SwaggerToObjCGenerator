@@ -14,6 +14,7 @@
 {
     NSMutableDictionary *keyPathDict = [NSMutableDictionary dictionaryWithDictionary:[super JSONKeyPathsByPropertyKey]];
     [keyPathDict setObject:@"format" forKey:@"format"];
+    [keyPathDict setObject:@"description" forKey:@"propertyDescription"];
     return keyPathDict;
 }
 

@@ -87,9 +87,13 @@
     
     if ([pathExtension isEqualToString:@"json"]) {
         return ContentTypeJSON;
-    } else if ([pathExtension isEqualToString:@"yaml"]) {
+    } else if ([pathExtension isEqualToString:@"yaml"] || [pathExtension isEqualToString:@"yml"]) {
         return ContentTypeYAML;
     }
+    
+    NSError *unsupportedContentTypeError = [NSError errorWithLocalizedDescription:@"Unsupported content type! Expected .json or .yaml (.yml) file extension"];
+    [unsupportedContentTypeError terminate];
+    
     return ContentTypeUndefined;
 }
 

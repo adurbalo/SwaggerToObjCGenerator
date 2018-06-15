@@ -15,7 +15,7 @@
     NSMutableDictionary *keyPathDict = [NSMutableDictionary dictionaryWithDictionary:[super JSONKeyPathsByPropertyKey]];
     [keyPathDict setObject:@"name" forKey:@"name"];
     [keyPathDict setObject:@"in" forKey:@"placedIn"];
-    [keyPathDict setObject:@"required" forKey:@"required"];
+    //[keyPathDict setObject:@"required" forKey:@"required"];
     [keyPathDict setObject:@"type" forKey:@"type"];
     [keyPathDict setObject:@"format" forKey:@"format"];
     [keyPathDict setObject:@"schema" forKey:@"schema"];
@@ -25,6 +25,10 @@
 
 + (NSValueTransformer *)schemaJSONTransformer {
     return [MTLJSONAdapter dictionaryTransformerWithModelClass:Schema.class];
+}
+
++ (NSValueTransformer *)requiredJSONTransformer {
+    return [NSValueTransformer valueTransformerForName:MTLBooleanValueTransformerName];
 }
 
 #pragma mark - Public

@@ -19,4 +19,15 @@
     return capitalizedString;
 }
 
+- (NSString *)documentationStyleString
+{
+    if (self.length == 0) {
+        return self;
+    }
+    NSString *formated = [self stringByReplacingOccurrencesOfString:@"\n" withString:@"\n * "];
+    formated = [self stringByReplacingOccurrencesOfString:@". " withString:@".\n * "];
+    NSString *result = [NSString stringWithFormat:@"/**\n * %@\n */\n", formated];
+    return result;
+}
+
 @end

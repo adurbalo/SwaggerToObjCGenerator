@@ -4,6 +4,13 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>LibYAML.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>Mantle.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -18,8 +25,26 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>YAML-Framework.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict/>
+	<dict>
+		<key>B52A96C24B258D25C17BF0B8BC5ADC94</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E22364ABE91D3C78B1DA1DFF6B707454</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
 </dict>
 </plist>

@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSString *itemsType;
 @property (nonatomic, strong) NSString *reference;
-@property (nonatomic) NSArray *enumList;
+@property (nonatomic, strong) NSArray *enumList;
 
 - (NSString *)objC_mainTypeName;
 - (NSString *)objC_genericTypeName;

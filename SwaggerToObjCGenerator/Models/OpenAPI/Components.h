@@ -7,10 +7,10 @@
 //
 
 #import "BaseModel.h"
-#import "Schema.h"
+#import "OASchema.h"
 
 @interface Components : BaseModel
 
-@property (nonatomic, strong) Schema *scheme;
+@property (nonatomic, strong) NSArray<OASchema *> *schemas;
 
 @end

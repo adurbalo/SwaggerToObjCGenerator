@@ -11,6 +11,7 @@
 
 #import "NSString+Helper.h"
 #import "SettingsManager.h"
+#import "NSError+Extension.h"
 
 #define CLASS_IMPORT_MARKER @"<import_marker>"
 #define CLASS_DERECTIVE_DECLARATION_MARKER @"<class_derective_declaration_marker>"
