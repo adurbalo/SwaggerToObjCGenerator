@@ -72,9 +72,9 @@
             importEnums = YES;
             [propertiesDeclaration appendFormat:@"@property (nonatomic) %@%@;\n", [obj objC_fullTypeName], objC_parameterNameFromSwaggerParameter(obj.name)];
             
-            if (obj.enumList.count > 0) {
-                [[SettingsManager sharedManager] addEnumName:obj.name withOptions:obj.enumList];
-            }
+//            if (obj.enumList.count > 0) {
+//                [[SettingsManager sharedManager] addEnumName:obj.name withOptions:obj.enumList];
+//            }
             
         } else {
             [propertiesDeclaration appendFormat:@"@property (nonatomic, strong) %@%@;\n", [obj objC_fullTypeName], objC_parameterNameFromSwaggerParameter(obj.name)];
@@ -213,9 +213,9 @@
             importEnums = YES;
             [propertiesDeclaration appendFormat:@"@property (nonatomic) %@%@;\n", [obj objC_fullTypeName], objC_parameterNameFromSwaggerParameter(obj.name)];
             
-            if (obj.enumList.count > 0) {
-                [[SettingsManager sharedManager] addEnumName:obj.name withOptions:obj.enumList];
-            }
+//            if (obj.enumList.count > 0) {
+//                [[SettingsManager sharedManager] addEnumName:obj.name withOptions:obj.enumList];
+//            }
             
         } else {
             [propertiesDeclaration appendFormat:@"@property (nonatomic, strong) %@%@;\n", [obj objC_fullTypeName], objC_parameterNameFromSwaggerParameter(obj.name)];

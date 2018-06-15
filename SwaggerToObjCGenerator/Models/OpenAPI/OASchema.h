@@ -9,14 +9,18 @@
 #import "BaseModel.h"
 #import "OAProperty.h"
 #import "Protocols.h"
+#import "OAObjectType.h"
+/*
+ @property (nonatomic, strong) NSString *type;
+ @property (nonatomic, strong) NSString *ref;
+ @property (nonatomic, strong) OAObjectType *items;
+ @property (nonatomic, strong) NSString *format;
+*/
 
-@interface OASchema : BaseModel <GeneratableDTO>
+@interface OASchema : OAObjectType <GeneratableDTO>
 
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSArray<OAProperty *> *properties;
-@property (nonatomic, strong) NSArray *enumList;
-
 
 - (NSString *)className;
 - (NSString *)humanClassDeclaration;

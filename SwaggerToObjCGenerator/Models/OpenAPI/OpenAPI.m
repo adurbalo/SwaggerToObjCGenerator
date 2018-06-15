@@ -13,6 +13,7 @@
 #import "Components.h"
 #import "OAServer.h"
 #import "OASchema.h"
+#import "DataManager.h"
 
 @implementation OpenAPI
 
@@ -128,7 +129,7 @@
 {
     NSMutableArray<id<GeneratableDTO>> *result = [NSMutableArray new];
     
-    [SettingsManager sharedManager].allSchemas = [self.components.schemas copy];
+    [[DataManager sharedManager] addOASchemas:self.components.schemas];
     
     [self.components.schemas enumerateObjectsUsingBlock:^(OASchema * _Nonnull schema, NSUInteger idx, BOOL * _Nonnull stop) {
         

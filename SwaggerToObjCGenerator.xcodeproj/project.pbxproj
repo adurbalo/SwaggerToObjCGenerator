@@ -32,6 +32,9 @@
 		617803741FB5E6BF0018A219 /* BaseEntity_m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 617803711FB5E4660018A219 /* BaseEntity_m */; };
 		6179FBCA1FAB33FD005B817C /* Swagger+CodeGen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6179FBC91FAB33FD005B817C /* Swagger+CodeGen.m */; };
 		6179FBD81FAB49E7005B817C /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 6179FBD71FAB49E7005B817C /* Service.m */; };
+		617E51D520D409A70061A516 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 617E51D420D409A70061A516 /* DataManager.m */; };
+		617E51D820D419D90061A516 /* OAContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 617E51D720D419D90061A516 /* OAContent.m */; };
+		617E51DB20D420740061A516 /* OAObjectType.m in Sources */ = {isa = PBXBuildFile; fileRef = 617E51DA20D420740061A516 /* OAObjectType.m */; };
 		61852CFF20D1440A00AF91D7 /* OASchema.m in Sources */ = {isa = PBXBuildFile; fileRef = 61852CFE20D1440A00AF91D7 /* OASchema.m */; };
 		61852D0220D144CA00AF91D7 /* OAProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 61852D0120D144CA00AF91D7 /* OAProperty.m */; };
 		61852D0520D1666100AF91D7 /* OAServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 61852D0420D1666100AF91D7 /* OAServer.m */; };
@@ -109,6 +112,12 @@
 		6179FBC91FAB33FD005B817C /* Swagger+CodeGen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Swagger+CodeGen.m"; sourceTree = "<group>"; };
 		6179FBD61FAB49E7005B817C /* Service.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Service.h; sourceTree = "<group>"; };
 		6179FBD71FAB49E7005B817C /* Service.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Service.m; sourceTree = "<group>"; };
+		617E51D320D409A70061A516 /* DataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		617E51D420D409A70061A516 /* DataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		617E51D620D419D90061A516 /* OAContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OAContent.h; sourceTree = "<group>"; };
+		617E51D720D419D90061A516 /* OAContent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OAContent.m; sourceTree = "<group>"; };
+		617E51D920D420740061A516 /* OAObjectType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OAObjectType.h; sourceTree = "<group>"; };
+		617E51DA20D420740061A516 /* OAObjectType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OAObjectType.m; sourceTree = "<group>"; };
 		61852CFD20D1440A00AF91D7 /* OASchema.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OASchema.h; sourceTree = "<group>"; };
 		61852CFE20D1440A00AF91D7 /* OASchema.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OASchema.m; sourceTree = "<group>"; };
 		61852D0020D144CA00AF91D7 /* OAProperty.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OAProperty.h; sourceTree = "<group>"; };
@@ -172,6 +181,10 @@
 				61852D0120D144CA00AF91D7 /* OAProperty.m */,
 				61852D0320D1666100AF91D7 /* OAServer.h */,
 				61852D0420D1666100AF91D7 /* OAServer.m */,
+				617E51D620D419D90061A516 /* OAContent.h */,
+				617E51D720D419D90061A516 /* OAContent.m */,
+				617E51D920D420740061A516 /* OAObjectType.h */,
+				617E51DA20D420740061A516 /* OAObjectType.m */,
 			);
 			path = OpenAPI;
 			sourceTree = "<group>";
@@ -221,6 +234,8 @@
 				619295C61FB9D7CE0024CB78 /* NSError+Extension.m */,
 				6139EC6F1FAC9B5700248C4F /* NSString+Helper.h */,
 				6139EC701FAC9B5700248C4F /* NSString+Helper.m */,
+				617E51D320D409A70061A516 /* DataManager.h */,
+				617E51D420D409A70061A516 /* DataManager.m */,
 				614DDADE1FB2000700BF0AEE /* SettingsManager.h */,
 				614DDADF1FB2000700BF0AEE /* SettingsManager.m */,
 				61264B9920D2703600704C06 /* Generator.h */,
@@ -401,8 +416,11 @@
 				61852D0920D16BBF00AF91D7 /* FilesHandler.m in Sources */,
 				61852CFF20D1440A00AF91D7 /* OASchema.m in Sources */,
 				1A4DB0B620D05D6400DA16B6 /* OpenAPI.m in Sources */,
+				617E51D520D409A70061A516 /* DataManager.m in Sources */,
 				61264B9820D2637500704C06 /* CodeGeneratorHelper.m in Sources */,
 				619365C81FA8AD52003B7B0B /* main.m in Sources */,
+				617E51DB20D420740061A516 /* OAObjectType.m in Sources */,
+				617E51D820D419D90061A516 /* OAContent.m in Sources */,
 				61852D0520D1666100AF91D7 /* OAServer.m in Sources */,
 				1A4DB0B920D0624A00DA16B6 /* Components.m in Sources */,
 				619295C71FB9D7CE0024CB78 /* NSError+Extension.m in Sources */,

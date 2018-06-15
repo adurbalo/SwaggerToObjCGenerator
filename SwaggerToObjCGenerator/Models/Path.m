@@ -208,9 +208,9 @@
         
         [methodTitleString appendFormat:@"%@:(%@)%@ ", title, [[obj currentSchema] objC_fullTypeName], name];
         
-        if ([[obj currentSchema] enumList].count > 0) {
-            [[SettingsManager sharedManager] addEnumName:name withOptions:[[obj currentSchema] enumList]];
-        }
+//        if ([[obj currentSchema] enumList].count > 0) {
+//            [[SettingsManager sharedManager] addEnumName:name withOptions:[[obj currentSchema] enumList]];
+//        }
     }];
     
     if (parametersExists) {
@@ -218,7 +218,12 @@
     }
     
     Response *response = [self successResponse];
-    if (response.schema) {
+    
+    if (response.content) { //OpenAPI
+        
+        //TODO: implementation required
+        
+    } else if (response.schema) { //Swagger
         [methodTitleString appendFormat:@"ResponseBlock:(void(^)(%@response, NSError *error))responseBlock", [response.schema objC_fullTypeName]];
     } else {
         [methodTitleString appendString:@"ResponseBlock:(void(^)(id response, NSError *error))responseBlock"];

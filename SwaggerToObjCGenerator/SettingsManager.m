@@ -19,10 +19,7 @@
 #define CONTENT_PATH_KEY @"-contentPath"
 #define CONTENT_URL_KEY @"-contentURL"
 
-
 @interface SettingsManager ()
-
-@property (nonatomic, strong) NSMutableDictionary<NSString* , NSArray<NSString *> *> *enumsDictionary;
 
 @property (nonatomic, strong) NSString *contentPath;
 @property (nonatomic, strong) NSString *contentURL;
@@ -43,9 +40,7 @@
 - (instancetype)init
 {
     self = [super init];
-    if (self) {
-        self.enumsDictionary = [NSMutableDictionary new];
-        
+    if (self) {        
         NSBundle *mainBundle = [NSBundle mainBundle];
         self.resourcesPath = [[mainBundle bundlePath] stringByAppendingPathComponent:@"Resources"];
     }
@@ -209,17 +204,6 @@
 - (NSString *)typeNameWithType:(NSString *)type
 {
     return [NSString stringWithFormat:@"%@%@", self.prefix, type];
-}
-
-#pragma mark - Enums
-
-- (void)addEnumName:(NSString *)enumName withOptions:(NSArray<NSString *> *)options
-{
-    NSString *updatedName = [enumName capitalizeFirstCharacter];
-    if (!updatedName) {
-        return;
-    }
-    [self.enumsDictionary setValue:options forKey:updatedName];
 }
 
 @end

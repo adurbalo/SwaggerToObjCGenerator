@@ -360,10 +360,12 @@
 {
     [self createParentServiceResource];
     [self createBaseEntity];
-    [self generateServicesClasses];
-    [self generateDTOs];
     
+    [self generateDTOs];
     [self generateEnumsClass];
+    
+    [self generateServicesClasses];
+    
     
     /*
      - (void)generateObjC_Classes

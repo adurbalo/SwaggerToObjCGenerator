@@ -1,23 +1,25 @@
 //
-//  OAProperty.m
+//  OAContent.m
 //  SwaggerToObjCGenerator
 //
-//  Created by Andrey Durbalo on 6/13/18.
+//  Created by Andrey Durbalo on 6/15/18.
 //  Copyright © 2018 TMW. All rights reserved.
 //
 
-#import "OAProperty.h"
+#import "OAContent.h"
 #import "OASchema.h"
 
-@implementation OAProperty
+@implementation OAContent
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
     NSMutableDictionary *keyPathDict = [NSMutableDictionary dictionaryWithDictionary:[super JSONKeyPathsByPropertyKey]];
-    [keyPathDict setObject:@"name" forKey:@"name"];
-    [keyPathDict setObject:@"enum" forKey:@"enumList"];
-    [keyPathDict setObject:@"description" forKey:@"propertyDescription"];
+    [keyPathDict setObject:@"schema" forKey:@"schema"];
     return keyPathDict;
+}
+
++ (NSValueTransformer *)schemaJSONTransformer {
+    return [MTLJSONAdapter dictionaryTransformerWithModelClass:OASchema.class];
 }
 
 @end

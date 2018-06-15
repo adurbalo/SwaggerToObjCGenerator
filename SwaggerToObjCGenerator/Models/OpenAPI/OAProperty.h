@@ -7,15 +7,12 @@
 //
 
 #import "BaseModel.h"
+#import "OAObjectType.h"
 
-@class OASchema;
-
-@interface OAProperty : BaseModel
+@interface OAProperty : OAObjectType
 
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *type;
-@property (nonatomic, strong) NSString *ref;
-@property (nonatomic, strong) OASchema *items;
+@property (nonatomic, strong) NSString *propertyDescription;
 @property (nonatomic, strong) NSArray *enumList;
 
 @end

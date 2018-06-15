@@ -8,6 +8,7 @@
 
 #import "OASchema.h"
 #import "Constants.h"
+#import "DataManager.h"
 
 @implementation OASchema
 
@@ -16,7 +17,6 @@
     NSMutableDictionary *keyPathDict = [NSMutableDictionary dictionaryWithDictionary:[super JSONKeyPathsByPropertyKey]];
     [keyPathDict setObject:@"type" forKey:@"type"];
     [keyPathDict setObject:@"properties" forKey:@"properties"];
-    [keyPathDict setObject:@"enum" forKey:@"enumList"];
     return keyPathDict;
 }
 
@@ -111,13 +111,8 @@
     [self.properties enumerateObjectsUsingBlock:^(OAProperty * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
         if (obj.ref) {
-            
-            NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(OAProperty * _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-                return [evaluatedObject.name isEqualToString:obj.ref.lastPathComponent];
-            }];
-            OASchema *schema = [[[SettingsManager sharedManager].allSchemas filteredArrayUsingPredicate:predicate] firstObject];
+            OASchema *schema = [[DataManager sharedManager] oaSchemaByName:obj.ref.lastPathComponent];
             if (schema) {
-                
                 if (schema.enumList) {
                     importEnums = YES;
                     [propertiesDeclaration appendFormat:@"@property (nonatomic) %@ %@;\n", enumTypeNameByParameterName(obj.name), objC_parameterNameFromSwaggerParameter(obj.name)];
@@ -127,11 +122,9 @@
                     [propertiesDeclaration appendFormat:@"@property (nonatomic, strong) %@%@;\n", type, objC_parameterNameFromSwaggerParameter(obj.name)];
                 }
             } else {
-                NSLog(@"BOOOOOOOOM");
+                NSLog(@"Can't find schema for ref: %@", obj.ref);
             }
-            
         } else {
-            
             NSString *type = [NSString stringWithFormat:@"%@ *", objC_classNameFromSwaggerType(obj.type)];
             if (obj.items) {
                 type = [NSString stringWithFormat:@"%@<%@ *> *", objC_classNameFromSwaggerType(obj.items.type), objC_classNameFromSwaggerType(obj.type)];
@@ -180,11 +173,7 @@
         [mappedKeysByPropertiesMethod appendFormat:@"\t\t%@[@\"%@\"] = @\"%@\";\n", dictionaryVariableName, obj.name, objC_parameterNameFromSwaggerParameter(obj.name)];
         
         if (obj.ref) {
-            
-            NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(OAProperty * _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-                return [evaluatedObject.name isEqualToString:obj.ref.lastPathComponent];
-            }];
-            OASchema *schema = [[[SettingsManager sharedManager].allSchemas filteredArrayUsingPredicate:predicate] firstObject];
+            OASchema *schema = [[DataManager sharedManager] oaSchemaByName:obj.ref.lastPathComponent];
             if (schema) {
                 
                 if (schema.enumList) {
@@ -199,10 +188,8 @@
                 NSLog(@"BOOOOOOOOM");
             }
         } else {
-        
+#warning UNIMPLEMENTED FULLY
         }
-        
-        
         if (obj.enumList.count) {
             [enumNameMethodString appendFormat:@"\tif ([fieldName isEqualToString:@\"%@\"]) return %@;\n", objC_parameterNameFromSwaggerParameter(obj.name), enumTypeNameConstantNameByParameterName(obj.name)];
         }

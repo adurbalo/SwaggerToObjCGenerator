@@ -217,7 +217,7 @@
     NSMutableString *h_importSection = [[NSMutableString alloc] init];
     NSMutableString *m_implementationSection = [[NSMutableString alloc] init];
     
-    [[SettingsManager sharedManager].enumsDictionary enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSArray<NSString *> * _Nonnull obj, BOOL * _Nonnull stop) {
+    [@{}/*[SettingsManager sharedManager].enumsDictionary*/ enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSArray<NSString *> * _Nonnull obj, BOOL * _Nonnull stop) {
         
         NSMutableString *h_enumDeclaration = [[NSMutableString alloc] init];
         NSMutableString *h_constantsDeclaration = [[NSMutableString alloc] init];

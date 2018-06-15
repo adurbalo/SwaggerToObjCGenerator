@@ -36,9 +36,4 @@ typedef NS_ENUM(NSUInteger, ContentType) {
 - (NSString *)definitionsSuperclassName;
 - (NSString *)typeNameWithType:(NSString *)type;
 
-- (NSDictionary<NSString* ,NSArray<NSString *> *> *)enumsDictionary;
-- (void)addEnumName:(NSString *)enumName withOptions:(NSArray<NSString *> *)options;
-
-@property (nonatomic, strong) NSArray *allSchemas;
-
 @end

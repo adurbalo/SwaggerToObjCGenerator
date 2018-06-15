@@ -41,6 +41,10 @@
             
             [pathObj enumerateKeysAndObjectsUsingBlock:^(NSString *  _Nonnull method, NSDictionary * _Nonnull obj, BOOL * _Nonnull stop) {
                 
+                if ([obj isKindOfClass:[NSNull class]]) {
+                    return;
+                }
+                
                 NSError *error = nil;
                 Path *pathCandidateObj = [MTLJSONAdapter modelOfClass:[Path class]
                                              fromJSONDictionary:obj
