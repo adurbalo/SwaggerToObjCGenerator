@@ -52,7 +52,7 @@
 - (OASchema *)oaSchemaByName:(NSString *)name
 {
     NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(OAProperty * _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-        return [evaluatedObject.name isEqualToString:name];
+        return [name hasSuffix:evaluatedObject.name];
     }];
     OASchema *schema = [[self.oaSchemas filteredArrayUsingPredicate:predicate] firstObject];
     return schema;

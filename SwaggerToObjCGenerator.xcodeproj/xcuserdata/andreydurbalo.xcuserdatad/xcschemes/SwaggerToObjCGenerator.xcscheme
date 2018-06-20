@@ -64,15 +64,15 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "-destinationPath &quot;/Users/andreydurbalo/Desktop/OpenAPI_dest&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-destinationPath &quot;/Users/andreydurbalo/Desktop/TestGeneratorProject/TestGeneratorProject/GeneratedCode&quot;"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-contentPath &quot;/Users/andreydurbalo/Downloads/OpenAPI-Specification-master/examples/v3.0/link-example.yaml&quot;"
+            argument = "-destinationPath &quot;/Users/andreydurbalo/Desktop/TestGeneratorProject/TestGeneratorProject/GeneratedCode&quot;"
             isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-contentPath &quot;/Users/andreydurbalo/Downloads/OpenAPI-Specification-master/examples/v3.0/petstore.yaml&quot;"
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-prefix &quot;AND&quot;"
@@ -80,15 +80,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-contentPath &quot;/Users/andreydurbalo/Desktop/tailoring_openapi.yml&quot;"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-contentPath &quot;/Users/andreydurbalo/Downloads/OpenAPI-Specification-master/examples/v2.0/json/uber.json&quot;"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-contentPath &quot;/Users/andreydurbalo/Desktop/tailoring_swagger.json&quot;"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-help"

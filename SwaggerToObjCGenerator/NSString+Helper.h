@@ -11,6 +11,8 @@
 @interface NSString (Helper)
 
 - (NSString *)capitalizeFirstCharacter;
+- (NSString *)lowercaseFirstCharacter;
 - (NSString *)documentationStyleString;
+- (NSString *)camelCaseStyleSting;
 
 @end

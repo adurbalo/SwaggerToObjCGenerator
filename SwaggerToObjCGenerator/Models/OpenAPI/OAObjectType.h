@@ -16,4 +16,10 @@
 @property (nonatomic, strong) NSString *format;
 @property (nonatomic, strong) NSArray *enumList;
 
+- (NSString *)objc_CustomTypeName;
+- (NSString *)objc_FullTypeName;
+- (BOOL)isEnumType;
+- (NSString *)enumTypeConstantName;
+- (NSString *)targetClassName;
+
 @end

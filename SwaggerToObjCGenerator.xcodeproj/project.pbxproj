@@ -12,7 +12,6 @@
 		1A4DB0B920D0624A00DA16B6 /* Components.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A4DB0B820D0624A00DA16B6 /* Components.m */; };
 		61124E4A1FA9F6690082BDA5 /* Definition.m in Sources */ = {isa = PBXBuildFile; fileRef = 61124E491FA9F6690082BDA5 /* Definition.m */; };
 		61124E4D1FA9F72B0082BDA5 /* Property.m in Sources */ = {isa = PBXBuildFile; fileRef = 61124E4C1FA9F72B0082BDA5 /* Property.m */; };
-		61264B9820D2637500704C06 /* CodeGeneratorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 61264B9720D2637500704C06 /* CodeGeneratorHelper.m */; };
 		61264B9B20D2703600704C06 /* Generator.m in Sources */ = {isa = PBXBuildFile; fileRef = 61264B9A20D2703600704C06 /* Generator.m */; };
 		6139EC711FAC9B5700248C4F /* NSString+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6139EC701FAC9B5700248C4F /* NSString+Helper.m */; };
 		6139EC7B1FACB0C200248C4F /* ParentServicesResource.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6139EC781FACAE2800248C4F /* ParentServicesResource.h */; };
@@ -30,7 +29,6 @@
 		6173B80E1FA9D8E400FAE8D9 /* Schema.m in Sources */ = {isa = PBXBuildFile; fileRef = 6173B80D1FA9D8E400FAE8D9 /* Schema.m */; };
 		617803731FB5E6BF0018A219 /* BaseEntity_h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 617803721FB5E4660018A219 /* BaseEntity_h */; };
 		617803741FB5E6BF0018A219 /* BaseEntity_m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 617803711FB5E4660018A219 /* BaseEntity_m */; };
-		6179FBCA1FAB33FD005B817C /* Swagger+CodeGen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6179FBC91FAB33FD005B817C /* Swagger+CodeGen.m */; };
 		6179FBD81FAB49E7005B817C /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 6179FBD71FAB49E7005B817C /* Service.m */; };
 		617E51D520D409A70061A516 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 617E51D420D409A70061A516 /* DataManager.m */; };
 		617E51D820D419D90061A516 /* OAContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 617E51D720D419D90061A516 /* OAContent.m */; };
@@ -83,8 +81,6 @@
 		61124E491FA9F6690082BDA5 /* Definition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Definition.m; sourceTree = "<group>"; };
 		61124E4B1FA9F72B0082BDA5 /* Property.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Property.h; sourceTree = "<group>"; };
 		61124E4C1FA9F72B0082BDA5 /* Property.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Property.m; sourceTree = "<group>"; };
-		61264B9620D2637500704C06 /* CodeGeneratorHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodeGeneratorHelper.h; sourceTree = "<group>"; };
-		61264B9720D2637500704C06 /* CodeGeneratorHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodeGeneratorHelper.m; sourceTree = "<group>"; };
 		61264B9920D2703600704C06 /* Generator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Generator.h; sourceTree = "<group>"; };
 		61264B9A20D2703600704C06 /* Generator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Generator.m; sourceTree = "<group>"; };
 		6139EC6F1FAC9B5700248C4F /* NSString+Helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Helper.h"; sourceTree = "<group>"; };
@@ -108,8 +104,6 @@
 		6173B80D1FA9D8E400FAE8D9 /* Schema.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Schema.m; sourceTree = "<group>"; };
 		617803711FB5E4660018A219 /* BaseEntity_m */ = {isa = PBXFileReference; lastKnownFileType = text; path = BaseEntity_m; sourceTree = "<group>"; };
 		617803721FB5E4660018A219 /* BaseEntity_h */ = {isa = PBXFileReference; lastKnownFileType = text; path = BaseEntity_h; sourceTree = "<group>"; };
-		6179FBC81FAB33FD005B817C /* Swagger+CodeGen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Swagger+CodeGen.h"; sourceTree = "<group>"; };
-		6179FBC91FAB33FD005B817C /* Swagger+CodeGen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Swagger+CodeGen.m"; sourceTree = "<group>"; };
 		6179FBD61FAB49E7005B817C /* Service.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Service.h; sourceTree = "<group>"; };
 		6179FBD71FAB49E7005B817C /* Service.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Service.m; sourceTree = "<group>"; };
 		617E51D320D409A70061A516 /* DataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
@@ -240,8 +234,6 @@
 				614DDADF1FB2000700BF0AEE /* SettingsManager.m */,
 				61264B9920D2703600704C06 /* Generator.h */,
 				61264B9A20D2703600704C06 /* Generator.m */,
-				61264B9620D2637500704C06 /* CodeGeneratorHelper.h */,
-				61264B9720D2637500704C06 /* CodeGeneratorHelper.m */,
 				61852D0720D16BBF00AF91D7 /* FilesHandler.h */,
 				61852D0820D16BBF00AF91D7 /* FilesHandler.m */,
 				619365D01FA8B671003B7B0B /* Models */,
@@ -267,8 +259,6 @@
 				619365D51FA8B7FD003B7B0B /* BaseModel.m */,
 				619365D11FA8B6CF003B7B0B /* Swagger.h */,
 				619365D21FA8B6CF003B7B0B /* Swagger.m */,
-				6179FBC81FAB33FD005B817C /* Swagger+CodeGen.h */,
-				6179FBC91FAB33FD005B817C /* Swagger+CodeGen.m */,
 				6179FBD61FAB49E7005B817C /* Service.h */,
 				6179FBD71FAB49E7005B817C /* Service.m */,
 				619365D71FA8B83D003B7B0B /* Info.h */,
@@ -399,7 +389,6 @@
 			files = (
 				6173B8081FA9D02A00FAE8D9 /* PathParameter.m in Sources */,
 				619365D61FA8B7FD003B7B0B /* BaseModel.m in Sources */,
-				6179FBCA1FAB33FD005B817C /* Swagger+CodeGen.m in Sources */,
 				61264B9B20D2703600704C06 /* Generator.m in Sources */,
 				61124E4D1FA9F72B0082BDA5 /* Property.m in Sources */,
 				61124E4A1FA9F6690082BDA5 /* Definition.m in Sources */,
@@ -417,7 +406,6 @@
 				61852CFF20D1440A00AF91D7 /* OASchema.m in Sources */,
 				1A4DB0B620D05D6400DA16B6 /* OpenAPI.m in Sources */,
 				617E51D520D409A70061A516 /* DataManager.m in Sources */,
-				61264B9820D2637500704C06 /* CodeGeneratorHelper.m in Sources */,
 				619365C81FA8AD52003B7B0B /* main.m in Sources */,
 				617E51DB20D420740061A516 /* OAObjectType.m in Sources */,
 				617E51D820D419D90061A516 /* OAContent.m in Sources */,
@@ -479,7 +467,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -528,7 +516,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};

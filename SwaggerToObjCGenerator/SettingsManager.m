@@ -20,6 +20,9 @@
 #define CONTENT_URL_KEY @"-contentURL"
 
 @interface SettingsManager ()
+{
+    BOOL _openAPI;
+}
 
 @property (nonatomic, strong) NSString *contentPath;
 @property (nonatomic, strong) NSString *contentURL;
@@ -164,6 +167,8 @@
         
     } else if (dictionary[@"openapi"]) {
         
+        _openAPI = YES;
+        
         OpenAPI *openApi = [MTLJSONAdapter modelOfClass:[OpenAPI class]
                                      fromJSONDictionary:dictionary
                                                   error:&error];
@@ -174,6 +179,11 @@
     }
     
     return generator;
+}
+
+- (BOOL)isOpenAPI
+{
+    return _openAPI;
 }
 
 - (NSString *)parentServiceRecourseName

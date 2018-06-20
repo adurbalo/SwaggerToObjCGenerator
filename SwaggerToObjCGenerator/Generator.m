@@ -83,7 +83,7 @@
 {
     NSDictionary<NSString *,NSArray<id<GeneratablePath>> *> *pathsByResources = [self.generatableObject pathsByServiceNames];
     
-    NSMutableString *apiFileContent = [NSMutableString new];
+    NSMutableString *apiFileContent = [[NSMutableString alloc] initWithString:[self serverPathsConstants]];
     
     NSMutableString *abstractServerContent_H_fileContent = [NSMutableString new];
     NSMutableString *abstractServerClassDerectiveDeclaration_H_Content = [NSMutableString new];
@@ -92,19 +92,30 @@
     NSMutableString *abstractServerContent_M_fileContent = [NSMutableString new];
     NSMutableString *abstractServerImports_M_fileContent = [NSMutableString new];
     
-    [pathsByResources enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull resourceName, NSArray<id<GeneratablePath>> * _Nonnull obj, BOOL * _Nonnull stop) {
+    NSMutableArray *sortedResourcesNames = [[pathsByResources allKeys] mutableCopy];
+    [sortedResourcesNames sortUsingSelector:@selector(caseInsensitiveCompare:)];
+    
+    for (NSString *resourceName in sortedResourcesNames) {
+        NSMutableArray<id<GeneratablePath>> *sortedPaths = [pathsByResources[resourceName] mutableCopy];
         
-        NSString *resorceClassName = [self generateH_FileForResourceName:resourceName withPaths:obj];
-        [self generateM_FileForResourceName:resourceName withPaths:obj];
+        [sortedPaths sortUsingComparator:^NSComparisonResult( id<GeneratablePath> _Nonnull obj1, id<GeneratablePath> _Nonnull obj2) {
+            if ([obj1 respondsToSelector:@selector(sortableKey)] && [obj2 respondsToSelector:@selector(sortableKey)]) {
+                return [[obj1 sortableKey] compare:[obj2 sortableKey] options:NSCaseInsensitiveSearch];
+            }
+            return [[obj1 methodDeclarationName] compare:[obj2 methodDeclarationName] options:NSCaseInsensitiveSearch];
+        }];
         
-        [apiFileContent setString:[NSString stringWithFormat:@"%@\n%@", apiFileContent, [self APIFileCodeForResourceName:resourceName withPaths:obj]]];
+        NSString *resorceClassName = [self generateH_FileForResourceName:resourceName withPaths:sortedPaths];
+        [self generateM_FileForResourceName:resourceName withPaths:sortedPaths];
+        
+        [apiFileContent setString:[NSString stringWithFormat:@"%@\n%@", apiFileContent, [self APIFileCodeForResourceName:resourceName withPaths:sortedPaths]]];
         [abstractServerContent_H_fileContent setString:[NSString stringWithFormat:@"%@ %@", abstractServerContent_H_fileContent, [self abstractServerDefinitionForResourceName:resourceName andResourceClassName:resorceClassName]]];
         [abstractServerClassDerectiveDeclaration_H_Content setString:[NSString stringWithFormat:@"%@@class %@;\n", abstractServerClassDerectiveDeclaration_H_Content,resorceClassName]];
         [abstractServerClassIvarsDeclaration_H_Content appendFormat:@"\t%@ *_%@;\n", resorceClassName, resourceName];
         
         [abstractServerContent_M_fileContent setString:[NSString stringWithFormat:@"%@ %@", abstractServerContent_M_fileContent, [self abstractServerImplementationForResourceName:resourceName andResourceClassName:resorceClassName]]];
         [abstractServerImports_M_fileContent setString:[NSString stringWithFormat:@"%@#import \"%@.h\"\n", abstractServerImports_M_fileContent, resorceClassName]];
-    }];
+    }
     
     [self generateAPIConstantsFileWithContent:apiFileContent];
     [self generateAbstractServerFile_H_WithContent:abstractServerContent_H_fileContent withClassesDerectiveDeclaration:abstractServerClassDerectiveDeclaration_H_Content andIvarsDeclaration:abstractServerClassIvarsDeclaration_H_Content];
@@ -196,6 +207,29 @@
         }
     }];
     return content;
+}
+
+#pragma mark - Server Description
+
+- (NSString *)serverPathsConstants
+{
+    if (![self.generatableObject respondsToSelector:@selector(serversURLByDescription)]) {
+        return @"";
+    }
+    NSMutableString *result = [NSMutableString new];
+    NSMutableArray *sortedKeys = [[[self.generatableObject serversURLByDescription] allKeys] mutableCopy];
+    [sortedKeys sortUsingSelector:@selector(caseInsensitiveCompare:)];
+    
+    if (sortedKeys.count > 0) {
+        [result appendString:@"\n#pragma mark - Generated Server Paths\n"];
+    }
+    
+    for (NSString *key in sortedKeys) {
+        NSString *value = [self.generatableObject serversURLByDescription][key];
+        NSString *constantName = [NSString stringWithFormat:@"k %@ Path", key];
+        [result appendFormat:@"static NSString *const %@ = @\"%@\";\n", [constantName camelCaseStyleSting], value];
+    }
+    return result;
 }
 
 #pragma mark - Abstract Server

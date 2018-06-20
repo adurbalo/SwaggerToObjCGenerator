@@ -87,4 +87,9 @@ static inline NSString* enumTypeNameConstantNameByParameterName(NSString *parame
     return [NSString stringWithFormat:@"k%@Name", enumTypeNameByParameterName(parameterName)];
 }
 
+static inline NSString* typeNameByName(NSString *typeName)
+{
+    return [NSString stringWithFormat:@"%@%@", [SettingsManager sharedManager].prefix, typeName];
+}
+
 #endif /* Constants_h */

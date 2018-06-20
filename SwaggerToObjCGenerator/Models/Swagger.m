@@ -7,9 +7,7 @@
 //
 
 #import "Swagger.h"
-#import "Swagger+CodeGen.h"
 #import "Constants.h"
-#import "CodeGeneratorHelper.h"
 
 @implementation Swagger
 
@@ -99,16 +97,6 @@
 }
 
 #pragma mark - Generatable
-
-//- (void)generateObjC_Classes
-//{
-//    [CodeGeneratorHelper generateParentServiceResource];
-//    [CodeGeneratorHelper generateBaseEntity];
-//    
-//    [self generateServicesClasses];
-//    [self generateDefinitionsClasses];
-//    [self generateEnumsClass];
-//}
 
 - (NSDictionary<NSString*, NSArray< id<GeneratablePath> > *> *)pathsByServiceNames
 {

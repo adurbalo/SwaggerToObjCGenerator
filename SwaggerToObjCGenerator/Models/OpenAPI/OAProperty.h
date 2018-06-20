@@ -13,6 +13,5 @@
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *propertyDescription;
-@property (nonatomic, strong) NSArray *enumList;
 
 @end

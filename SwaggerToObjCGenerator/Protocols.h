@@ -14,9 +14,12 @@
 
 @protocol Generatable <NSObject>
 
+@required
 - (NSDictionary<NSString*, NSArray< id<GeneratablePath> > *> *)pathsByServiceNames;
 - (NSArray< id<GeneratableDTO> > *)allGeneratableDTO;
 - (NSDictionary<NSString *, NSArray<NSString *> *> *)enumsNamesByOptions;
+@optional
+- (NSDictionary<NSString *, NSString *> *)serversURLByDescription;
 
 @end
 
@@ -39,6 +42,8 @@
 - (NSString *)methodDeclarationName;
 - (NSString *)methodImplementation;
 - (NSSet<NSString *> *)customClassesNames;
+@optional
+- (NSString *)sortableKey;
 
 @end
 

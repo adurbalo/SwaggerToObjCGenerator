@@ -9,12 +9,15 @@
 #import "BaseModel.h"
 #import "Schema.h"
 
+@class OASchema;
+
 @interface PathParameter : Schema
 
 @property (nonatomic, strong) NSString *placedIn;
 @property (nonatomic) BOOL required;
 @property (nonatomic, strong) NSString *format;
 @property (nonatomic, strong) Schema *schema;
+@property (nonatomic, strong) OASchema *oaSchema;
 
 - (Schema*)currentSchema;
 

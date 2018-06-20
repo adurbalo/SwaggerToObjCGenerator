@@ -10,6 +10,7 @@
 #import "NSString+Helper.h"
 #import "Constants.h"
 #import "SettingsManager.h"
+#import "OASchema.h"
 
 @interface Path ()
  
@@ -90,6 +91,17 @@
     return queryParameters;
 }
 
+- (NSString *)operationName
+{
+    NSString *description = self.operationId?:self.summary;
+    NSString *operationName = [description camelCaseStyleSting];
+    if (operationName.length == 0) {
+        NSCharacterSet *charactersToRemove = [[NSCharacterSet letterCharacterSet] invertedSet];
+        operationName = [[self.method componentsSeparatedByCharactersInSet:charactersToRemove] componentsJoinedByString:@""];
+    }
+    return operationName;
+}
+
 #pragma mark - Public
 
 - (NSSet<NSString *> *)customClassesNames
@@ -98,17 +110,37 @@
     
     [self.responses enumerateObjectsUsingBlock:^(Response * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        NSArray *allTypes = [obj.schema allTypes];
-        if ([allTypes count] > 0) {
-            [names addObjectsFromArray:allTypes];
+        if ([SettingsManager sharedManager].isOpenAPI) {
+            NSString *customName = [obj.content.schema objc_CustomTypeName];
+            if (customName) {
+                [names addObject:customName];
+            }
+            if ([obj.content.schema isEnumType]) {
+                [names addObject:[[SettingsManager sharedManager] enumsClassName]];
+            }
+        } else {
+            NSArray *allTypes = [obj.schema allTypes];
+            if ([allTypes count] > 0) {
+                [names addObjectsFromArray:allTypes];
+            }
         }
     }];
     
     [self.parameters enumerateObjectsUsingBlock:^(PathParameter * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        NSArray *allTypes = [[obj currentSchema] allTypes];
-        if ([allTypes count] > 0) {
-            [names addObjectsFromArray:allTypes];
+        if ([SettingsManager sharedManager].isOpenAPI) {
+            NSString *customName = [obj.oaSchema objc_CustomTypeName];
+            if (customName) {
+                [names addObject:customName];
+            }
+            if ([obj.oaSchema isEnumType]) {
+                [names addObject:[[SettingsManager sharedManager] enumsClassName]];
+            }
+        } else {
+            NSArray *allTypes = [[obj currentSchema] allTypes];
+            if ([allTypes count] > 0) {
+                [names addObjectsFromArray:allTypes];
+            }
         }
     }];
     
@@ -146,20 +178,6 @@
 
 - (NSString *)methodNameForDeclaration:(BOOL)forDeclaration
 {
-    //    NSArray *components = [self.pathString componentsSeparatedByString:@"/"];
-    //    if (components.count == 0) {
-    //        components = @[self.pathString];
-    //    }
-    //
-    //    NSMutableString *methodTitleString = [[NSMutableString alloc] initWithFormat:@"- (NSURLSessionTask *)%@", self.method];
-    //    [components enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-    //        if (![obj hasPrefix:@"{"]) {
-    //            NSString *component = [objC_parameterNameFromSwaggerParameter(obj) capitalizeFirstCharacter];
-    //            [methodTitleString appendString:component];
-    //        }
-    //    }];
-    //
-    //
     NSMutableString *methodTitleString = [[NSMutableString alloc] init];
     NSString *description = nil;
     if (self.summary.length > 0) {
@@ -169,28 +187,14 @@
         if (!description) {
             description = [self.pathDescription copy];
         } else {
-            description = [description stringByAppendingFormat:@"\n%@", self.pathDescription];
+            description = [description stringByAppendingFormat:@"\n %@", self.pathDescription];
         }
     }
     if (description && forDeclaration) {
         [methodTitleString appendFormat:@"\n%@", [description documentationStyleString]];
     }
-    __block NSString *operationName = self.operationId?:@"";
-    if (operationName.length == 0) {
-        NSArray<NSString *> *summaryArray = [self.summary componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        [summaryArray enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (idx == 0) {
-                operationName = [operationName stringByAppendingString:[obj lowercaseString]];
-            } else {
-                operationName = [operationName stringByAppendingString:[obj capitalizedString]];
-            }
-        }];
-        if (operationName.length == 0) {
-            operationName = self.method;
-        }
-    }
     
-    [methodTitleString appendFormat:@"- (NSURLSessionTask *)%@", operationName];
+    [methodTitleString appendFormat:@"- (NSURLSessionTask *)%@", [self operationName]];
     
     BOOL parametersExists = NO;
     if (self.parameters.count > 0) {
@@ -206,11 +210,11 @@
             title = [title capitalizeFirstCharacter];
         }
         
-        [methodTitleString appendFormat:@"%@:(%@)%@ ", title, [[obj currentSchema] objC_fullTypeName], name];
-        
-//        if ([[obj currentSchema] enumList].count > 0) {
-//            [[SettingsManager sharedManager] addEnumName:name withOptions:[[obj currentSchema] enumList]];
-//        }
+        if ([SettingsManager sharedManager].isOpenAPI) {
+            [methodTitleString appendFormat:@"%@:(%@)%@ ", title, [obj.oaSchema objc_FullTypeName], name];
+        } else {
+            [methodTitleString appendFormat:@"%@:(%@)%@ ", title, [[obj currentSchema] objC_fullTypeName], name];
+        }
     }];
     
     if (parametersExists) {
@@ -221,8 +225,8 @@
     
     if (response.content) { //OpenAPI
         
-        //TODO: implementation required
-        
+        [methodTitleString appendFormat:@"ResponseBlock:(void(^)(%@response, NSError *error))responseBlock", [response.content.schema objc_FullTypeName]];
+            
     } else if (response.schema) { //Swagger
         [methodTitleString appendFormat:@"ResponseBlock:(void(^)(%@response, NSError *error))responseBlock", [response.schema objC_fullTypeName]];
     } else {
@@ -236,7 +240,7 @@
     NSMutableString *methodImplementationString = [NSMutableString new];
     NSString *methodName = [self methodNameForDeclaration:NO];
     [methodImplementationString appendFormat:@"%@\n{\n", methodName];
-    [methodImplementationString appendFormat:@"\tNSString *thePath = %@;", [self apiConstVariableName]];
+    [methodImplementationString appendFormat:@"\tNSString *thePath = [%@ copy];", [self apiConstVariableName]];
     
     NSMutableArray<NSString *> *parameters = [[self availableParametersTypes] mutableCopy];
     NSString *pathParameterName = @"path";
@@ -275,10 +279,19 @@
                 }
                  [methodImplementationString appendString:@"\t\t\t[updatedPathComponents replaceObjectAtIndex:idx withObject:parameterObject];\n\t\t}"];
             } else {
-                if (obj.enumList.count > 0) {
-                    [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = [%@ objectForEnumValue:%@ enumName:%@];", variableName, obj.name, [[SettingsManager sharedManager] enumsClassName], parameterVariableName, enumTypeNameConstantNameByParameterName(obj.name)];
+                
+                if ([[SettingsManager sharedManager] isOpenAPI]) {
+                    if (obj.oaSchema.isEnumType) {
+                        [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = [%@ objectForEnumValue:%@ enumName:%@];", variableName, obj.name, [[SettingsManager sharedManager] enumsClassName], parameterVariableName, [obj.oaSchema enumTypeConstantName]];
+                    } else {
+                        [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = %@;", variableName, obj.name, parameterVariableName];
+                    }
                 } else {
-                    [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = %@;", variableName, obj.name, parameterVariableName];
+                    if (obj.enumList.count > 0) {
+                        [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = [%@ objectForEnumValue:%@ enumName:%@];", variableName, obj.name, [[SettingsManager sharedManager] enumsClassName], parameterVariableName, enumTypeNameConstantNameByParameterName(obj.name)];
+                    } else {
+                        [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = %@;", variableName, obj.name, parameterVariableName];
+                    }
                 }
             }
         }];
@@ -312,6 +325,11 @@
         } else if (response.schema.type) {
             outputClass = objC_classNameFromSwaggerType([response.schema.type lastPathComponent]);
         }
+    } else if (response.content) {
+        if (response.content.contentType) {
+            [methodImplementationString appendFormat:@"\n\trequestParmeters[@\"Content-Type\"] = @\"%@\";", response.content.contentType];
+        }
+        outputClass = [response.content.schema targetClassName];
     }
     
     if (outputClass){
@@ -323,6 +341,12 @@
     [methodImplementationString appendFormat:@"\n\treturn [self.serverAPI makeRequestWithHTTPMethod:@\"%@\" resource:self forURLPath:thePath parameters:requestParmeters outputClass:%@ responseBlock:responseBlock];", self.method, outputClass];
     [methodImplementationString appendString:@"\n}\n"];
     return methodImplementationString;
+}
+
+- (NSString *)sortableKey
+{
+    NSString *key = [self methodNameForDeclaration:NO];
+    return key;
 }
 
 @end

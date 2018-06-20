@@ -19,6 +19,7 @@
     [keyPathDict setObject:@"type" forKey:@"type"];
     [keyPathDict setObject:@"format" forKey:@"format"];
     [keyPathDict setObject:@"schema" forKey:@"schema"];
+    [keyPathDict setObject:@"schema" forKey:@"oaSchema"];
     [keyPathDict setObject:@"enum" forKey:@"enumList"];
     return keyPathDict;
 }

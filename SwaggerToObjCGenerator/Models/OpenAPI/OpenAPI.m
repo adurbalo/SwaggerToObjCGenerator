@@ -91,8 +91,13 @@
         NSMutableArray *components = [[obj componentsSeparatedByString:@"/"] mutableCopy];
         [components removeObject:@""];
         
-        if ([components firstObject]) {
-            [servicesNames addObject:[components firstObject]];
+        for (NSString *component in components) {
+            NSCharacterSet *charactersToRemove = [[NSCharacterSet letterCharacterSet] invertedSet];
+            NSString *updatedComponent = [[component componentsSeparatedByCharactersInSet:charactersToRemove] componentsJoinedByString:@""];
+            if ([updatedComponent isEqualToString:component]) {
+                [servicesNames addObject:component];
+                return;
+            }
         }
     }];
     
@@ -100,10 +105,8 @@
         
         NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSString * _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
             
-            if (![evaluatedObject hasPrefix:[NSString stringWithFormat:@"/%@", serviceName]]) {
-                return NO;
-            }
-            return YES;
+            NSRange range = [evaluatedObject rangeOfString:serviceName];
+            return range.location != NSNotFound;
         }];
         NSArray<NSString*> *filteredKeys = [[self.paths allKeys] filteredArrayUsingPredicate:predicate];
         
@@ -155,6 +158,17 @@
     }];
     
     return [result copy];
+}
+
+- (NSDictionary<NSString *,NSString *> *)serversURLByDescription
+{
+    NSMutableDictionary *dictionary = [NSMutableDictionary new];
+    for (OAServer *server in self.servers) {
+        if (server.serverDescription && server.url) {
+            dictionary[server.serverDescription] = server.url;
+        }
+    }
+    return [dictionary copy];
 }
 
 @end

@@ -29,6 +29,9 @@ typedef NS_ENUM(NSUInteger, ContentType) {
 - (void)showHelp;
 
 - (id<Generatable>)generator;
+
+- (BOOL)isOpenAPI;
+
 - (NSString *)parentServiceRecourseName;
 - (NSString *)apiConstantName;
 - (NSString *)abstractServerName;
