@@ -37,6 +37,8 @@
 		61852D0220D144CA00AF91D7 /* OAProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 61852D0120D144CA00AF91D7 /* OAProperty.m */; };
 		61852D0520D1666100AF91D7 /* OAServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 61852D0420D1666100AF91D7 /* OAServer.m */; };
 		61852D0920D16BBF00AF91D7 /* FilesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 61852D0820D16BBF00AF91D7 /* FilesHandler.m */; };
+		61857A3520DD2B1B00D567A3 /* HelperTypesTemplate_h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 61857A3420DD296D00D567A3 /* HelperTypesTemplate_h */; };
+		61857A3620DD2B1B00D567A3 /* HelperTypesTemplate_m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 61857A3320DD296D00D567A3 /* HelperTypesTemplate_m */; };
 		619295C71FB9D7CE0024CB78 /* NSError+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 619295C61FB9D7CE0024CB78 /* NSError+Extension.m */; };
 		619365C81FA8AD52003B7B0B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365C71FA8AD52003B7B0B /* main.m */; };
 		619365D31FA8B6CF003B7B0B /* Swagger.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365D21FA8B6CF003B7B0B /* Swagger.m */; };
@@ -54,6 +56,8 @@
 			dstPath = Resources;
 			dstSubfolderSpec = 16;
 			files = (
+				61857A3520DD2B1B00D567A3 /* HelperTypesTemplate_h in CopyFiles */,
+				61857A3620DD2B1B00D567A3 /* HelperTypesTemplate_m in CopyFiles */,
 				617803731FB5E6BF0018A219 /* BaseEntity_h in CopyFiles */,
 				617803741FB5E6BF0018A219 /* BaseEntity_m in CopyFiles */,
 				614DDAE91FB222D000BF0AEE /* EnumsTemplate_h in CopyFiles */,
@@ -120,6 +124,8 @@
 		61852D0420D1666100AF91D7 /* OAServer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OAServer.m; sourceTree = "<group>"; };
 		61852D0720D16BBF00AF91D7 /* FilesHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesHandler.h; sourceTree = "<group>"; };
 		61852D0820D16BBF00AF91D7 /* FilesHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilesHandler.m; sourceTree = "<group>"; };
+		61857A3320DD296D00D567A3 /* HelperTypesTemplate_m */ = {isa = PBXFileReference; lastKnownFileType = text; path = HelperTypesTemplate_m; sourceTree = "<group>"; };
+		61857A3420DD296D00D567A3 /* HelperTypesTemplate_h */ = {isa = PBXFileReference; lastKnownFileType = text; path = HelperTypesTemplate_h; sourceTree = "<group>"; };
 		6190FE321FAC81AE0027E586 /* APIConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIConsts.h; sourceTree = "<group>"; };
 		619295C51FB9D7CE0024CB78 /* NSError+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSError+Extension.h"; sourceTree = "<group>"; };
 		619295C61FB9D7CE0024CB78 /* NSError+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+Extension.m"; sourceTree = "<group>"; };
@@ -190,6 +196,8 @@
 				617803711FB5E4660018A219 /* BaseEntity_m */,
 				614DDAE71FB222BC00BF0AEE /* EnumsTemplate_h */,
 				614DDAE81FB222BD00BF0AEE /* EnumsTemplate_m */,
+				61857A3420DD296D00D567A3 /* HelperTypesTemplate_h */,
+				61857A3320DD296D00D567A3 /* HelperTypesTemplate_m */,
 				6139EC811FACC41C00248C4F /* AbstractServerAPI.h */,
 				6139EC801FACC41B00248C4F /* AbstractServerAPI.m */,
 				6139EC781FACAE2800248C4F /* ParentServicesResource.h */,

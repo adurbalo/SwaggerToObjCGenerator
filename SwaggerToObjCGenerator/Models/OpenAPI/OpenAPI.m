@@ -101,14 +101,18 @@
         }
     }];
     
+    
+    NSMutableArray<NSString *> *allPaths = [[self.paths allKeys] mutableCopy];
+    
     [servicesNames enumerateObjectsUsingBlock:^(NSString * _Nonnull serviceName, BOOL * _Nonnull stop) {
         
         NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSString * _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-            
-            NSRange range = [evaluatedObject rangeOfString:serviceName];
-            return range.location != NSNotFound;
+            if ([evaluatedObject hasPrefix:[@"/" stringByAppendingString:serviceName]]) {
+                return YES;
+            }
+            return NO;
         }];
-        NSArray<NSString*> *filteredKeys = [[self.paths allKeys] filteredArrayUsingPredicate:predicate];
+        NSArray<NSString*> *filteredKeys = [allPaths filteredArrayUsingPredicate:predicate];
         
         NSMutableArray<id<GeneratablePath>> *pathsForService = [NSMutableArray new];
         
@@ -120,10 +124,28 @@
             }
         }];
         
+        if (filteredKeys.count) {
+            [allPaths removeObjectsInArray:filteredKeys];
+        }
+        
         if (pathsForService.count) {
             resultDictionary[serviceName] = [pathsForService copy];
         }
     }];
+    
+    if (allPaths.count > 0) {
+        NSMutableArray<id<GeneratablePath>> *pathsForService = [NSMutableArray new];
+        [allPaths enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            NSArray<Path*> *pathsArray = self.paths[obj];
+            if (pathsArray.count > 0) {
+                [pathsForService addObjectsFromArray:pathsArray];
+            }
+        }];
+        if (pathsForService.count) {
+            resultDictionary[@"Other"] = [pathsForService copy];
+        }
+    }
     
     return [resultDictionary copy];
 }

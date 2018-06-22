@@ -36,6 +36,7 @@ typedef NS_ENUM(NSUInteger, ContentType) {
 - (NSString *)apiConstantName;
 - (NSString *)abstractServerName;
 - (NSString *)enumsClassName;
+- (NSString *)helperTypesName;
 - (NSString *)definitionsSuperclassName;
 - (NSString *)typeNameWithType:(NSString *)type;
 

@@ -206,6 +206,11 @@
     return [NSString stringWithFormat:@"%@Enums", self.prefix];
 }
 
+- (NSString *)helperTypesName
+{
+    return [NSString stringWithFormat:@"%@HelperTypes", self.prefix];
+}
+
 - (NSString *)definitionsSuperclassName
 {
     return [NSString stringWithFormat:@"%@BaseEntity", self.prefix];

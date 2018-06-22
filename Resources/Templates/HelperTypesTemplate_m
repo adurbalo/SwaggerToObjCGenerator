@@ -1,0 +1,58 @@
+
+<import_marker>
+
+__strong static NSDateFormatter *_<prefix_name>DateFormatter = nil;
+__strong static NSDateFormatter *_<prefix_name>DateTimeFormatter = nil;
+
+@implementation <prefix_name>Date
+
+#pragma mark - Static methods
+
++ (void)setDateFormatter:(NSDateFormatter *)aDateFormatter
+{
+    _<prefix_name>DateFormatter = aDateFormatter;
+}
+
++ (NSDateFormatter *)dateFormatter
+{
+    if ( !_<prefix_name>DateFormatter ){
+        _<prefix_name>DateFormatter = [[NSDateFormatter alloc] init];
+        _<prefix_name>DateFormatter.dateFormat = @"yyyy-MM-dd";
+    }
+    return _<prefix_name>DateFormatter;
+}
+
+@end
+
+@implementation <prefix_name>DateTime
+
++ (void)setDateFormatter:(NSDateFormatter *)aDateFormatter
+{
+    _<prefix_name>DateFormatter = aDateFormatter;
+}
+
++ (NSDateFormatter *)dateFormatter
+{
+    if ( !_<prefix_name>DateTimeFormatter ){
+        _<prefix_name>DateTimeFormatter = [[NSDateFormatter alloc] init];
+        _<prefix_name>DateTimeFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+    }
+    return _<prefix_name>DateTimeFormatter;
+}
+
+@end
+
+@implementation NSDate (<prefix_name>Date)
+
+- (<prefix_name>Date*)<prefix_name>Date
+{
+    return (<prefix_name>Date*)self;
+}
+
+- (<prefix_name>DateTime*)<prefix_name>DateTime
+{
+    return (<prefix_name>DateTime*)self;
+}
+
+@end
+

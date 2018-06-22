@@ -23,17 +23,32 @@
 #define PARENT_SERVICE_RESOURCE_MARKER @"<parent_service_resource_marker>"
 #define CLASS_IVAR_DECLARATION @"<class_ivar_declaration>"
 #define ENUM_CLASS_NAME_MARKER @"<enum_class_name>"
+#define PREFIX_NAME_MARKER @"<prefix_name>"
 
 static inline NSString* objC_classNameFromSwaggerType(NSString *swaggerType)
 {
+    NSArray *toStringTypes = @[@"string",
+                               @"date-time", //Temp
+                               @"date",
+                               @"dateTime"
+                               ];
+    
+    NSArray *toNumberTypes = @[@"integer",
+                               @"long",
+                               @"float",
+                               @"double",
+                               @"boolean",
+                               @"number" //Not sure about OpenAPI support
+                               ];
+    
     NSString *objCNameClass = nil;
-    if ([swaggerType isEqualToString:@"string"]) {
+    if ([toStringTypes containsObject:swaggerType]) {
         objCNameClass = @"NSString";
     } else if ([swaggerType isEqualToString:@"array"]) {
         objCNameClass = @"NSArray";
     } else if ([swaggerType isEqualToString:@"object"]) {
         objCNameClass = @"NSDictionary";
-    } else if ([swaggerType isEqualToString:@"integer"] || [swaggerType isEqualToString:@"number"] || [swaggerType isEqualToString:@"boolean"]) {
+    } else if ([toNumberTypes containsObject:swaggerType]) {
         objCNameClass = @"NSNumber";
     } else {
         //NSLog(@"Custom type: %@ ?", swaggerType);

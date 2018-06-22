@@ -1,0 +1,20 @@
+
+#import <Foundation/Foundation.h>
+
+@interface <prefix_name>Date : NSDate
+
++ (void)setDateFormatter:(NSDateFormatter*)dateFormatter;
++ (NSDateFormatter *)dateFormatter;
+
+@end
+
+@interface <prefix_name>DateTime : <prefix_name>Date
+
+@end
+
+@interface NSDate (<prefix_name>Date)
+
+- (<prefix_name>Date *)<prefix_name>Date;
+- (<prefix_name>DateTime *)<prefix_name>DateTime;
+
+@end

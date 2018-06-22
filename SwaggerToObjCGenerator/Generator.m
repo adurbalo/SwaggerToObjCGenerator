@@ -53,6 +53,33 @@
     [FilesHandler writeString:mContentOfFile toFilePath:fullFilePathM];
 }
 
+- (void)createHelperTypes
+{
+    NSMutableString *objcHtemplate = [[NSMutableString alloc] initWithContentsOfFile:[[SettingsManager sharedManager].resourcesPath stringByAppendingPathComponent:@"HelperTypesTemplate_h"]
+                                                                            encoding:NSUTF8StringEncoding
+                                                                               error:nil];
+    NSMutableString *objcMtemplate = [[NSMutableString alloc] initWithContentsOfFile:[[SettingsManager sharedManager].resourcesPath stringByAppendingPathComponent:@"HelperTypesTemplate_m"]
+                                                                            encoding:NSUTF8StringEncoding
+                                                                               error:nil];
+    
+    NSString *path = [SettingsManager sharedManager].destinationPath;
+    NSString *className = [SettingsManager sharedManager].helperTypesName;
+    NSString *prefix = [SettingsManager sharedManager].prefix;
+    
+    NSString *hFilePath = [[path stringByAppendingPathComponent:className] stringByAppendingString:@".h"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:hFilePath]) {
+        [objcHtemplate replaceOccurrencesOfString:PREFIX_NAME_MARKER withString:prefix options:0 range:NSMakeRange(0, objcHtemplate.length)];
+        [FilesHandler writeString:objcHtemplate toFilePath:hFilePath];
+    }
+    
+    NSString *mFilePath = [[path stringByAppendingPathComponent:className] stringByAppendingString:@".m"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:mFilePath]) {
+        [objcMtemplate replaceOccurrencesOfString:CLASS_IMPORT_MARKER withString:[NSString stringWithFormat:@"#import \"%@.h\"", className] options:0 range:NSMakeRange(0, objcMtemplate.length)];
+        [objcMtemplate replaceOccurrencesOfString:PREFIX_NAME_MARKER withString:prefix options:0 range:NSMakeRange(0, objcMtemplate.length)];
+        [FilesHandler writeString:objcMtemplate toFilePath:mFilePath];
+    }
+}
+
 - (void)createBaseEntity
 {
     NSMutableString *objcHtemplate = [[NSMutableString alloc] initWithContentsOfFile:[[SettingsManager sharedManager].resourcesPath stringByAppendingPathComponent:@"BaseEntity_h"]
@@ -64,10 +91,20 @@
     
     NSString *path = [SettingsManager sharedManager].destinationPath;
     NSString *className = [SettingsManager sharedManager].definitionsSuperclassName;
+    NSString *prefix = [SettingsManager sharedManager].prefix;
+    
     NSString *hFilePath = [[path stringByAppendingPathComponent:className] stringByAppendingString:@".h"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:hFilePath]) {
         [objcHtemplate replaceOccurrencesOfString:CLASS_NAME_MARKER withString:className options:0 range:NSMakeRange(0, objcHtemplate.length)];
-        [objcHtemplate replaceOccurrencesOfString:CLASS_IMPORT_MARKER withString:[NSString stringWithFormat:@"#import \"%@.h\"", [SettingsManager sharedManager].enumsClassName] options:0 range:NSMakeRange(0, objcHtemplate.length)];
+        
+        NSArray<NSString *> *classesToImport = @[[SettingsManager sharedManager].helperTypesName,
+                                                 [SettingsManager sharedManager].enumsClassName];
+        NSMutableString *importsString = [[NSMutableString alloc] init];
+        [classesToImport enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [importsString appendFormat:@"#import \"%@.h\"\n", obj];
+        }];
+        
+        [objcHtemplate replaceOccurrencesOfString:CLASS_IMPORT_MARKER withString:importsString options:0 range:NSMakeRange(0, objcHtemplate.length)];
         [FilesHandler writeString:objcHtemplate toFilePath:hFilePath];
     }
     
@@ -75,6 +112,7 @@
     if (![[NSFileManager defaultManager] fileExistsAtPath:mFilePath]) {
         [objcMtemplate replaceOccurrencesOfString:ENUM_CLASS_NAME_MARKER withString:[[SettingsManager sharedManager] enumsClassName] options:0 range:NSMakeRange(0, objcMtemplate.length)];
         [objcMtemplate replaceOccurrencesOfString:CLASS_NAME_MARKER withString:className options:0 range:NSMakeRange(0, objcMtemplate.length)];
+        [objcMtemplate replaceOccurrencesOfString:PREFIX_NAME_MARKER withString:prefix options:0 range:NSMakeRange(0, objcMtemplate.length)];
         [FilesHandler writeString:objcMtemplate toFilePath:mFilePath];
     }
 }
@@ -393,6 +431,7 @@
 - (void)start
 {
     [self createParentServiceResource];
+    [self createHelperTypes];
     [self createBaseEntity];
     
     [self generateDTOs];

@@ -65,6 +65,14 @@
             <class_name_marker> *entity = [[propClass alloc] initWithDictionary:valueForKey];
             [self setValue:entity forKey:propertyName];
         }
+        else if ([propClass isSubclassOfClass:[<prefix_name>Date class]]){
+            <prefix_name>Date *date = [[[<prefix_name>Date dateFormatter] dateFromString:valueForKey] <prefix_name>Date];
+            [self setValue:date forKey:propertyName];
+        }
+        else if ([propClass isSubclassOfClass:[<prefix_name>DateTime class]]){
+            <prefix_name>DateTime *date = [[[<prefix_name>DateTime dateFormatter] dateFromString:valueForKey] <prefix_name>DateTime];
+            [self setValue:date forKey:propertyName];
+        }
         else if ([propClass isSubclassOfClass:[NSArray class]]){
             NSArray *array = valueForKey;
             if (array.count == 0) {
@@ -116,16 +124,25 @@
                 id enumObj = [<enum_class_name> objectForEnumValue:enumValue enumName:enumName];
                 value = enumObj;
             }
-        } else if ([propClass isSubclassOfClass:[<class_name_marker> class]]) {
+        } 
+        else if ([propClass isSubclassOfClass:[<class_name_marker> class]]) {
             value = [value dictionaryValue];
-        } else if ([propClass isSubclassOfClass:[NSArray class]]) {
+        }
+        else if ([propClass isSubclassOfClass:[<prefix_name>Date class]]) {
+            value = [[<prefix_name>Date dateFormatter] stringFromDate:value];
+        }
+        else if ([propClass isSubclassOfClass:[<prefix_name>DateTime class]]) {
+            value = [[<prefix_name>DateTime dateFormatter] stringFromDate:value];
+        } 
+        else if ([propClass isSubclassOfClass:[NSArray class]]) {
             NSString *memberClassName = [selfClass classNameOfMembersForMappedField:propertyName];
             Class memberClass = NSClassFromString(memberClassName);
             if ( [memberClass isSubclassOfClass:[<class_name_marker> class]] ){
                 NSArray *array = [value valueForKey:@"dictionaryValue"];
                 if (array.count == 0) {
                     value = nil;
-                } else {
+                } 
+                else {
                     value = array;
                 }
             }
@@ -135,7 +152,7 @@
             [dictionaryValue setObject:value forKey:jsonKey];
         }
     }];
-    return dictionaryValue;
+    return [dictionaryValue copy];
 }
 
 #pragma mark -
