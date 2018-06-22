@@ -209,7 +209,6 @@
         if (idx == 0) {
             title = [title capitalizeFirstCharacter];
         }
-        
         if ([SettingsManager sharedManager].isOpenAPI) {
             [methodTitleString appendFormat:@"%@:(%@)%@ ", title, [obj.oaSchema objc_FullTypeName], name];
         } else {
@@ -260,7 +259,7 @@
             return;
         }
         
-        NSString *variableName = [NSString stringWithFormat:@"%@Parmeters", parameterType];
+        NSString *variableName = [NSString stringWithFormat:@"%@Parameters", parameterType];
         
         if (![parameterType isEqualToString:pathParameterName]) {
             [methodImplementationString appendFormat:@"\n\tNSMutableDictionary *%@ = [[NSMutableDictionary alloc] init];", variableName];
@@ -284,7 +283,16 @@
                     if (obj.oaSchema.isEnumType) {
                         [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = [%@ objectForEnumValue:%@ enumName:%@];", variableName, obj.name, [[SettingsManager sharedManager] enumsClassName], parameterVariableName, [obj.oaSchema enumTypeConstantName]];
                     } else {
-                        [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = %@;", variableName, obj.name, parameterVariableName];
+                        
+                        if ([obj.oaSchema isDateType]) {
+                            [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = [[[%@ class] dateFormatter] stringFromDate:%@];", variableName, obj.name, parameterVariableName, parameterVariableName];
+                        }
+                        else if ([obj.oaSchema objc_CustomTypeName]) {
+                            [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = [%@ dictionaryValue];", variableName, obj.name, parameterVariableName];
+                        }
+                        else {
+                            [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = %@;", variableName, obj.name, parameterVariableName];
+                        }
                     }
                 } else {
                     if (obj.enumList.count > 0) {
@@ -302,14 +310,14 @@
     
     [parameters removeObject:pathParameterName];
     if ([parameters count] == 0) {
-        [methodImplementationString appendString:@"\n\tNSMutableDictionary<NSString*, id> *requestParmeters = nil;"];
+        [methodImplementationString appendString:@"\n\tNSMutableDictionary<NSString*, id> *requestParameters = nil;"];
     } else {
-        [methodImplementationString appendString:@"\n\tNSMutableDictionary<NSString*, id> *requestParmeters = [[NSMutableDictionary alloc] init];"];
+        [methodImplementationString appendString:@"\n\tNSMutableDictionary<NSString*, id> *requestParameters = [[NSMutableDictionary alloc] init];"];
         [parameters enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj isEqualToString:bodyParameterName]) {
-                [methodImplementationString appendFormat:@"\n\trequestParmeters[@\"%@\"] = [%@ dictionaryValue];", obj, obj];
+                [methodImplementationString appendFormat:@"\n\trequestParameters[@\"%@\"] = [%@ dictionaryValue];", obj, obj];
             } else {
-                [methodImplementationString appendFormat:@"\n\trequestParmeters[@\"%@\"] = %@Parmeters;", obj, obj];
+                [methodImplementationString appendFormat:@"\n\trequestParameters[@\"%@\"] = %@Parameters;", obj, obj];
             }
         }];
     }
@@ -327,7 +335,7 @@
         }
     } else if (response.content) {
         if (response.content.contentType) {
-            [methodImplementationString appendFormat:@"\n\trequestParmeters[@\"Content-Type\"] = @\"%@\";", response.content.contentType];
+            [methodImplementationString appendFormat:@"\n\trequestParameters[@\"Content-Type\"] = @\"%@\";", response.content.contentType];
         }
         outputClass = [response.content.schema targetClassName];
     }
@@ -338,7 +346,7 @@
     else{
         outputClass = @"Nil";
     }
-    [methodImplementationString appendFormat:@"\n\treturn [self.serverAPI makeRequestWithHTTPMethod:@\"%@\" resource:self forURLPath:thePath parameters:requestParmeters outputClass:%@ responseBlock:responseBlock];", self.method, outputClass];
+    [methodImplementationString appendFormat:@"\n\treturn [self.serverAPI makeRequestWithHTTPMethod:@\"%@\" resource:self forURLPath:thePath parameters:[requestParameters copy] outputClass:%@ responseBlock:responseBlock];", self.method, outputClass];
     [methodImplementationString appendString:@"\n}\n"];
     return methodImplementationString;
 }

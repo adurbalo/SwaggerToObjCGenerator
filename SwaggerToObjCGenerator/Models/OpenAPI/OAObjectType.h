@@ -21,5 +21,6 @@
 - (BOOL)isEnumType;
 - (NSString *)enumTypeConstantName;
 - (NSString *)targetClassName;
+- (BOOL)isDateType;
 
 @end

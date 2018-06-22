@@ -336,7 +336,7 @@
 
 - (void)generateDTOs
 {
-    NSString *pathToDefinitionDir = [[SettingsManager sharedManager].destinationPath stringByAppendingPathComponent:@"Definitions"];
+    NSString *pathToDefinitionDir = [[SettingsManager sharedManager].destinationPath stringByAppendingPathComponent:@"Schemas"];
     NSString *pathToMachineDirectory = [pathToDefinitionDir stringByAppendingPathComponent:@"Machine"];
     [FilesHandler createDirectoryForPathIfNeeded:pathToMachineDirectory];
     [FilesHandler clearFilesInDirectoryPath:pathToMachineDirectory];
@@ -378,26 +378,32 @@
     NSMutableString *h_importSection = [[NSMutableString alloc] init];
     NSMutableString *m_implementationSection = [[NSMutableString alloc] init];
     
-    [[self.generatableObject enumsNamesByOptions] enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSArray<NSString *> * _Nonnull obj, BOOL * _Nonnull stop) {
+    NSDictionary<NSString *,NSArray<NSString *> *> *enumsNamesByOptions = [self.generatableObject enumsNamesByOptions];
+    NSMutableArray<NSString *> *sortedEnumsNames = [[enumsNamesByOptions allKeys] mutableCopy];
+    [sortedEnumsNames sortUsingSelector:@selector(caseInsensitiveCompare:)];
+    
+    [sortedEnumsNames enumerateObjectsUsingBlock:^(NSString * _Nonnull name, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        NSArray<NSString *> *options = enumsNamesByOptions[name];
         
         NSMutableString *h_enumDeclaration = [[NSMutableString alloc] init];
         NSMutableString *h_constantsDeclaration = [[NSMutableString alloc] init];
         
-        [h_enumDeclaration appendFormat:@"\ntypedef NS_ENUM(NSUInteger, %@) {\n", enumTypeNameByParameterName(key)];
-        [h_constantsDeclaration appendFormat:@"static NSString *const %@ = @\"%@\";\n", enumTypeNameConstantNameByParameterName(key), enumTypeNameByParameterName(key)];
-        [h_constantsDeclaration appendFormat:@"static NSUInteger const k%@Count = %zd;\n", enumTypeNameByParameterName(key), obj.count];
+        [h_enumDeclaration appendFormat:@"\ntypedef NS_ENUM(NSUInteger, %@) {\n", enumTypeNameByParameterName(name)];
+        [h_constantsDeclaration appendFormat:@"static NSString *const %@ = @\"%@\";\n", enumTypeNameConstantNameByParameterName(name), enumTypeNameByParameterName(name)];
+        [h_constantsDeclaration appendFormat:@"static NSUInteger const k%@Count = %zd;\n", enumTypeNameByParameterName(name), options.count];
         
-        [m_implementationSection appendFormat:@"\n+ (NSDictionary<NSString *, NSNumber *> *)%@Dictionary\n{\n", enumTypeNameByParameterName(key)];
+        [m_implementationSection appendFormat:@"\n+ (NSDictionary<NSString *, NSNumber *> *)%@Dictionary\n{\n", enumTypeNameByParameterName(name)];
         [m_implementationSection appendString:@"\tNSMutableDictionary<NSString *, NSNumber *> *dictionary = [NSMutableDictionary new];\n"];
         
-        [obj enumerateObjectsUsingBlock:^(NSString * _Nonnull enumValue, NSUInteger idx, BOOL * _Nonnull stop) {
+        [options enumerateObjectsUsingBlock:^(NSString * _Nonnull enumValue, NSUInteger idx, BOOL * _Nonnull stop) {
             if (idx == 0) {
-                [h_enumDeclaration appendFormat:@"\t%@ = 1", enumValueName(enumTypeNameByParameterName(key), enumValue)];
+                [h_enumDeclaration appendFormat:@"\t%@ = 1", enumValueName(enumTypeNameByParameterName(name), enumValue)];
             } else {
-                [h_enumDeclaration appendFormat:@",\n\t%@", enumValueName(enumTypeNameByParameterName(key), enumValue)];
+                [h_enumDeclaration appendFormat:@",\n\t%@", enumValueName(enumTypeNameByParameterName(name), enumValue)];
             }
             
-            NSString *constVarName = [NSString stringWithFormat:@"k%@String", enumValueName(enumTypeNameByParameterName(key), enumValue)];
+            NSString *constVarName = [NSString stringWithFormat:@"k%@String", enumValueName(enumTypeNameByParameterName(name), enumValue)];
             [h_constantsDeclaration appendFormat:@"static NSString *const %@ = @\"%@\";\n", constVarName, enumValue];
             
             [m_implementationSection appendFormat:@"\tdictionary[%@] = @(%zd);\n", constVarName, idx+1];
@@ -405,7 +411,7 @@
         [h_enumDeclaration appendString:@"\n};\n"];
         [h_importSection appendFormat:@"%@\n%@", h_enumDeclaration, h_constantsDeclaration];
         
-        [m_implementationSection appendString:@"\treturn dictionary;\n}\n"];
+        [m_implementationSection appendString:@"\treturn [dictionary copy];\n}\n"];
     }];
     
     NSString *className = [SettingsManager sharedManager].enumsClassName;

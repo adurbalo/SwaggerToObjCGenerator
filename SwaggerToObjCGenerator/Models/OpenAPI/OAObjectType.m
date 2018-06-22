@@ -58,11 +58,11 @@
         if ([schema isEnumType]) {
             return nil;
         }
-       result = [schema targetClassName]?:objC_classNameFromSwaggerType(schema.type);
+        result = [schema targetClassName]?:objC_classNameFromSwaggerType(schema.type);
     } else if (self.type) {
         result = [NSString stringWithFormat:@"%@ *",  objC_classNameFromSwaggerType(self.type)];
     }
-
+    
     if (isCustomClassType(result)) {
         return result;
     }
@@ -134,6 +134,11 @@
         return nil;
     }
     return [currentScheme className];
+}
+
+- (BOOL)isDateType
+{
+    return [[self objc_FullTypeName] hasPrefix:[NSString stringWithFormat:@"%@Date", [SettingsManager sharedManager].prefix]];
 }
 
 @end

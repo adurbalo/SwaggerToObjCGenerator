@@ -27,11 +27,11 @@
 
 static inline NSString* objC_classNameFromSwaggerType(NSString *swaggerType)
 {
-    NSArray *toStringTypes = @[@"string",
-                               @"date-time", //Temp
-                               @"date",
-                               @"dateTime"
-                               ];
+    NSArray *toStringTypes = @[@"string"];
+    
+    NSArray *toDateTypes = @[@"date",
+                             @"dateTime"
+                             ];
     
     NSArray *toNumberTypes = @[@"integer",
                                @"long",
@@ -44,6 +44,14 @@ static inline NSString* objC_classNameFromSwaggerType(NSString *swaggerType)
     NSString *objCNameClass = nil;
     if ([toStringTypes containsObject:swaggerType]) {
         objCNameClass = @"NSString";
+    } else if ([toDateTypes containsObject:swaggerType]) {
+        
+        if ([swaggerType isEqualToString:@"dateTime"]) {
+            objCNameClass = [[SettingsManager sharedManager] typeNameWithType:@"DateTime"];
+        } else {
+            objCNameClass = [[SettingsManager sharedManager] typeNameWithType:@"Date"];
+        }
+        
     } else if ([swaggerType isEqualToString:@"array"]) {
         objCNameClass = @"NSArray";
     } else if ([swaggerType isEqualToString:@"object"]) {
@@ -79,12 +87,12 @@ static inline BOOL isCustomClassType(NSString *className)
     if (!className) {
         return NO;
     }
-    return ![className hasPrefix:@"NS"] && ![className isEqualToString:@"id"];
+    return ![className hasPrefix:@"NS"] && ![className isEqualToString:@"id"] && ![className hasPrefix:[NSString stringWithFormat:@"%@Date", [SettingsManager sharedManager].prefix]];
 }
 
 static inline NSString* enumTypeNameByParameterName(NSString *parameterName)
 {
-    return [NSString stringWithFormat:@"%@%@EnumType", [SettingsManager sharedManager].prefix, [parameterName capitalizeFirstCharacter]];
+    return [NSString stringWithFormat:@"%@%@", [SettingsManager sharedManager].prefix, [parameterName capitalizeFirstCharacter]];
 }
 
 static inline NSString* enumValueName(NSString *enumTypeName, NSString *stringValue)
