@@ -45,7 +45,7 @@
     self = [super init];
     if (self) {        
         NSBundle *mainBundle = [NSBundle mainBundle];
-        self.resourcesPath = [[mainBundle bundlePath] stringByAppendingPathComponent:@"Resources"];
+        self.resourcesPath = [[mainBundle bundlePath] stringByAppendingPathComponent:@"Templates"];
     }
     return self;
 }

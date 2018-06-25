@@ -53,7 +53,7 @@
 		619365C21FA8AD52003B7B0B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
-			dstPath = Resources;
+			dstPath = Templates;
 			dstSubfolderSpec = 16;
 			files = (
 				61857A3520DD2B1B00D567A3 /* HelperTypesTemplate_h in CopyFiles */,
