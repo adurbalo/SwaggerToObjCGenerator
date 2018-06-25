@@ -10,7 +10,7 @@
 
 + (NSDictionary<NSString *, NSString *> *)mappedKeysByProperties
 {
-    return nil;
+    return @{};
 }
 
 + (NSString *)enumNameForMappedField:(NSString*)fieldName
@@ -65,13 +65,13 @@
             <class_name_marker> *entity = [[propClass alloc] initWithDictionary:valueForKey];
             [self setValue:entity forKey:propertyName];
         }
-        else if ([propClass isSubclassOfClass:[<prefix_name>Date class]]){
-            <prefix_name>Date *date = [[[<prefix_name>Date dateFormatter] dateFromString:valueForKey] <prefix_name>Date];
-            [self setValue:date forKey:propertyName];
+        else if ([propClass isKindOfClass:[TAPDateBox class]]) {
+            TAPDateBox *box = [[TAPDateBox alloc] initWithString:valueForKey];
+            [self setValue:box forKey:propertyName];
         }
-        else if ([propClass isSubclassOfClass:[<prefix_name>DateTime class]]){
-            <prefix_name>DateTime *date = [[[<prefix_name>DateTime dateFormatter] dateFromString:valueForKey] <prefix_name>DateTime];
-            [self setValue:date forKey:propertyName];
+        else if ([propClass isKindOfClass:[TAPDateTimeBox class]]) {
+            TAPDateTimeBox *box = [[TAPDateTimeBox alloc] initWithString:valueForKey];
+            [self setValue:box forKey:propertyName];
         }
         else if ([propClass isSubclassOfClass:[NSArray class]]){
             NSArray *array = valueForKey;
@@ -128,12 +128,12 @@
         else if ([propClass isSubclassOfClass:[<class_name_marker> class]]) {
             value = [value dictionaryValue];
         }
-        else if ([propClass isSubclassOfClass:[<prefix_name>Date class]]) {
-            value = [[<prefix_name>Date dateFormatter] stringFromDate:value];
+        else if ([propClass isKindOfClass:[<prefix_name>DateBox class]]) {
+            value = [(<prefix_name>DateBox *)value stringValue];
         }
-        else if ([propClass isSubclassOfClass:[<prefix_name>DateTime class]]) {
-            value = [[<prefix_name>DateTime dateFormatter] stringFromDate:value];
-        } 
+        else if ([propClass isKindOfClass:[<prefix_name>DateTimeBox class]]) {
+            value = [(<prefix_name>DateTimeBox *)value stringValue];
+        }
         else if ([propClass isSubclassOfClass:[NSArray class]]) {
             NSString *memberClassName = [selfClass classNameOfMembersForMappedField:propertyName];
             Class memberClass = NSClassFromString(memberClassName);

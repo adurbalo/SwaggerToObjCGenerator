@@ -1,20 +1,19 @@
 
 #import <Foundation/Foundation.h>
 
-@interface <prefix_name>Date : NSDate
+@interface <prefix_name>DateBox : NSObject
 
 + (void)setDateFormatter:(NSDateFormatter*)dateFormatter;
 + (NSDateFormatter *)dateFormatter;
 
+- (instancetype)initWithDate:(NSDate *)date;
+- (instancetype)initWithString:(NSString *)string;
+
+@property (nonatomic, strong) NSDate *date;
+@property (nonatomic, strong) NSString *stringValue;
+
 @end
 
-@interface <prefix_name>DateTime : <prefix_name>Date
-
-@end
-
-@interface NSDate (<prefix_name>Date)
-
-- (<prefix_name>Date *)<prefix_name>Date;
-- (<prefix_name>DateTime *)<prefix_name>DateTime;
+@interface <prefix_name>DateTimeBox : <prefix_name>DateBox
 
 @end

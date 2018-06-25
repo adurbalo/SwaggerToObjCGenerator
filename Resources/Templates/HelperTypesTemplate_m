@@ -1,12 +1,34 @@
 
-<import_marker>
+#import "<prefix_name>HelperTypes.h"
 
 __strong static NSDateFormatter *_<prefix_name>DateFormatter = nil;
 __strong static NSDateFormatter *_<prefix_name>DateTimeFormatter = nil;
 
-@implementation <prefix_name>Date
+#pragma mark -
 
-#pragma mark - Static methods
+@implementation <prefix_name>DateBox
+
+#pragma mark - Init
+
+- (instancetype)initWithDate:(NSDate *)date
+{
+    self = [super init];
+    if (self) {
+        self.date = date;
+    }
+    return self;
+}
+
+- (instancetype)initWithString:(NSString *)string
+{
+    self = [super init];
+    if (self) {
+        self.stringValue = string;
+    }
+    return self;
+}
+
+#pragma mark - Class Methods
 
 + (void)setDateFormatter:(NSDateFormatter *)aDateFormatter
 {
@@ -22,13 +44,27 @@ __strong static NSDateFormatter *_<prefix_name>DateTimeFormatter = nil;
     return _<prefix_name>DateFormatter;
 }
 
+#pragma mark - Setters
+
+- (void)setDate:(NSDate *)date
+{
+    _date = date;
+    _stringValue = [[[self class] dateFormatter] stringFromDate:_date];
+}
+
+- (void)setStringValue:(NSString *)stringValue
+{
+    _stringValue = stringValue;
+    _date = [[[self class] dateFormatter] dateFromString:_stringValue];
+}
+
 @end
 
-@implementation <prefix_name>DateTime
+@implementation <prefix_name>DateTimeBox
 
 + (void)setDateFormatter:(NSDateFormatter *)aDateFormatter
 {
-    _<prefix_name>DateFormatter = aDateFormatter;
+    _<prefix_name>DateTimeFormatter = aDateFormatter;
 }
 
 + (NSDateFormatter *)dateFormatter
@@ -37,22 +73,7 @@ __strong static NSDateFormatter *_<prefix_name>DateTimeFormatter = nil;
         _<prefix_name>DateTimeFormatter = [[NSDateFormatter alloc] init];
         _<prefix_name>DateTimeFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     }
-    return _<prefix_name>DateTimeFormatter;
+    return _<prefix_name>DateFormatter;
 }
 
 @end
-
-@implementation NSDate (<prefix_name>Date)
-
-- (<prefix_name>Date*)<prefix_name>Date
-{
-    return (<prefix_name>Date*)self;
-}
-
-- (<prefix_name>DateTime*)<prefix_name>DateTime
-{
-    return (<prefix_name>DateTime*)self;
-}
-
-@end
-

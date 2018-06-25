@@ -285,7 +285,7 @@
                     } else {
                         
                         if ([obj.oaSchema isDateType]) {
-                            [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = [[[%@ class] dateFormatter] stringFromDate:%@];", variableName, obj.name, parameterVariableName, parameterVariableName];
+                            [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = [%@ stringValue];", variableName, obj.name, parameterVariableName];
                         }
                         else if ([obj.oaSchema objc_CustomTypeName]) {
                             [methodImplementationString appendFormat:@"\n\t%@[@\"%@\"] = [%@ dictionaryValue];", variableName, obj.name, parameterVariableName];

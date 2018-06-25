@@ -47,9 +47,9 @@ static inline NSString* objC_classNameFromSwaggerType(NSString *swaggerType)
     } else if ([toDateTypes containsObject:swaggerType]) {
         
         if ([swaggerType isEqualToString:@"dateTime"]) {
-            objCNameClass = [[SettingsManager sharedManager] typeNameWithType:@"DateTime"];
+            objCNameClass = [[SettingsManager sharedManager] typeNameWithType:@"DateTimeBox"];
         } else {
-            objCNameClass = [[SettingsManager sharedManager] typeNameWithType:@"Date"];
+            objCNameClass = [[SettingsManager sharedManager] typeNameWithType:@"DateBox"];
         }
         
     } else if ([swaggerType isEqualToString:@"array"]) {
