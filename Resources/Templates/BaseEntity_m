@@ -65,12 +65,12 @@
             <class_name_marker> *entity = [[propClass alloc] initWithDictionary:valueForKey];
             [self setValue:entity forKey:propertyName];
         }
-        else if ([propClass isKindOfClass:[TAPDateBox class]]) {
-            TAPDateBox *box = [[TAPDateBox alloc] initWithString:valueForKey];
+        else if ([propClass isSubclassOfClass:[<prefix_name>DateTimeBox class]]) {
+            <prefix_name>DateTimeBox *box = [[<prefix_name>DateTimeBox alloc] initWithString:valueForKey];
             [self setValue:box forKey:propertyName];
         }
-        else if ([propClass isKindOfClass:[TAPDateTimeBox class]]) {
-            TAPDateTimeBox *box = [[TAPDateTimeBox alloc] initWithString:valueForKey];
+        else if ([propClass isSubclassOfClass:[<prefix_name>DateBox class]]) {
+            <prefix_name>DateBox *box = [[<prefix_name>DateBox alloc] initWithString:valueForKey];
             [self setValue:box forKey:propertyName];
         }
         else if ([propClass isSubclassOfClass:[NSArray class]]){
@@ -128,11 +128,11 @@
         else if ([propClass isSubclassOfClass:[<class_name_marker> class]]) {
             value = [value dictionaryValue];
         }
-        else if ([propClass isKindOfClass:[<prefix_name>DateBox class]]) {
-            value = [(<prefix_name>DateBox *)value stringValue];
-        }
-        else if ([propClass isKindOfClass:[<prefix_name>DateTimeBox class]]) {
+        else if ([propClass isSubclassOfClass:[<prefix_name>DateTimeBox class]]) {
             value = [(<prefix_name>DateTimeBox *)value stringValue];
+        }
+        else if ([propClass isSubclassOfClass:[<prefix_name>DateBox class]]) {
+            value = [(<prefix_name>DateBox *)value stringValue];
         }
         else if ([propClass isSubclassOfClass:[NSArray class]]) {
             NSString *memberClassName = [selfClass classNameOfMembersForMappedField:propertyName];

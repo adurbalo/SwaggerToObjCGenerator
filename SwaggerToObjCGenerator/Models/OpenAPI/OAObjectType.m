@@ -47,6 +47,39 @@
     return nil;
 }
 
+- (NSString *)objC_classNameByObjectType:(OAObjectType *)objectType
+{
+    NSArray *toNumberTypes = @[@"integer",
+                               @"long",
+                               @"float",
+                               @"double",
+                               @"boolean",
+                               @"number" //Not sure about OpenAPI support
+                               ];
+    
+    NSString *objCNameClass = nil;
+    if ([objectType.type isEqualToString:@"string"]) {
+        
+        if ([objectType.format isEqualToString:@"date-time"]) {
+            objCNameClass = [[SettingsManager sharedManager] typeNameWithType:@"DateTimeBox"];
+        } else if ([objectType.format isEqualToString:@"date"]) {
+            objCNameClass = [[SettingsManager sharedManager] typeNameWithType:@"DateBox"];
+        } else {
+            objCNameClass = @"NSString";
+        }
+    } else if ([objectType.type isEqualToString:@"array"]) {
+        objCNameClass = @"NSArray";
+    } else if ([objectType.type isEqualToString:@"object"]) {
+        objCNameClass = @"NSDictionary";
+    } else if ([toNumberTypes containsObject:objectType.type]) {
+        objCNameClass = @"NSNumber";
+    } else {
+        //NSLog(@"Custom type: %@ ?", swaggerType);
+        objCNameClass = [[SettingsManager sharedManager] typeNameWithType:objectType.type];
+    }
+    return objCNameClass;
+}
+
 #pragma mark - Public
 
 - (NSString *)objc_CustomTypeName
@@ -58,9 +91,9 @@
         if ([schema isEnumType]) {
             return nil;
         }
-        result = [schema targetClassName]?:objC_classNameFromSwaggerType(schema.type);
+        result = [schema targetClassName]?:[self objC_classNameByObjectType:schema];
     } else if (self.type) {
-        result = [NSString stringWithFormat:@"%@ *",  objC_classNameFromSwaggerType(self.type)];
+        result = [NSString stringWithFormat:@"%@ *", [self objC_classNameByObjectType:self]];
     }
     
     if (isCustomClassType(result)) {
@@ -78,7 +111,7 @@
         if ([schema isEnumType]) {
             result = [NSString stringWithFormat:@"%@ ", enumTypeNameByParameterName(schema.name)];
         } else {
-            NSString *targetClassName = [schema targetClassName]?:objC_classNameFromSwaggerType(schema.type);
+            NSString *targetClassName = [schema targetClassName]?:[self objC_classNameByObjectType:schema];
             if (self.items) {
                 result = [NSString stringWithFormat:@"NSArray <%@ *> *", targetClassName];
             } else {
@@ -86,7 +119,7 @@
             }
         }
     } else if (self.type) {
-        result = [NSString stringWithFormat:@"%@ *",  objC_classNameFromSwaggerType(self.type)];
+        result = [NSString stringWithFormat:@"%@ *",  [self objC_classNameByObjectType:self]];
     }
     return result;
 }
