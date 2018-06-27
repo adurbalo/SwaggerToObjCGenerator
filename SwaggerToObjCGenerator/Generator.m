@@ -173,6 +173,8 @@
     NSMutableString *hContentOfFile = [[NSMutableString alloc] initWithContentsOfFile:[[SettingsManager sharedManager].resourcesPath stringByAppendingPathComponent:@"ObjectiveCClassTemplate.h"]
                                                                              encoding:NSUTF8StringEncoding
                                                                                 error:nil];
+    [hContentOfFile insertString:@"//! DO NOT MODIFY THIS CLASS !\n" atIndex:0];
+    
     //Generate Class name
     [hContentOfFile replaceOccurrencesOfString:CLASS_NAME_MARKER withString:className options:0 range:NSMakeRange(0, hContentOfFile.length)];
     
@@ -214,6 +216,8 @@
     NSMutableString *mContentOfFile = [[NSMutableString alloc] initWithContentsOfFile:[[SettingsManager sharedManager].resourcesPath stringByAppendingPathComponent:@"ObjectiveCClassTemplate.m"]
                                                                              encoding:NSUTF8StringEncoding
                                                                                 error:nil];
+    [mContentOfFile insertString:@"//! DO NOT MODIFY THIS CLASS !\n" atIndex:0];
+    
     //Import Api Const
     [mContentOfFile replaceOccurrencesOfString:CLASS_IMPORT_MARKER withString:[NSString stringWithFormat:@"#import \"%@.h\"", [[SettingsManager sharedManager] apiConstantName]] options:0 range:NSMakeRange(0, mContentOfFile.length)];
     
