@@ -143,7 +143,13 @@
             }
         }];
         if (pathsForService.count) {
-            resultDictionary[@"Other"] = [pathsForService copy];
+            NSString *otherOroginalName = @"other";
+            NSString *otherResourceName = [otherOroginalName copy];
+            NSUInteger index = 1;
+            while ([[resultDictionary allKeys] containsObject:otherResourceName]) {
+                otherResourceName = [otherOroginalName stringByAppendingFormat:@"%ld", ++index];
+            }
+            resultDictionary[otherResourceName] = [pathsForService copy];
         }
     }
     

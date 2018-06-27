@@ -162,13 +162,15 @@
     }
     
     NSMutableString *varNameString = [[NSMutableString alloc] initWithString:@"k"];
+    NSCharacterSet *set = [[NSCharacterSet letterCharacterSet] invertedSet];
     [components enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSString *oneComp = [obj stringByReplacingOccurrencesOfString:@"{" withString:@""];
-        oneComp = [oneComp stringByReplacingOccurrencesOfString:@"}" withString:@""];
-        [varNameString appendString:[oneComp capitalizeFirstCharacter]];
+        NSString *oneComp = [[obj componentsSeparatedByCharactersInSet:set] componentsJoinedByString:@""];
+        if (oneComp.length > 0) {
+            [varNameString appendString:[oneComp capitalizeFirstCharacter]];
+        }
     }];
     [varNameString appendString:@"APIPath"];
-    return varNameString;
+    return [varNameString copy];
 }
 
 - (NSString *)methodDeclarationName

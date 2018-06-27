@@ -444,24 +444,6 @@
     [self generateEnumsClass];
     
     [self generateServicesClasses];
-    
-    
-    /*
-     - (void)generateObjC_Classes
-     {
-     [CodeGeneratorHelper generateParentServiceResource];
-     [CodeGeneratorHelper generateBaseEntity];
-     
-     [self generateServicesClasses];
-     
-     
-     
-     [self generateDefinitionsClasses];
-     [self generateEnumsClass];
-     }
-
-     
-     */
 }
 
 @end
