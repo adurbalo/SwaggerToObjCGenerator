@@ -9,3 +9,8 @@ target 'SwaggerToObjCGenerator' do
     pod 'Mantle'
     pod 'YAML-Framework'
 end
+
+target 'OpenAPItoObjC_CodeGen' do
+    pod 'Mantle'
+    pod 'YAML-Framework'
+end

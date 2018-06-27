@@ -39,6 +39,36 @@
 		61852D0920D16BBF00AF91D7 /* FilesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 61852D0820D16BBF00AF91D7 /* FilesHandler.m */; };
 		61857A3520DD2B1B00D567A3 /* HelperTypesTemplate_h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 61857A3420DD296D00D567A3 /* HelperTypesTemplate_h */; };
 		61857A3620DD2B1B00D567A3 /* HelperTypesTemplate_m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 61857A3320DD296D00D567A3 /* HelperTypesTemplate_m */; };
+		619277AF20E3C148007EB0A3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 619277AE20E3C148007EB0A3 /* AppDelegate.m */; };
+		619277B220E3C148007EB0A3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 619277B120E3C148007EB0A3 /* ViewController.m */; };
+		619277B420E3C14A007EB0A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 619277B320E3C14A007EB0A3 /* Assets.xcassets */; };
+		619277B720E3C14A007EB0A3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 619277B520E3C14A007EB0A3 /* Main.storyboard */; };
+		619277BA20E3C14A007EB0A3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 619277B920E3C14A007EB0A3 /* main.m */; };
+		619277BF20E3D42E007EB0A3 /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 614DDADF1FB2000700BF0AEE /* SettingsManager.m */; };
+		619277C020E3D56C007EB0A3 /* NSError+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 619295C61FB9D7CE0024CB78 /* NSError+Extension.m */; };
+		619277C120E3D56C007EB0A3 /* NSString+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6139EC701FAC9B5700248C4F /* NSString+Helper.m */; };
+		619277C220E3D56C007EB0A3 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 617E51D420D409A70061A516 /* DataManager.m */; };
+		619277C320E3D56C007EB0A3 /* Generator.m in Sources */ = {isa = PBXBuildFile; fileRef = 61264B9A20D2703600704C06 /* Generator.m */; };
+		619277C420E3D56C007EB0A3 /* FilesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 61852D0820D16BBF00AF91D7 /* FilesHandler.m */; };
+		619277C520E3D56C007EB0A3 /* OpenAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A4DB0B520D05D6400DA16B6 /* OpenAPI.m */; };
+		619277C620E3D56C007EB0A3 /* Components.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A4DB0B820D0624A00DA16B6 /* Components.m */; };
+		619277C720E3D56C007EB0A3 /* OASchema.m in Sources */ = {isa = PBXBuildFile; fileRef = 61852CFE20D1440A00AF91D7 /* OASchema.m */; };
+		619277C820E3D56C007EB0A3 /* OAProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 61852D0120D144CA00AF91D7 /* OAProperty.m */; };
+		619277C920E3D56C007EB0A3 /* OAServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 61852D0420D1666100AF91D7 /* OAServer.m */; };
+		619277CA20E3D56C007EB0A3 /* OAContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 617E51D720D419D90061A516 /* OAContent.m */; };
+		619277CB20E3D56C007EB0A3 /* OAObjectType.m in Sources */ = {isa = PBXBuildFile; fileRef = 617E51DA20D420740061A516 /* OAObjectType.m */; };
+		619277CC20E3D56C007EB0A3 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365D51FA8B7FD003B7B0B /* BaseModel.m */; };
+		619277CD20E3D56C007EB0A3 /* Swagger.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365D21FA8B6CF003B7B0B /* Swagger.m */; };
+		619277CE20E3D56C007EB0A3 /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 6179FBD71FAB49E7005B817C /* Service.m */; };
+		619277CF20E3D56C007EB0A3 /* Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365D81FA8B83D003B7B0B /* Info.m */; };
+		619277D020E3D56C007EB0A3 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365DB1FA8B9B0003B7B0B /* Contact.m */; };
+		619277D120E3D56C007EB0A3 /* License.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365DE1FA8BA2B003B7B0B /* License.m */; };
+		619277D220E3D56C007EB0A3 /* Path.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365E11FA8C915003B7B0B /* Path.m */; };
+		619277D320E3D56C007EB0A3 /* PathParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6173B8071FA9D02A00FAE8D9 /* PathParameter.m */; };
+		619277D420E3D56C007EB0A3 /* Response.m in Sources */ = {isa = PBXBuildFile; fileRef = 6173B80A1FA9D89800FAE8D9 /* Response.m */; };
+		619277D520E3D56C007EB0A3 /* Schema.m in Sources */ = {isa = PBXBuildFile; fileRef = 6173B80D1FA9D8E400FAE8D9 /* Schema.m */; };
+		619277D620E3D56C007EB0A3 /* Definition.m in Sources */ = {isa = PBXBuildFile; fileRef = 61124E491FA9F6690082BDA5 /* Definition.m */; };
+		619277D720E3D56C007EB0A3 /* Property.m in Sources */ = {isa = PBXBuildFile; fileRef = 61124E4C1FA9F72B0082BDA5 /* Property.m */; };
 		619295C71FB9D7CE0024CB78 /* NSError+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 619295C61FB9D7CE0024CB78 /* NSError+Extension.m */; };
 		619365C81FA8AD52003B7B0B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365C71FA8AD52003B7B0B /* main.m */; };
 		619365D31FA8B6CF003B7B0B /* Swagger.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365D21FA8B6CF003B7B0B /* Swagger.m */; };
@@ -47,6 +77,7 @@
 		619365DC1FA8B9B0003B7B0B /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365DB1FA8B9B0003B7B0B /* Contact.m */; };
 		619365DF1FA8BA2B003B7B0B /* License.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365DE1FA8BA2B003B7B0B /* License.m */; };
 		619365E21FA8C915003B7B0B /* Path.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365E11FA8C915003B7B0B /* Path.m */; };
+		76C8C39BAC62BA708969D922 /* libPods-OpenAPItoObjC_CodeGen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D1A40B7283F1B73912EFD86 /* libPods-OpenAPItoObjC_CodeGen.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -127,6 +158,16 @@
 		61857A3320DD296D00D567A3 /* HelperTypesTemplate_m */ = {isa = PBXFileReference; lastKnownFileType = text; path = HelperTypesTemplate_m; sourceTree = "<group>"; };
 		61857A3420DD296D00D567A3 /* HelperTypesTemplate_h */ = {isa = PBXFileReference; lastKnownFileType = text; path = HelperTypesTemplate_h; sourceTree = "<group>"; };
 		6190FE321FAC81AE0027E586 /* APIConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIConsts.h; sourceTree = "<group>"; };
+		619277AB20E3C147007EB0A3 /* OpenAPItoObjC_CodeGen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenAPItoObjC_CodeGen.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		619277AD20E3C148007EB0A3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		619277AE20E3C148007EB0A3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		619277B020E3C148007EB0A3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		619277B120E3C148007EB0A3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		619277B320E3C14A007EB0A3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		619277B620E3C14A007EB0A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		619277B820E3C14A007EB0A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		619277B920E3C14A007EB0A3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		619277BB20E3C14A007EB0A3 /* OpenAPItoObjC_CodeGen.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenAPItoObjC_CodeGen.entitlements; sourceTree = "<group>"; };
 		619295C51FB9D7CE0024CB78 /* NSError+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSError+Extension.h"; sourceTree = "<group>"; };
 		619295C61FB9D7CE0024CB78 /* NSError+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+Extension.m"; sourceTree = "<group>"; };
 		619365C41FA8AD52003B7B0B /* SwaggerToObjCGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwaggerToObjCGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,10 +185,21 @@
 		619365E01FA8C915003B7B0B /* Path.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Path.h; sourceTree = "<group>"; };
 		619365E11FA8C915003B7B0B /* Path.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Path.m; sourceTree = "<group>"; };
 		7926E697BBC2BBE9B79126EF /* libPods-SwaggerToObjCGenerator.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SwaggerToObjCGenerator.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B31162242492BB5A75CD7C2 /* Pods-OpenAPItoObjC_CodeGen.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenAPItoObjC_CodeGen.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OpenAPItoObjC_CodeGen/Pods-OpenAPItoObjC_CodeGen.debug.xcconfig"; sourceTree = "<group>"; };
+		9D1A40B7283F1B73912EFD86 /* libPods-OpenAPItoObjC_CodeGen.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OpenAPItoObjC_CodeGen.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3EDAA75F075A9D58BD2474 /* Pods-SwaggerToObjCGenerator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwaggerToObjCGenerator.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwaggerToObjCGenerator/Pods-SwaggerToObjCGenerator.debug.xcconfig"; sourceTree = "<group>"; };
+		B5C7F7690438F42AAC13ACAF /* Pods-OpenAPItoObjC_CodeGen.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenAPItoObjC_CodeGen.release.xcconfig"; path = "Pods/Target Support Files/Pods-OpenAPItoObjC_CodeGen/Pods-OpenAPItoObjC_CodeGen.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		619277A820E3C147007EB0A3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76C8C39BAC62BA708969D922 /* libPods-OpenAPItoObjC_CodeGen.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		619365C11FA8AD52003B7B0B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -164,6 +216,8 @@
 			children = (
 				AA3EDAA75F075A9D58BD2474 /* Pods-SwaggerToObjCGenerator.debug.xcconfig */,
 				0F5D4C492C9406BFEA4D6542 /* Pods-SwaggerToObjCGenerator.release.xcconfig */,
+				7B31162242492BB5A75CD7C2 /* Pods-OpenAPItoObjC_CodeGen.debug.xcconfig */,
+				B5C7F7690438F42AAC13ACAF /* Pods-OpenAPItoObjC_CodeGen.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -209,10 +263,27 @@
 			path = Templates;
 			sourceTree = "<group>";
 		};
+		619277AC20E3C148007EB0A3 /* OpenAPItoObjC_CodeGen */ = {
+			isa = PBXGroup;
+			children = (
+				619277AD20E3C148007EB0A3 /* AppDelegate.h */,
+				619277AE20E3C148007EB0A3 /* AppDelegate.m */,
+				619277B020E3C148007EB0A3 /* ViewController.h */,
+				619277B120E3C148007EB0A3 /* ViewController.m */,
+				619277B320E3C14A007EB0A3 /* Assets.xcassets */,
+				619277B520E3C14A007EB0A3 /* Main.storyboard */,
+				619277B820E3C14A007EB0A3 /* Info.plist */,
+				619277B920E3C14A007EB0A3 /* main.m */,
+				619277BB20E3C14A007EB0A3 /* OpenAPItoObjC_CodeGen.entitlements */,
+			);
+			path = OpenAPItoObjC_CodeGen;
+			sourceTree = "<group>";
+		};
 		619365BB1FA8AD52003B7B0B = {
 			isa = PBXGroup;
 			children = (
 				619365C61FA8AD52003B7B0B /* SwaggerToObjCGenerator */,
+				619277AC20E3C148007EB0A3 /* OpenAPItoObjC_CodeGen */,
 				619365C51FA8AD52003B7B0B /* Products */,
 				619365CE1FA8AE4B003B7B0B /* Resources */,
 				0CBBBC8259AD419067BA2AAA /* Pods */,
@@ -224,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				619365C41FA8AD52003B7B0B /* SwaggerToObjCGenerator */,
+				619277AB20E3C147007EB0A3 /* OpenAPItoObjC_CodeGen.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -295,6 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				7926E697BBC2BBE9B79126EF /* libPods-SwaggerToObjCGenerator.a */,
+				9D1A40B7283F1B73912EFD86 /* libPods-OpenAPItoObjC_CodeGen.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -302,6 +375,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		619277AA20E3C147007EB0A3 /* OpenAPItoObjC_CodeGen */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 619277BE20E3C14A007EB0A3 /* Build configuration list for PBXNativeTarget "OpenAPItoObjC_CodeGen" */;
+			buildPhases = (
+				69047796B6411BC2D5FB4134 /* [CP] Check Pods Manifest.lock */,
+				619277A720E3C147007EB0A3 /* Sources */,
+				619277A820E3C147007EB0A3 /* Frameworks */,
+				619277A920E3C147007EB0A3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenAPItoObjC_CodeGen;
+			productName = OpenAPItoObjC_CodeGen;
+			productReference = 619277AB20E3C147007EB0A3 /* OpenAPItoObjC_CodeGen.app */;
+			productType = "com.apple.product-type.application";
+		};
 		619365C31FA8AD52003B7B0B /* SwaggerToObjCGenerator */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 619365CB1FA8AD52003B7B0B /* Build configuration list for PBXNativeTarget "SwaggerToObjCGenerator" */;
@@ -310,7 +401,6 @@
 				619365C01FA8AD52003B7B0B /* Sources */,
 				619365C11FA8AD52003B7B0B /* Frameworks */,
 				619365C21FA8AD52003B7B0B /* CopyFiles */,
-				1E4E00D959106F9B0098493C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -330,6 +420,10 @@
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = TMW;
 				TargetAttributes = {
+					619277AA20E3C147007EB0A3 = {
+						CreatedOnToolsVersion = 9.4.1;
+						ProvisioningStyle = Automatic;
+					};
 					619365C31FA8AD52003B7B0B = {
 						CreatedOnToolsVersion = 9.0.1;
 						ProvisioningStyle = Automatic;
@@ -350,24 +444,40 @@
 			projectRoot = "";
 			targets = (
 				619365C31FA8AD52003B7B0B /* SwaggerToObjCGenerator */,
+				619277AA20E3C147007EB0A3 /* OpenAPItoObjC_CodeGen */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		619277A920E3C147007EB0A3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				619277B420E3C14A007EB0A3 /* Assets.xcassets in Resources */,
+				619277B720E3C14A007EB0A3 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXShellScriptBuildPhase section */
-		1E4E00D959106F9B0098493C /* [CP] Copy Pods Resources */ = {
+		69047796B6411BC2D5FB4134 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OpenAPItoObjC_CodeGen-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwaggerToObjCGenerator/Pods-SwaggerToObjCGenerator-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ACDDB60F77B9AE3C83F190DD /* [CP] Check Pods Manifest.lock */ = {
@@ -391,6 +501,41 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		619277A720E3C147007EB0A3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				619277C020E3D56C007EB0A3 /* NSError+Extension.m in Sources */,
+				619277C120E3D56C007EB0A3 /* NSString+Helper.m in Sources */,
+				619277C220E3D56C007EB0A3 /* DataManager.m in Sources */,
+				619277C320E3D56C007EB0A3 /* Generator.m in Sources */,
+				619277C420E3D56C007EB0A3 /* FilesHandler.m in Sources */,
+				619277C520E3D56C007EB0A3 /* OpenAPI.m in Sources */,
+				619277C620E3D56C007EB0A3 /* Components.m in Sources */,
+				619277C720E3D56C007EB0A3 /* OASchema.m in Sources */,
+				619277C820E3D56C007EB0A3 /* OAProperty.m in Sources */,
+				619277C920E3D56C007EB0A3 /* OAServer.m in Sources */,
+				619277CA20E3D56C007EB0A3 /* OAContent.m in Sources */,
+				619277CB20E3D56C007EB0A3 /* OAObjectType.m in Sources */,
+				619277CC20E3D56C007EB0A3 /* BaseModel.m in Sources */,
+				619277CD20E3D56C007EB0A3 /* Swagger.m in Sources */,
+				619277CE20E3D56C007EB0A3 /* Service.m in Sources */,
+				619277CF20E3D56C007EB0A3 /* Info.m in Sources */,
+				619277D020E3D56C007EB0A3 /* Contact.m in Sources */,
+				619277D120E3D56C007EB0A3 /* License.m in Sources */,
+				619277D220E3D56C007EB0A3 /* Path.m in Sources */,
+				619277D320E3D56C007EB0A3 /* PathParameter.m in Sources */,
+				619277D420E3D56C007EB0A3 /* Response.m in Sources */,
+				619277D520E3D56C007EB0A3 /* Schema.m in Sources */,
+				619277D620E3D56C007EB0A3 /* Definition.m in Sources */,
+				619277D720E3D56C007EB0A3 /* Property.m in Sources */,
+				619277BF20E3D42E007EB0A3 /* SettingsManager.m in Sources */,
+				619277B220E3C148007EB0A3 /* ViewController.m in Sources */,
+				619277BA20E3C14A007EB0A3 /* main.m in Sources */,
+				619277AF20E3C148007EB0A3 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		619365C01FA8AD52003B7B0B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -426,7 +571,56 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		619277B520E3C14A007EB0A3 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				619277B620E3C14A007EB0A3 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		619277BC20E3C14A007EB0A3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B31162242492BB5A75CD7C2 /* Pods-OpenAPItoObjC_CodeGen.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = OpenAPItoObjC_CodeGen/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.andreydurbalo.OpenAPItoObjC-CodeGen";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		619277BD20E3C14A007EB0A3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B5C7F7690438F42AAC13ACAF /* Pods-OpenAPItoObjC_CodeGen.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = OpenAPItoObjC_CodeGen/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.andreydurbalo.OpenAPItoObjC-CodeGen";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		619365C91FA8AD52003B7B0B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -553,6 +747,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		619277BE20E3C14A007EB0A3 /* Build configuration list for PBXNativeTarget "OpenAPItoObjC_CodeGen" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				619277BC20E3C14A007EB0A3 /* Debug */,
+				619277BD20E3C14A007EB0A3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		619365BF1FA8AD52003B7B0B /* Build configuration list for PBXProject "SwaggerToObjCGenerator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

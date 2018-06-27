@@ -10,11 +10,17 @@ DEPENDENCIES:
   - Mantle
   - YAML-Framework
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - LibYAML
+    - Mantle
+    - YAML-Framework
+
 SPEC CHECKSUMS:
   LibYAML: 3af2c5adf3a40dff936d087aa6a77edc10036bc5
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
   YAML-Framework: 6fe698e19d39d778829f5937e39d1e6bc12afd7b
 
-PODFILE CHECKSUM: 7846a1a47d45da27be182c3600cd19409394bcb1
+PODFILE CHECKSUM: 4b72d0c6071e22d511c53f6335e2cc768811187c
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

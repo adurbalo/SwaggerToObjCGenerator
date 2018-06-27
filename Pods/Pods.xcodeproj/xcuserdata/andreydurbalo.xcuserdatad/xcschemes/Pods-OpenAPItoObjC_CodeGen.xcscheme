@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BDD6CB1489C7EBE22FD3DFC9EC3E740A"
-               BlueprintName = "Pods-SwaggerToObjCGenerator"
+               BlueprintIdentifier = "D35D53B9B69469ABDFE1C32B90E4F74D"
+               BlueprintName = "Pods-OpenAPItoObjC_CodeGen"
                ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "libPods-SwaggerToObjCGenerator.a">
+               BuildableName = "libPods-OpenAPItoObjC_CodeGen.a">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

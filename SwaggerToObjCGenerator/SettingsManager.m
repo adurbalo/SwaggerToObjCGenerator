@@ -52,7 +52,9 @@
 
 - (void)configurateWithArgumentsDictionary:(NSDictionary<NSString *,NSString *> *)argumentsDictionary
 {
+    NSString *destinationPath = [NSString pathWithComponents:[argumentsDictionary[DESTINATION_PATH_KEY] componentsSeparatedByString:@"/"]];
     self.destinationPath = argumentsDictionary[DESTINATION_PATH_KEY];
+    self.destinationPath = destinationPath;
     self.prefix = argumentsDictionary[PREFIX_KEY]?:@"";
     
     self.contentPath = argumentsDictionary[CONTENT_PATH_KEY];

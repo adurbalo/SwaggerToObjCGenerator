@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>OpenAPItoObjC_CodeGen.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
 		<key>SwaggerToObjCGenerator.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,6 +17,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>619277AA20E3C147007EB0A3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>619365C31FA8AD52003B7B0B</key>
 		<dict>
 			<key>primary</key>
