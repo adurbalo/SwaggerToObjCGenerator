@@ -10,6 +10,7 @@
 #import "PathParameter.h"
 #import "Response.h"
 #import "Protocols.h"
+#import "OARequestBody.h"
 
 @interface Path : BaseModel <GeneratablePath>
 
@@ -24,5 +25,6 @@
 @property (nonatomic, strong) NSArray<NSString *> *produces;
 @property (nonatomic, strong) NSArray<PathParameter *> *parameters;
 @property (nonatomic, strong) NSArray<Response*> *responses;
+@property (nonatomic, strong) OARequestBody *requestBody;
 
 @end

@@ -16,6 +16,8 @@
  
 @end
 
+#define BODY_VARIABLE_NAME @"body"
+
 @implementation Path
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
@@ -28,6 +30,7 @@
     [keyPathDict setObject:@"produces" forKey:@"produces"];
     [keyPathDict setObject:@"parameters" forKey:@"parameters"];
     [keyPathDict setObject:@"responses" forKey:@"responses"];
+    [keyPathDict setObject:@"requestBody" forKey:@"requestBody"];
     return keyPathDict;
 }
 
@@ -60,6 +63,10 @@
         }];
         return (responsesArray.count > 0)?responsesArray:nil;
     }];
+}
+
++ (NSValueTransformer *)requestBodyJSONTransformer {
+    return [MTLJSONAdapter dictionaryTransformerWithModelClass:OARequestBody.class];
 }
 
 #pragma mark - Internal
@@ -199,7 +206,7 @@
     [methodTitleString appendFormat:@"- (NSURLSessionTask *)%@", [self operationName]];
     
     BOOL parametersExists = NO;
-    if (self.parameters.count > 0) {
+    if (self.parameters.count > 0 || self.requestBody) {
         parametersExists = YES;
         [methodTitleString appendString:@"With"];
     }
@@ -217,6 +224,17 @@
             [methodTitleString appendFormat:@"%@:(%@)%@ ", title, [[obj currentSchema] objC_fullTypeName], name];
         }
     }];
+    
+    if ([SettingsManager sharedManager].isOpenAPI) {
+        if (self.requestBody) {
+            NSString *name = BODY_VARIABLE_NAME;
+            NSString *title = [name copy];
+            if (self.parameters.count == 0) {
+                title = [title capitalizeFirstCharacter];
+            }
+            [methodTitleString appendFormat:@"%@:(%@)%@ ", title, [self.requestBody.content.schema objc_FullTypeName], name];
+        }
+    }
     
     if (parametersExists) {
         [methodTitleString appendString:@"and"];
@@ -245,21 +263,12 @@
     
     NSMutableArray<NSString *> *parameters = [[self availableParametersTypes] mutableCopy];
     NSString *pathParameterName = @"path";
-    NSString *bodyParameterName = @"body";
 
     if ([parameters containsObject:pathParameterName]) {
         [parameters replaceObjectAtIndex:[parameters indexOfObject:pathParameterName] withObject:[parameters firstObject]];
     }
     
-    if ([parameters containsObject:bodyParameterName]) {
-        [parameters replaceObjectAtIndex:[parameters indexOfObject:bodyParameterName] withObject:[parameters lastObject]];
-    }
-    
     [parameters enumerateObjectsUsingBlock:^(NSString * _Nonnull parameterType, NSUInteger idx, BOOL * _Nonnull stop) {
-        
-        if ([parameterType isEqualToString:bodyParameterName]) {
-            return;
-        }
         
         NSString *variableName = [NSString stringWithFormat:@"%@Parameters", parameterType];
         
@@ -316,12 +325,16 @@
     } else {
         [methodImplementationString appendString:@"\n\tNSMutableDictionary<NSString*, id> *requestParameters = [[NSMutableDictionary alloc] init];"];
         [parameters enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj isEqualToString:bodyParameterName]) {
-                [methodImplementationString appendFormat:@"\n\trequestParameters[@\"%@\"] = [%@ dictionaryValue];", obj, obj];
-            } else {
-                [methodImplementationString appendFormat:@"\n\trequestParameters[@\"%@\"] = %@Parameters;", obj, obj];
-            }
+            [methodImplementationString appendFormat:@"\n\trequestParameters[@\"%@\"] = %@Parameters;", obj, obj];
+            
         }];
+    }
+    
+    //Body
+    NSString *bodyLocalVarName = @"nil";
+    if (self.requestBody) {
+        bodyLocalVarName = @"bodyData";
+        [methodImplementationString appendFormat:@"\n\tNSData *%@ = [NSData dataFromObj:%@];", bodyLocalVarName, BODY_VARIABLE_NAME];
     }
     
     //Return
@@ -348,7 +361,7 @@
     else{
         outputClass = @"Nil";
     }
-    [methodImplementationString appendFormat:@"\n\treturn [self.serverAPI makeRequestWithHTTPMethod:@\"%@\" resource:self forURLPath:thePath parameters:[requestParameters copy] outputClass:%@ responseBlock:responseBlock];", self.method, outputClass];
+    [methodImplementationString appendFormat:@"\n\treturn [self.serverAPI makeRequestWithHTTPMethod:@\"%@\" resource:self forURLPath:thePath parameters:[requestParameters copy] body:%@ outputClass:%@ responseBlock:responseBlock];", self.method, bodyLocalVarName,outputClass];
     [methodImplementationString appendString:@"\n}\n"];
     return methodImplementationString;
 }

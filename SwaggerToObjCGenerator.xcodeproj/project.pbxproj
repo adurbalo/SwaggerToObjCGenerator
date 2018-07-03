@@ -47,6 +47,7 @@
 		619365DC1FA8B9B0003B7B0B /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365DB1FA8B9B0003B7B0B /* Contact.m */; };
 		619365DF1FA8BA2B003B7B0B /* License.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365DE1FA8BA2B003B7B0B /* License.m */; };
 		619365E21FA8C915003B7B0B /* Path.m in Sources */ = {isa = PBXBuildFile; fileRef = 619365E11FA8C915003B7B0B /* Path.m */; };
+		619EB20820EA86E800E68763 /* OARequestBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 619EB20720EA86E800E68763 /* OARequestBody.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -143,6 +144,8 @@
 		619365DE1FA8BA2B003B7B0B /* License.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = License.m; sourceTree = "<group>"; };
 		619365E01FA8C915003B7B0B /* Path.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Path.h; sourceTree = "<group>"; };
 		619365E11FA8C915003B7B0B /* Path.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Path.m; sourceTree = "<group>"; };
+		619EB20620EA86E800E68763 /* OARequestBody.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OARequestBody.h; sourceTree = "<group>"; };
+		619EB20720EA86E800E68763 /* OARequestBody.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OARequestBody.m; sourceTree = "<group>"; };
 		7926E697BBC2BBE9B79126EF /* libPods-SwaggerToObjCGenerator.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SwaggerToObjCGenerator.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3EDAA75F075A9D58BD2474 /* Pods-SwaggerToObjCGenerator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwaggerToObjCGenerator.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwaggerToObjCGenerator/Pods-SwaggerToObjCGenerator.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -185,6 +188,8 @@
 				617E51D720D419D90061A516 /* OAContent.m */,
 				617E51D920D420740061A516 /* OAObjectType.h */,
 				617E51DA20D420740061A516 /* OAObjectType.m */,
+				619EB20620EA86E800E68763 /* OARequestBody.h */,
+				619EB20720EA86E800E68763 /* OARequestBody.m */,
 			);
 			path = OpenAPI;
 			sourceTree = "<group>";
@@ -408,6 +413,7 @@
 				619365DF1FA8BA2B003B7B0B /* License.m in Sources */,
 				619365D31FA8B6CF003B7B0B /* Swagger.m in Sources */,
 				6173B80E1FA9D8E400FAE8D9 /* Schema.m in Sources */,
+				619EB20820EA86E800E68763 /* OARequestBody.m in Sources */,
 				61852D0220D144CA00AF91D7 /* OAProperty.m in Sources */,
 				6173B80B1FA9D89800FAE8D9 /* Response.m in Sources */,
 				61852D0920D16BBF00AF91D7 /* FilesHandler.m in Sources */,

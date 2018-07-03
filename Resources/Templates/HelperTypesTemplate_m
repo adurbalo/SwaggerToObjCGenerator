@@ -1,5 +1,6 @@
 
 #import "<prefix_name>HelperTypes.h"
+#import "<prefix_name>BaseEntity.h"
 
 __strong static NSDateFormatter *_<prefix_name>DateFormatter = nil;
 __strong static NSDateFormatter *_<prefix_name>DateTimeFormatter = nil;
@@ -77,3 +78,29 @@ __strong static NSDateFormatter *_<prefix_name>DateTimeFormatter = nil;
 }
 
 @end
+
+@implementation NSData (TAPExtensions)
+
++ (NSData *)dataFromObj:(id)object
+{
+    id objectToConvert = nil;
+
+    if ([object respondsToSelector:@selector(dictionaryValue)]) {
+        objectToConvert = [object dictionaryValue];
+    } else if ([NSJSONSerialization isValidJSONObject:object]) {
+        objectToConvert = object;
+    } else {
+        NSLog(@"Provide your custom convert to data from object: %@", object);
+    }
+
+    if (!objectToConvert) {
+        return nil;
+    }
+
+    NSError *error = nil;
+    NSData *result = [NSJSONSerialization dataWithJSONObject:objectToConvert options:0 error:&error];
+    if (error) {
+        NSLog(@"Error during convertation to data: %@", error);
+    }
+    return result;
+}

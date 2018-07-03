@@ -17,3 +17,9 @@
 @interface <prefix_name>DateTimeBox : <prefix_name>DateBox
 
 @end
+
+@interface NSData (<prefix_name>Extensions)
+
++ (NSData *)dataFromObj:(id)object;
+
+@end
