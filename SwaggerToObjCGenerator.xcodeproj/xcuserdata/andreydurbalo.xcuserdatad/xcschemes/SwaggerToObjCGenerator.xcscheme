@@ -67,6 +67,10 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "-contentURL &quot;https://tailoringtest.tmw.com/tailoring-server/openapi.yml&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "-destinationPath &quot;/Users/andreydurbalo/Desktop/TestGeneratorProject/TestGeneratorProject/GeneratedCode&quot;"
             isEnabled = "NO">
          </CommandLineArgument>
@@ -80,7 +84,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-contentPath &quot;/Users/andreydurbalo/Desktop/tailoring_openapi.yml&quot;"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-help"

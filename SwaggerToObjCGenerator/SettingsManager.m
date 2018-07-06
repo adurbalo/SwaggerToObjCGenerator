@@ -128,7 +128,9 @@
             if (self.contentPath) {
                 stream = [[NSInputStream alloc] initWithFileAtPath:self.contentPath];
             } else if (self.contentURL) {
-                stream = [[NSInputStream alloc] initWithURL:[NSURL URLWithString:self.contentURL]];
+                NSURL *url = [NSURL URLWithString:self.contentURL];
+                NSData *data = [NSData dataWithContentsOfURL:url];
+                stream = [NSInputStream inputStreamWithData:data];
             }
             result = [YAMLSerialization objectWithYAMLStream:stream
                                                      options:kYAMLReadOptionStringScalars

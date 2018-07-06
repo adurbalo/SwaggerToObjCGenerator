@@ -104,3 +104,5 @@ __strong static NSDateFormatter *_<prefix_name>DateTimeFormatter = nil;
     }
     return result;
 }
+
+@end
