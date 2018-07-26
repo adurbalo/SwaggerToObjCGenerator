@@ -11,6 +11,7 @@
 
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) NSString *stringValue;
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
 @end
 

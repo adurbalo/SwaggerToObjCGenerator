@@ -320,15 +320,12 @@
     }];
     
     [parameters removeObject:pathParameterName];
-    if ([parameters count] == 0) {
-        [methodImplementationString appendString:@"\n\tNSMutableDictionary<NSString*, id> *requestParameters = nil;"];
-    } else {
-        [methodImplementationString appendString:@"\n\tNSMutableDictionary<NSString*, id> *requestParameters = [[NSMutableDictionary alloc] init];"];
-        [parameters enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [methodImplementationString appendFormat:@"\n\trequestParameters[@\"%@\"] = %@Parameters;", obj, obj];
-            
-        }];
-    }
+    
+    [methodImplementationString appendString:@"\n\tNSMutableDictionary<NSString*, id> *requestParameters = [[NSMutableDictionary alloc] init];"];
+    [parameters enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [methodImplementationString appendFormat:@"\n\trequestParameters[@\"%@\"] = %@Parameters;", obj, obj];
+        
+    }];
     
     //Body
     NSString *bodyLocalVarName = @"nil";
