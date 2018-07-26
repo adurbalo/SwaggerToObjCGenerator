@@ -151,6 +151,11 @@
         }
     }];
     
+    NSString *bodyType = [self.requestBody.content.schema objc_CustomTypeName];
+    if (bodyType) {
+        [names addObject:bodyType];
+    }
+    
     NSMutableSet<NSString *> *filteredSet = [NSMutableSet new];
     [names enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, BOOL * _Nonnull stop) {
         if (isCustomClassType(obj)) {
