@@ -63,12 +63,16 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-destinationPath &quot;/Users/andreydurbalo/Desktop/OpenAPI_dest&quot;"
-            isEnabled = "NO">
+            argument = "-destinationPath &quot;/Users/andreydurbalo/Desktop/OpenAPI_dest/&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-contentURL &quot;https://tailoringtest.tmw.com/tailoring-server/openapi.yml&quot;"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-destinationPath &quot;/Users/andreydurbalo/Desktop/TestGeneratorProject/TestGeneratorProject/GeneratedCode&quot;"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-contentPath &quot;/Users/andreydurbalo/Downloads/OpenAPI-Specification-master/examples/v3.0/petstore.yaml&quot;"
@@ -80,7 +84,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-contentPath &quot;/Users/andreydurbalo/Desktop/tailoring_openapi.yml&quot;"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-help"

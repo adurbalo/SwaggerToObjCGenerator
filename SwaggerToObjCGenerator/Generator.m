@@ -133,6 +133,10 @@
     NSMutableArray *sortedResourcesNames = [[pathsByResources allKeys] mutableCopy];
     [sortedResourcesNames sortUsingSelector:@selector(caseInsensitiveCompare:)];
     
+    NSString *resourcesDirectory = [[SettingsManager sharedManager].destinationPath stringByAppendingPathComponent:@"Resources"];
+    [FilesHandler createDirectoryForPathIfNeeded:resourcesDirectory];
+    [FilesHandler clearFilesInDirectoryPath:resourcesDirectory];
+    
     for (NSString *resourceName in sortedResourcesNames) {
         NSMutableArray<id<GeneratablePath>> *sortedPaths = [pathsByResources[resourceName] mutableCopy];
         
@@ -166,7 +170,6 @@
 {
     NSString *className = [NSString stringWithFormat:@"%@%@ServiceResource", [SettingsManager sharedManager].prefix, [resourceName capitalizeFirstCharacter]];
     NSString *resourcesDirectory = [[SettingsManager sharedManager].destinationPath stringByAppendingPathComponent:@"Resources"];
-    [FilesHandler createDirectoryForPathIfNeeded:resourcesDirectory];
     
     NSString *fullFilePath = [[resourcesDirectory stringByAppendingPathComponent:className] stringByAppendingString:@".h"];
     
@@ -209,7 +212,6 @@
 {
     NSString *className = [NSString stringWithFormat:@"%@%@ServiceResource", [SettingsManager sharedManager].prefix, [resourceName capitalizeFirstCharacter]];
     NSString *resourcesDirectory = [[SettingsManager sharedManager].destinationPath stringByAppendingPathComponent:@"Resources"];
-    [FilesHandler createDirectoryForPathIfNeeded:resourcesDirectory];
     
     NSString *fullFilePath = [[resourcesDirectory stringByAppendingPathComponent:className] stringByAppendingString:@".m"];
     

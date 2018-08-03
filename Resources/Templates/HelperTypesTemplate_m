@@ -1,5 +1,6 @@
 
 #import "<prefix_name>HelperTypes.h"
+#import "<prefix_name>BaseEntity.h"
 
 __strong static NSDateFormatter *_<prefix_name>DateFormatter = nil;
 __strong static NSDateFormatter *_<prefix_name>DateTimeFormatter = nil;
@@ -44,18 +45,28 @@ __strong static NSDateFormatter *_<prefix_name>DateTimeFormatter = nil;
     return _<prefix_name>DateFormatter;
 }
 
-#pragma mark - Setters
+#pragma mark - Accessors
 
 - (void)setDate:(NSDate *)date
 {
     _date = date;
-    _stringValue = [[[self class] dateFormatter] stringFromDate:_date];
+    _stringValue = [[self dateFormatter] stringFromDate:_date];
 }
 
 - (void)setStringValue:(NSString *)stringValue
 {
     _stringValue = stringValue;
-    _date = [[[self class] dateFormatter] dateFromString:_stringValue];
+    _date = [[self dateFormatter] dateFromString:_stringValue];
+}
+
+- (NSDateFormatter *)dateFormatter
+{
+    if (_dateFormatter) {
+        return _dateFormatter;
+    }
+    else {
+        return [[self class] dateFormatter];
+    }
 }
 
 @end
@@ -74,6 +85,34 @@ __strong static NSDateFormatter *_<prefix_name>DateTimeFormatter = nil;
         _<prefix_name>DateTimeFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     }
     return _<prefix_name>DateFormatter;
+}
+
+@end
+
+@implementation NSData (TAPExtensions)
+
++ (NSData *)dataFromObj:(id)object
+{
+    id objectToConvert = nil;
+
+    if ([object respondsToSelector:@selector(dictionaryValue)]) {
+        objectToConvert = [object dictionaryValue];
+    } else if ([NSJSONSerialization isValidJSONObject:object]) {
+        objectToConvert = object;
+    } else {
+        NSLog(@"Provide your custom convert to data from object: %@", object);
+    }
+
+    if (!objectToConvert) {
+        return nil;
+    }
+
+    NSError *error = nil;
+    NSData *result = [NSJSONSerialization dataWithJSONObject:objectToConvert options:0 error:&error];
+    if (error) {
+        NSLog(@"Error during convertation to data: %@", error);
+    }
+    return result;
 }
 
 @end

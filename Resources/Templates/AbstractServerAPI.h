@@ -8,6 +8,7 @@
                                        resource:(<parent_service_resource_marker> *)resource
                                      forURLPath:(NSString *)urlPath
                                      parameters:(NSDictionary<NSString*, id> *)parameters
+                                           body:(NSData *)body
                                     outputClass:(Class)outputClass
                                   responseBlock:(void (^)(id, NSError *))responseBlock;
 @end
