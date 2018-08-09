@@ -35,6 +35,7 @@
             if (error) {
                 *stop = YES;
                 *success = NO;
+                notifyLog(error.localizedDescription);
                 NSLog(@"Error: %@", error);
             } else {
                 property.name = key;

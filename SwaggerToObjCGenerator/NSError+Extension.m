@@ -7,6 +7,7 @@
 //
 
 #import "NSError+Extension.h"
+#import "Constants.h"
 
 static const NSInteger kDefaultErrorCode = 1;
 
@@ -26,7 +27,11 @@ static const NSInteger kDefaultErrorCode = 1;
 - (void)terminate
 {
     NSLog(@"ERROR: %@ 🚫🛬", self);
+#ifdef UI_APP
+    notifyLog(self.localizedDescription);
+#else
     exit((int)self.code);
+#endif
 }
 
 

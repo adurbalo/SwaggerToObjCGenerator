@@ -115,4 +115,15 @@ static inline NSString* typeNameByName(NSString *typeName)
     return [NSString stringWithFormat:@"%@%@", [SettingsManager sharedManager].prefix, typeName];
 }
 
+static NSString *const NotifyLogMessageNotification = @"NotifyLogMessageNotification";
+
+static inline void notifyLog(NSString *log)
+{
+    if (log.length == 0) {
+        return;
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NotifyLogMessageNotification object:log];
+}
+
 #endif /* Constants_h */

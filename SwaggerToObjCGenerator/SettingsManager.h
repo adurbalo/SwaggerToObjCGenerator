@@ -23,6 +23,8 @@ typedef NS_ENUM(NSUInteger, ContentType) {
 @property (nonatomic, strong) NSString *prefix;
 @property (nonatomic, strong) NSString *resourcesPath;
 @property (nonatomic, strong) NSString *destinationPath;
+@property (nonatomic, strong) NSString *contentPath;
+@property (nonatomic, strong) NSString *contentURL;
 
 + (instancetype)sharedManager;
 - (void)configurateWithArgumentsDictionary:(NSDictionary<NSString*, NSString*> *)argumentsDictionary;

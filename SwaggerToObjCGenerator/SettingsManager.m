@@ -24,9 +24,6 @@
     BOOL _openAPI;
 }
 
-@property (nonatomic, strong) NSString *contentPath;
-@property (nonatomic, strong) NSString *contentURL;
-
 @end
 
 @implementation SettingsManager
@@ -81,7 +78,7 @@
 {
     NSString *pathExtension = [self.contentURL pathExtension];
     
-    if (!pathExtension) {
+    if (pathExtension.length == 0) {
         pathExtension = [self.contentPath pathExtension];
     }
     

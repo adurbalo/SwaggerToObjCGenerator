@@ -8,6 +8,7 @@
 
 #import "FilesHandler.h"
 #import "NSError+Extension.h"
+#import "Constants.h"
 
 @implementation FilesHandler
 
@@ -50,7 +51,9 @@
     if (error) {
         [error terminate];
     } else {
-        NSLog(@"%@ generated ✅", [filePath lastPathComponent]);
+        NSString *message = [NSString stringWithFormat:@"%@ generated ✅", [filePath lastPathComponent]];
+        notifyLog(message);
+        NSLog(@"%@", message);
     };
 }
 
