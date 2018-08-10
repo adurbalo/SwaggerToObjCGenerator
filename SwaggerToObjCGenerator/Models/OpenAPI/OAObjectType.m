@@ -21,6 +21,7 @@
     [keyPathDict setObject:@"items" forKey:@"items"];
     [keyPathDict setObject:@"format" forKey:@"format"];
     [keyPathDict setObject:@"enum" forKey:@"enumList"];
+    [keyPathDict setObject:@"pattern" forKey:@"pattern"];
     return keyPathDict;
 }
 

@@ -15,6 +15,7 @@
 @property (nonatomic, strong) OAObjectType *items;
 @property (nonatomic, strong) NSString *format;
 @property (nonatomic, strong) NSArray *enumList;
+@property (nonatomic, strong) NSString *pattern;
 
 - (NSString *)objc_CustomTypeName;
 - (NSString *)objc_FullTypeName;

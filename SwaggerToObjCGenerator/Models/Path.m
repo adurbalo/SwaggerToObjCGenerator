@@ -124,26 +124,26 @@
     
     [self.parameters enumerateObjectsUsingBlock:^(PathParameter * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [methodTitleString appendFormat:@"\n%@ @param %@", space, obj.name];
-        [methodTitleString appendFormat:@" - %@", obj.required?@"required":@"optional"];
+        [methodTitleString appendFormat:@" (%@)", obj.required?@"required":@"optional"];
         if (obj.oaSchema.type.length > 0) {
             [methodTitleString appendFormat:@", type \"%@\"", obj.oaSchema.type];
         }
-        if (obj.format) {
-            [methodTitleString appendFormat:@", format \"%@\"", obj.format];
+        if (obj.oaSchema.format.length > 0) {
+            [methodTitleString appendFormat:@", format \"%@\"", obj.oaSchema.format];
+        }
+        if (obj.oaSchema.pattern.length > 0) {
+            [methodTitleString appendFormat:@", pattern \"%@\"", obj.oaSchema.pattern];
         }
     }];
     
     if (self.requestBody) {
         [methodTitleString appendFormat:@"\n%@ @param %@", space, BODY_VARIABLE_NAME];
-        [methodTitleString appendFormat:@" - %@", self.requestBody.required?@"required":@"optional"];
-        if (self.requestBody.content.schema.type.length > 0) {
-            [methodTitleString appendFormat:@", type \"%@\"", self.requestBody.content.schema.type];
-        }
-        if (self.requestBody.content.schema.format.length > 0) {
-            [methodTitleString appendFormat:@", format \"%@\"", self.requestBody.content.schema.format];
+        [methodTitleString appendFormat:@" (%@)", self.requestBody.required?@"required":@"optional"];
+        if ([self.requestBody.content.schema targetClassName].length > 0) {
+            [methodTitleString appendFormat:@", type \"%@\"", [self.requestBody.content.schema targetClassName]];
         }
     }
-    [methodTitleString appendFormat:@"\n%@ @param responseBlock - block with response object or error", space];
+    [methodTitleString appendFormat:@"\n%@ @param responseBlock (optional), block with response object or error", space];
     [methodTitleString appendFormat:@"\n%@ @return NSURLSessionTask object", space];
 
     return [NSString stringWithFormat:@"/*!%@\n*/", methodTitleString];

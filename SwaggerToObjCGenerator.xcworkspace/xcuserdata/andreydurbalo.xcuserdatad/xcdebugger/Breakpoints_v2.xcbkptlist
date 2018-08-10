@@ -37,7 +37,7 @@
             condition = "forDeclaration == YES"
             continueAfterRunningActions = "No"
             filePath = "SwaggerToObjCGenerator/Models/Path.m"
-            timestampString = "555593090.135761"
+            timestampString = "555597579.71336"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "243"
