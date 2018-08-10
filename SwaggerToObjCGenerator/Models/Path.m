@@ -109,6 +109,46 @@
     return operationName;
 }
 
+- (NSString *)pathDocumentation
+{
+    NSMutableString *methodTitleString = [[NSMutableString alloc] init];
+    NSString *space = @"\t";
+    
+    if (self.summary.length > 0) {
+        [methodTitleString appendFormat:@"\n%@ @brief %@", space, self.summary];
+    }
+    
+    if (self.pathDescription.length > 0) {
+        [methodTitleString appendFormat:@"\n%@ @discussion %@", space, self.pathDescription];
+    }
+    
+    [self.parameters enumerateObjectsUsingBlock:^(PathParameter * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [methodTitleString appendFormat:@"\n%@ @param %@", space, obj.name];
+        [methodTitleString appendFormat:@" - %@", obj.required?@"required":@"optional"];
+        if (obj.oaSchema.type.length > 0) {
+            [methodTitleString appendFormat:@", type \"%@\"", obj.oaSchema.type];
+        }
+        if (obj.format) {
+            [methodTitleString appendFormat:@", format \"%@\"", obj.format];
+        }
+    }];
+    
+    if (self.requestBody) {
+        [methodTitleString appendFormat:@"\n%@ @param %@", space, BODY_VARIABLE_NAME];
+        [methodTitleString appendFormat:@" - %@", self.requestBody.required?@"required":@"optional"];
+        if (self.requestBody.content.schema.type.length > 0) {
+            [methodTitleString appendFormat:@", type \"%@\"", self.requestBody.content.schema.type];
+        }
+        if (self.requestBody.content.schema.format.length > 0) {
+            [methodTitleString appendFormat:@", format \"%@\"", self.requestBody.content.schema.format];
+        }
+    }
+    [methodTitleString appendFormat:@"\n%@ @param responseBlock - block with response object or error", space];
+    [methodTitleString appendFormat:@"\n%@ @return NSURLSessionTask object", space];
+
+    return [NSString stringWithFormat:@"/*!%@\n*/", methodTitleString];
+}
+
 #pragma mark - Public
 
 - (NSSet<NSString *> *)customClassesNames
@@ -193,19 +233,9 @@
 - (NSString *)methodNameForDeclaration:(BOOL)forDeclaration
 {
     NSMutableString *methodTitleString = [[NSMutableString alloc] init];
-    NSString *description = nil;
-    if (self.summary.length > 0) {
-        description = [self.summary copy];
-    }
-    if (self.pathDescription.length > 0) {
-        if (!description) {
-            description = [self.pathDescription copy];
-        } else {
-            description = [description stringByAppendingFormat:@"\n %@", self.pathDescription];
-        }
-    }
-    if (description && forDeclaration) {
-        [methodTitleString appendFormat:@"\n%@", [description documentationStyleString]];
+    
+    if (forDeclaration) {
+        [methodTitleString appendFormat:@"\n%@\n", [self pathDocumentation]];
     }
     
     [methodTitleString appendFormat:@"- (NSURLSessionTask *)%@", [self operationName]];

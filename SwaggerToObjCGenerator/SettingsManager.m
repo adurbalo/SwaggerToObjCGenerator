@@ -129,7 +129,11 @@
                 stream = [[NSInputStream alloc] initWithFileAtPath:self.contentPath];
             } else if (self.contentURL) {
                 NSURL *url = [NSURL URLWithString:self.contentURL];
-                NSData *data = [NSData dataWithContentsOfURL:url];
+                NSError *error = nil;
+                NSData *data = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
+                if (error) {
+                    [error terminate];
+                }
                 stream = [NSInputStream inputStreamWithData:data];
             }
             result = [YAMLSerialization objectWithYAMLStream:stream
